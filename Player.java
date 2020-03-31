@@ -5,16 +5,19 @@ import java.util.*;
 public class Player {
 
     public ArrayList<Piece> playerPieces;
-    public ArrayList<Integer> blotPieces;
+    public ArrayList<Integer> blotPieces = new ArrayList<Integer>();;
     private boolean win;
     private boolean blotHit;
+    // coordinates of player's home quad
     private int homeX;
     private int homeY;
 
+    /** Constructors **/
     public Player(int x, int y) {
+        // initialize player pieces arraylist
         playerPieces = new ArrayList<Piece>();
         makePieces();
-        blotPieces = new ArrayList<Integer>();
+        // initialize win, blotHit, and Home x & y
         win = false;
         blotHit = false;
         homeX = x;
@@ -23,18 +26,92 @@ public class Player {
 
     public Player(ArrayList<Piece> p, int x, int y) {
         playerPieces = p;
-        blotPieces = new ArrayList<Integer>();
         win = false;
         blotHit = false;
         homeX = x;
         homeY = y;
     }
 
-    // Setters //
+    /** Setters **/
+
+    // Set playerPieces to input ArrayList
     public void setPieces(ArrayList<Piece> p) {
         playerPieces = p;
     }
 
+    // Set win = true
+    public void setWin() {
+        win = true;
+    }
+
+    // Set blotHit status
+    public void setBlotHit() {
+        blotHit = true;
+    }
+
+    // Undo blotHit status
+    public void undoBlotHit() {
+        blotHit = false;
+    }
+
+    // Methods //
+
+    // Determine if a player has won
+    public boolean hasWon() {
+        if(allHome()) {
+            setWin();
+        }
+        return win;
+    }
+
+    /** TODO determineBlot() will need altering once more players are added, as it only looks at player pieces. Perhaps it
+     should be a function within a Rules class or something that then flags pieces as blots so if another player lands on them, the
+     Rules know instantly that it's a blotHit? */
+
+    // Determine if there's a blotted piece (one piece on the spike)
+    public void determineBlot() {
+        int[] values = new int[24];
+        for(int v=0; v < values.length; v++) {
+            values[v] = 0;
+        }
+
+        for(int p=0; p < playerPieces.size(); p++) {
+            int temp = playerPieces.get(p).getX();
+            if(playerPieces.get(p).getY() == 2) {
+                temp += 12;
+            }
+            values[temp] = values[temp] + 1;
+        }
+
+        blotPieces.clear();
+        for(int c=0; c < values.length; c++) {
+            if(values[c] == 1) {
+                blotPieces.add(c);
+            }
+        }
+    }
+
+    // Determine if all player pieces are in the home quad
+    public boolean allHome() {
+        for(int p=0; p < playerPieces.size(); p++) {
+            if(playerPieces.get(p).getY() != homeY) {
+                return false;
+            } else if(playerPieces.get(p).getX() >= homeX) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Determine if a single piece is in the home quad
+    public boolean isHome(Piece h) {
+        if(h.getY() == homeY && h.getX() >= homeX) {
+            return true;
+        }
+        return false;
+    }
+
+    // Establish player pieces
     public void makePieces() {
 
         //creating red pieces --> Thanks Sean for the code
@@ -70,68 +147,5 @@ public class Player {
         playerPieces.add(red13);
         playerPieces.add(red14);
         playerPieces.add(red15);
-    }
-
-    public void setWin() {
-        win = true;
-    }
-
-    public void setBlotHit() {
-        blotHit = true;
-    }
-
-    public void undoBlotHit() {
-        blotHit = false;
-    }
-
-    // Methods //
-
-    public boolean hasWon() {
-        if(allHome()) {
-            setWin();
-        }
-        return win;
-    }
-
-
-    // Determine if there's a blotted piece (one piece on the spike)
-    public void determineBlot() {
-        int[] values = new int[24];
-        for(int v=0; v < values.length; v++) {
-            values[v] = 0;
-        }
-
-        for(int p=0; p < playerPieces.size(); p++) {
-            int temp = playerPieces.get(p).getX();
-            if(playerPieces.get(p).getY() == 2) {
-                temp += 12;
-            }
-            values[temp] = values[temp] + 1;
-        }
-
-        blotPieces.clear();
-        for(int c=0; c < values.length; c++) {
-            if(values[c] == 1) {
-                blotPieces.add(c);
-            }
-        }
-    }
-
-    public boolean allHome() {
-        for(int p=0; p < playerPieces.size(); p++) {
-            if(playerPieces.get(p).getY() != homeY) {
-                return false;
-            } else if(playerPieces.get(p).getX() >= homeX) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public boolean isHome(Piece h) {
-        if(h.getY() == homeY && h.getX() >= homeX) {
-            return true;
-        }
-        return false;
     }
 }

@@ -193,7 +193,7 @@ public class Board {
       printBoard(board);
 
       /** TESTING PLAYER **/
-      Player first = new Player(7,2);
+      Player first = new Player(7, 2);
 
       // add two pieces to the same spike
       Piece pc = first.playerPieces.get(4);
@@ -220,12 +220,16 @@ public class Board {
 
       // test to determineBlot() on board --> prints Spike's array number
       first.determineBlot();
-      System.out.print("Spikes with Blots: " + first.blotPieces);
+      System.out.println("Spikes with Blots: " + first.blotPieces);
 
       // add piece to blot, determineBlot() again
       board.get(4).removeFromSpike(pc2);
-      board.get(22).addToSpike(pc2);
+      board.get(21).addToSpike(pc2);
       first.determineBlot();
       System.out.println("Spikes with Blots take 2: " + first.blotPieces);
+
+      // print player board again
+      System.out.println("Player Board");
+      printBoard(board);
    }
 }
