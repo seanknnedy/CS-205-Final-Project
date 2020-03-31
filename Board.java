@@ -142,7 +142,16 @@ public class Board {
       player2.add(black13);
       player2.add(black14);
       player2.add(black15);
-
+   
+   }
+   
+   //roll die: returns an array of two integers between 1 and 6 (inclusive)
+   public int[] roll() {
+      int[] roll = new int[2];
+      Random rand = new Random();
+      roll[0] = rand.nextInt(6) + 1;
+      roll[1] = rand.nextInt(6) + 1;
+      return roll;
    }
 
    //getBoard

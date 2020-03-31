@@ -8,6 +8,7 @@ public class Piece {
    private String color;
    private int xCoord;
    private int yCoord;
+   private bool blot;
    
    //constructor
    public Piece(String c, int x, int y) {
@@ -31,6 +32,11 @@ public class Piece {
       this.yCoord = y;
    }
    
+   //set blot
+   public void setBlot(boolean b) {
+      this.blot = b;
+   }
+   
    //get color
    public String getColor() {
       return color;
@@ -46,12 +52,26 @@ public class Piece {
       return yCoord;
    }
    
+   //get blot
+   public bool getBlot() {
+      return blot;
+   }
+   
    //isEqual: determines if piece is from same player
    public boolean isEqual(Piece p, String expected) {
       if (p.getColor() == expected) {
          return true;
       }
       return false;
-   } 
+   }
+   
+   //switch blot
+   public void switchBlot() {
+      if (this.blot) {
+         this.blot = false;
+      } else {
+         this.blot = true;
+      }
+   }
    
 }
