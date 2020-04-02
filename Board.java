@@ -142,15 +142,15 @@ public class Board {
       player2.add(black13);
       player2.add(black14);
       player2.add(black15);
-   
+
    }
-   
+
    //roll die: returns an array of two integers between 1 and 6 (inclusive)
-   public int[] roll() {
-      int[] roll = new int[2];
+   public ArrayList<Integer> roll() {
+      ArrayList<Integer> roll = new ArrayList<Integer>(2);
       Random rand = new Random();
-      roll[0] = rand.nextInt(6) + 1;
-      roll[1] = rand.nextInt(6) + 1;
+      roll.add((rand.nextInt(6)+1));
+      roll.add((rand.nextInt(6)+1));
       return roll;
    }
 
@@ -202,7 +202,7 @@ public class Board {
       printBoard(board);
 
       /** TESTING PLAYER **/
-      Player first = new Player(7, 2);
+      Player first = new Player(7, 12, 2, "Red");
 
       // add two pieces to the same spike
       Piece pc = first.playerPieces.get(4);
@@ -240,5 +240,40 @@ public class Board {
       // print player board again
       System.out.println("Player Board");
       printBoard(board);
+
+      /** TESTING COMPUTER **/
+
+      System.out.println("Testing Computer");
+      System.out.println("---------------------------------");
+      Board compBoard = new Board();
+      Player computer = new Player(1,6,2,"Black");
+
+      // testing Double
+      ArrayList<Integer> roll1 = new ArrayList<Integer>(2);
+      roll1.add(4);
+      roll1.add(4);
+      computer.playComp(roll1, compBoard.board);
+
+      System.out.println("Computer Board Doubles");
+      printBoard(board);
+      System.out.println("------------------------------------------------------------------------------------------------------");
+
+      // testing Single
+      ArrayList<Integer> roll2 = new ArrayList<Integer>(2);
+      roll2.add(2);
+      roll2.add(3);
+      computer.playComp(roll2, compBoard.board);
+      System.out.println("Computer Board Single");
+      printBoard(board);
+      System.out.println("------------------------------------------------------------------------------------------------------");
+
+      // testing multiple rounds of Computer
+      for(int j = 0; j < 6; j++) {
+         System.out.println("\n");
+         computer.playComp(compBoard.roll(), compBoard.board);
+         System.out.println("Computer Board, Round " + j);
+         printBoard(board);
+         System.out.println("------------------------------------------------------------------------------------------------------");
+      }
    }
 }
