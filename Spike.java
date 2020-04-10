@@ -12,7 +12,8 @@ public class Spike {
    //bookkeeping - keeps track of what is on each spike
    private String currentTeam;
 
-   //constructor
+
+   /**************************************************** Constructor **************************************************/
    public Spike(int x, int y) {
       setX(x);
       setY(y);
@@ -20,27 +21,36 @@ public class Spike {
       currentTeam = "NONE";
    }
 
-   //set x coord
+
+   /**************************************************** Getters/Setters **********************************************/
+   // Set x coordinate
    public void setX(int x) {
       this.xCoord = x;
    }
 
-   //set y coord
+   // Set y coordinate
    public void setY(int y) {
       this.yCoord = y;
    }
 
-   //set current team
+   // Set current team
    public void setCurrentTeam(Piece p) {
       this.currentTeam = p.getColor();
    }
 
-   //get current team
+   // Returns current team
    public String getCurrentTeam() {
       return currentTeam;
    }
 
-   //add piece to spike
+   // Returns pieces on spike
+   public ArrayList<Piece> getPiecesOnSpike() {
+      return spike;
+   }
+
+
+   /**************************************************** Methods ******************************************************/
+   // Add piece to spike
    public void addToSpike(Piece p) {
       spike.add(p);
       currentTeam = p.getColor();
@@ -48,26 +58,20 @@ public class Spike {
       p.setY(yCoord);
    }
 
-   //remove piece from spike
+   // Remove piece from spike
    public void removeFromSpike(Piece p) {
       spike.remove(p);
       p.setX(0);
       p.setY(0);
-      // update current team
+      // update current team if the spike is now empty
       if(spike.size() == 0) {
          currentTeam = "NONE";
       }
    }
 
-   //get spike
-   public ArrayList<Piece> getPiecesOnSpike() {
-      return spike;
-   }
-
-   //overridden toString method
+   // Overridden toString method
    @Override
    public String toString() {
       return spike.toString();
    }
-
 }

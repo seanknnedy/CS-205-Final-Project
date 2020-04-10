@@ -4,14 +4,20 @@ import java.lang.*;
 public class PlayerComputerTesting {
 
     public static void makeMove(Board b, Player p, Player opponent, int pieceID, int fromSpike, int toSpike) {
+        boolean allAtHome = p.allHome();
         boolean valid = validMove(b, p, opponent, pieceID, toSpike);
-        if(valid) {
-            b.getSpike(fromSpike).removeFromSpike(p.getPiece(pieceID));
-            b.getSpike(toSpike).addToSpike(p.getPiece(pieceID));
-            System.out.println("Move complete\n");
+        if(!allAtHome) {
+            if(valid) {
+                b.getSpike(fromSpike).removeFromSpike(p.getPiece(pieceID));
+                b.getSpike(toSpike).addToSpike(p.getPiece(pieceID));
+                System.out.println("Move complete\n");
+            } else {
+                System.out.println("Move Incomplete... Try Again!\n");
+            }
         } else {
-            System.out.println("Move Incomplete... Try Again!\n");
+
         }
+
     }
 
     // Implement all the game rules
@@ -48,7 +54,7 @@ public class PlayerComputerTesting {
             return false;
         }
 
-        // Case 5: assume valid move (Add when moving a blot onto board?)
+        // Case 5: assume valid move (Add when moving a blot on to board?)
         else {
             System.out.println("Valid Move - Not in any cases");
             return true;

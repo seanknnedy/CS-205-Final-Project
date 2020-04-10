@@ -2,13 +2,16 @@ import java.util.ArrayList;
 
 public class Computer extends Player{
 
+
+    /**************************************************** Constructor *************************************************/
     public Computer(int b, int t, int y, String tm) {
-        // call constructor
+        // call Player constructor
         super(b, t, y, tm);
     }
 
 
-    // sends compute to playDouble() or playSingle() depending on their roll
+    /**************************************************** Methods *****************************************************/
+    // Sends compute to playDouble() or playSingle() depending on their roll
     public void playComp(ArrayList<Integer> roll, ArrayList<Spike> board) {
         if(roll.get(0).equals(roll.get(1))) {
             playDouble(roll, board);
@@ -17,8 +20,7 @@ public class Computer extends Player{
         }
     }
 
-
-    // handles when the computer rolls the same number on both dice
+    // Handles when the computer rolls the same number on both dice
     public void playDouble(ArrayList<Integer> d, ArrayList<Spike> b) {
         // declaring everything
         System.out.println("In playDouble with roll of " + d);
@@ -84,7 +86,7 @@ public class Computer extends Player{
         }
     }
 
-    // handles when the computer rolls different numbers on the dice
+    // Handles when the computer rolls different numbers on the dice
     public void playSingle(ArrayList<Integer> s, ArrayList<Spike> b) {
 
         System.out.println("In playSingle with roll of " + s);
@@ -142,13 +144,12 @@ public class Computer extends Player{
         }
     }
 
-    // grabs a new piece
+    // Choose a random piece
     public Piece randPiece(ArrayList<Piece> c) {
         return c.get(rand.nextInt(c.size()));
     }
 
-
-    // determines if the piece can take a turn, places piece & returns true if yes, returns false otherwise
+    // Determines if the piece can take a turn, places piece & returns true if yes, returns false otherwise
     public boolean takeTurn(Piece p, int r, ArrayList<Spike> b) {
         int pX = p.getX();
         int toMove = pX + r;

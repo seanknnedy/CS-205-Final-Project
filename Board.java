@@ -7,7 +7,8 @@ public class Board {
    //initializing board object and piece arrays for each player (not sure if latter part is needed yet)
    private static ArrayList<Spike> board; // = new Piece[24][5];
 
-   //board constructor
+
+   /**************************************************** Constructor **************************************************/
    public Board(ArrayList<Piece> p1, String team1, ArrayList<Piece> p2, String team2) {
 
       //creating each spike on the board (24 in all)
@@ -171,26 +172,31 @@ public class Board {
 
    }
 
-   //roll die: returns an array of two integers between 1 and 6 (inclusive)
-   public ArrayList<Integer> roll() {
-      ArrayList<Integer> roll = new ArrayList<Integer>(2);
-      Random rand = new Random();
-      roll.add((rand.nextInt(6)+1));
-      roll.add((rand.nextInt(6)+1));
-      return roll;
-   }
 
-   //getBoard
+   /**************************************************** Getters/Setters **********************************************/
+   // Returns the Board
    public ArrayList<Spike> getBoard() {
       return board;
    }
 
-   //getSpike -- use this when adding/deleting pieces to spikes
+   // Returns the Spike - use this when adding/deleting pieces to spikes
    public Spike getSpike(int numSpike) {
       return board.get(numSpike - 1);
    }
 
-   //print board
+
+   /**************************************************** Methods ******************************************************/
+   // Returns the die roll in an array of two integers between 1 and 6 (inclusive)
+      public ArrayList<Integer> roll() {
+         ArrayList<Integer> roll = new ArrayList<Integer>(2);
+         Random rand = new Random();
+         roll.add((rand.nextInt(6)+1));
+         roll.add((rand.nextInt(6)+1));
+         return roll;
+      }
+
+
+   // Prints the board
    public static void printBoard(Board board, Player p1, Player p2) {
       System.out.println("Player 2's Pieces at Home: ");
 

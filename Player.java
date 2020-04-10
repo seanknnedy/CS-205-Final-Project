@@ -1,4 +1,3 @@
-import java.io.*;
 import java.lang.*;
 import java.util.*;
 
@@ -18,7 +17,7 @@ public class Player {
     private String team;
 
 
-    /** Constructors **/
+    /**************************************************** Constructors ************************************************/
     public Player(int b, int t, int y, String tm) {
         // initialize player pieces arraylist
         playerPieces = new ArrayList<Piece>();
@@ -42,13 +41,8 @@ public class Player {
         homeY = y;
     }
 
-    /** Setters / Getters **/
 
-    // Set playerPieces to input ArrayList
-    public void setPieces(ArrayList<Piece> p) {
-        playerPieces = p;
-    }
-
+    /**************************************************** Getters/Setters *********************************************/
     // Set win = true
     public void setWin() {
         win = true;
@@ -59,28 +53,27 @@ public class Player {
         blotHit = !blotHit;
     }
 
+    // Returns the team of the player
     public String getTeam() {
         return team;
     }
 
+    // Returns the piece with the given id
     public Piece getPiece(int id) {
         return playerPieces.get(id - 1);
     }
 
-    // Methods //
 
+    /**************************************************** Methods *****************************************************/
     // Determine if a player has won
     public boolean hasWon() {
-        if(allHome()) {
-            win = true;
-        }
-        return win;
+        return bearOffPieces.size() == 15;
     }
 
     // Determine if all player pieces are in the home quad
     public boolean allHome() {
-        for(int p = 0; p < playerPieces.size(); p++) {
-            if(!isHome(playerPieces.get(p))) {
+        for (Piece playerPiece : playerPieces) {
+            if (!isHome(playerPiece)) {
                 return false;
             }
         }
@@ -89,29 +82,30 @@ public class Player {
 
     // Determine if a single piece is in the home quad
     public boolean isHome(Piece h) {
-        if(h.getY() == homeY && h.getX() >= homeXb && h.getX() <= homeXt) {
-            return true;
-        }
-        return false;
+        return h.getY() == homeY && h.getX() >= homeXb && h.getX() <= homeXt;
     }
 
+    // Bear off the specified piece
     public void bearOffAPiece(Piece p) {
         bearOffPieces.add(p);
     }
 
+    // Print the Pieces that have been beared
+    public void printBearOffs() {
+        for (Piece bearOffPiece : bearOffPieces) {
+            System.out.print(bearOffPiece + " ");
+        }
+    }
+
+    // Add a blot to the list of blotted pieces
     public void addBlot(int pieceID) {
         blotPieces.add(getPiece(pieceID));
     }
 
+    // Print the list blots
     public void printBlots() {
-        for(int i = 0; i < blotPieces.size(); i++) {
-            System.out.print(blotPieces.get(i) + " ");
-        }
-    }
-
-    public void printBearOffs() {
-        for(int i = 0; i < bearOffPieces.size(); i++) {
-            System.out.print(bearOffPieces.get(i) + " ");
+        for (Piece blotPiece : blotPieces) {
+            System.out.print(blotPiece + " ");
         }
     }
 }
