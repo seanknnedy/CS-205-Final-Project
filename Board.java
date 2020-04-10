@@ -160,8 +160,9 @@ public class Board {
    }
 
    //print board
-   public static void printBoard(ArrayList<Spike> b) {
+   public static void printBoard(Board board) {
       //for each spike
+      ArrayList<Spike> b = board.getBoard();
       for (int i = 0; i < b.size(); i++) {
          //print spike
          System.out.print(b.get(i).toString());
@@ -174,106 +175,30 @@ public class Board {
       System.out.println();
    }
 
-   //simple testing
    public static void main(String [] args) {
       //create new board and print
       Board newBoard = new Board();
-      printBoard(newBoard.board);
+      Board.printBoard(newBoard);
 
       //create new piece, print x and y coords
       Piece p = new Piece("red", 0, 0);
-      System.out.println(p.getX());
-      System.out.println(p.getY());
+      System.out.println("X: " + p.getX());
+      System.out.println("Y: " + p.getY());
 
       //add to spike 5, print x and y coords
-      board.get(5).addToSpike(p);
-      System.out.println(p.getX());
-      System.out.println(p.getY());
+      newBoard.getBoard().get(5).addToSpike(p);
+      System.out.println("X: " + p.getX());
+      System.out.println("Y: " + p.getY());
 
       //print board to show piece is on spike (havent implemented toString for Piece, but this shows that it's on the spike)
-      printBoard(board);
+      Board.printBoard(newBoard);
 
       //remove piece from spike 5, print x and y coords
-      board.get(5).removeFromSpike(p);
-      System.out.println(p.getX());
-      System.out.println(p.getY());
+      newBoard.getBoard().get(5).removeFromSpike(p);
+      System.out.println("X: " + p.getX());
+      System.out.println("Y: " + p.getY());
 
       //print board again to show piece is removed
-      printBoard(board);
-
-      /** TESTING PLAYER **/
-      Player first = new Player(7, 12, 2, "Red");
-
-      // add two pieces to the same spike
-      Piece pc = first.playerPieces.get(4);
-      board.get(4).addToSpike(pc);
-
-      Piece pc2 = first.playerPieces.get(7);
-      board.get(4).addToSpike(pc2);
-
-      // add one piece to a spike
-      Piece blot = first.playerPieces.get(6);
-      board.get(22).addToSpike(blot);
-
-      // print player board
-      System.out.println("\nPlayer Board");
-      printBoard(board);
-
-      // test if a piece isHome()
-      System.out.println("Testing isHome()");
-      System.out.println("Piece on Spike 22: " + first.isHome(blot));
-      System.out.println("Piece on Spike 4: " + first.isHome(pc));
-
-      // test if pieces are allHome()
-      System.out.println("Testing allHome() --> " + first.allHome());
-
-      // test to determineBlot() on board --> prints Spike's array number
-      first.determineBlot();
-      System.out.println("Spikes with Blots: " + first.blotPieces);
-
-      // add piece to blot, determineBlot() again
-      board.get(4).removeFromSpike(pc2);
-      board.get(21).addToSpike(pc2);
-      first.determineBlot();
-      System.out.println("Spikes with Blots take 2: " + first.blotPieces);
-
-      // print player board again
-      System.out.println("Player Board");
-      printBoard(board);
-
-      /** TESTING COMPUTER **/
-
-      System.out.println("Testing Computer");
-      System.out.println("---------------------------------");
-      Board compBoard = new Board();
-      Player computer = new Player(1,6,2,"Black");
-
-      // testing Double
-      ArrayList<Integer> roll1 = new ArrayList<Integer>(2);
-      roll1.add(4);
-      roll1.add(4);
-      computer.playComp(roll1, compBoard.board);
-
-      System.out.println("Computer Board Doubles");
-      printBoard(board);
-      System.out.println("------------------------------------------------------------------------------------------------------");
-
-      // testing Single
-      ArrayList<Integer> roll2 = new ArrayList<Integer>(2);
-      roll2.add(2);
-      roll2.add(3);
-      computer.playComp(roll2, compBoard.board);
-      System.out.println("Computer Board Single");
-      printBoard(board);
-      System.out.println("------------------------------------------------------------------------------------------------------");
-
-      // testing multiple rounds of Computer
-      for(int j = 0; j < 6; j++) {
-         System.out.println("\n");
-         computer.playComp(compBoard.roll(), compBoard.board);
-         System.out.println("Computer Board, Round " + j);
-         printBoard(board);
-         System.out.println("------------------------------------------------------------------------------------------------------");
-      }
+      Board.printBoard(newBoard);
    }
 }

@@ -66,7 +66,7 @@ public class Player {
     // Determine if a player has won
     public boolean hasWon() {
         if(allHome()) {
-            setWin();
+            win = true;
         }
         return win;
     }
@@ -149,7 +149,7 @@ public class Player {
 
     // sends compute to playDouble() or playSingle() depending on their roll
     public void playComp(ArrayList<Integer> roll, ArrayList<Spike> board) {
-        if(roll.get(0) == roll.get(1)) {
+        if(roll.get(0).equals(roll.get(1))) {
             playDouble(roll, board);
         } else {
             playSingle(roll, board);
