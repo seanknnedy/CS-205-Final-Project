@@ -9,13 +9,15 @@ public class Piece {
    private int xCoord;
    private int yCoord;
    private boolean blot;
+   private int ID;
 
    //constructor
-   public Piece(String c, int x, int y) {
+   public Piece(String c, int x, int y, int id) {
       setColor(c);
       setX(x);
       setY(y);
       blot = false;
+      ID = id;
    }
 
    //setcolor
@@ -41,6 +43,11 @@ public class Piece {
    //get color
    public String getColor() {
       return color;
+   }
+
+   //get ID
+   public int getID() {
+      return ID;
    }
 
    //get x coord
@@ -73,5 +80,10 @@ public class Piece {
       } else {
          this.blot = true;
       }
+   }
+
+   @Override
+   public String toString() {
+      return getColor() + getID();
    }
 }

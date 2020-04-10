@@ -9,14 +9,23 @@ public class PlayerComputerTesting {
     * Did not test setWin due to unclear reasoning (hasWon does the same thing)
     */
 
-    public static void PlayerTesting() {
-        //create new board and print
-        Board newBoard = new Board();
-        Board.printBoard(newBoard);
-
+    public static void main(String [] args)  {
 
         // Testing Player Constructor 1 (uses make Pieces)
-        Player first = new Player(7, 12, 2, "Red");
+        Player player = new Player(7, 12, 2, "RED");
+        Computer computer = new Computer(7, 12, 1, "BLK");
+
+        //create new board and print
+        Board newBoard = new Board(player.playerPieces, player.getTeam(), computer.playerPieces, computer.getTeam());
+        Board.printBoard(newBoard);
+
+        // make player move
+        newBoard.getSpike(1).removeFromSpike(player.playerPieces.get(1));
+        newBoard.getSpike(2).addToSpike(player.playerPieces.get(1));
+
+        Board.printBoard(newBoard);
+
+/*
 
         // Testing setBlotHit
 
@@ -65,11 +74,11 @@ public class PlayerComputerTesting {
         // print player board again
         System.out.println("Player Board");
         Board.printBoard(newBoard);
-    }
 
-    public static void ComputerTesting() {
+ */
 
         /** TESTING COMPUTER **/
+        Computer comp = new Computer(7, 12, 2, "Red");
         /*
 
         System.out.println("Testing Computer");
@@ -106,8 +115,5 @@ public class PlayerComputerTesting {
         }
         */
 
-    }
-    public static void main(String [] args) {
-        PlayerTesting();
     }
 }
