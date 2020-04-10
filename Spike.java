@@ -9,11 +9,15 @@ public class Spike {
    private int yCoord;
    private ArrayList<Piece> spike;
 
+   //bookkeeping - keeps track of what is on each spike
+   private String currentTeam;
+
    //constructor
    public Spike(int x, int y) {
       setX(x);
       setY(y);
       spike = new ArrayList<Piece>();
+      currentTeam = "NONE";
    }
 
    //set x coord
@@ -26,19 +30,22 @@ public class Spike {
       this.yCoord = y;
    }
 
+   //set current team
+   public void setCurrentTeam(Piece p) {
+      this.currentTeam = p.getColor();
+   }
+
+   //get current team
+   public String getCurrentTeam() {
+      return currentTeam;
+   }
+
    //add piece to spike
    public void addToSpike(Piece p) {
-      if (spike.size() >= 5) {
-         System.out.println("test: max number of pieces (5) on this spike");
-      } else {
-         if(spike.size() == 0) {
-            p.setBlot(true);
-         }
-         spike.add(p);
-         p.setX(xCoord);
-         p.setY(yCoord);
-
-      }
+      spike.add(p);
+      currentTeam = p.getColor();
+      p.setX(xCoord);
+      p.setY(yCoord);
    }
 
    //remove piece from spike
@@ -46,11 +53,14 @@ public class Spike {
       spike.remove(p);
       p.setX(0);
       p.setY(0);
-      p.switchBlot();
+      // update current team
+      if(spike.size() == 0) {
+         currentTeam = "NONE";
+      }
    }
 
    //get spike
-   public ArrayList<Piece> getSpike() {
+   public ArrayList<Piece> getPiecesOnSpike() {
       return spike;
    }
 

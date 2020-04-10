@@ -6,8 +6,6 @@ public class Board {
 
    //initializing board object and piece arrays for each player (not sure if latter part is needed yet)
    private static ArrayList<Spike> board; // = new Piece[24][5];
-   private ArrayList<Piece> player1;
-   private ArrayList<Piece> player2;
 
    //board constructor
    public Board(ArrayList<Piece> p1, String team1, ArrayList<Piece> p2, String team2) {
@@ -193,7 +191,9 @@ public class Board {
    }
 
    //print board
-   public static void printBoard(Board board) {
+   public static void printBoard(Board board, Player p1, Player p2) {
+      System.out.println("Player 2's Pieces at Home: ");
+
       //for each spike
       ArrayList<Spike> b = board.getBoard();
       for (int i = 0; i < b.size(); i++) {
@@ -205,6 +205,14 @@ public class Board {
             System.out.println();
          }
       }
+
+      System.out.println("\nPlayer 1's Pieces at Home: ");
+      p2.printBearOffs();
+
+      System.out.print("BLOTS: ");
+      p1.printBlots();
+      p2.printBlots();
+
       System.out.println("\n");
    }
 

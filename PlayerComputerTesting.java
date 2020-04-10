@@ -3,6 +3,59 @@ import java.lang.*;
 
 public class PlayerComputerTesting {
 
+    public static void makeMove(Board b, Player p, Player opponent, int pieceID, int fromSpike, int toSpike) {
+        boolean valid = validMove(b, p, opponent, pieceID, toSpike);
+        if(valid) {
+            b.getSpike(fromSpike).removeFromSpike(p.getPiece(pieceID));
+            b.getSpike(toSpike).addToSpike(p.getPiece(pieceID));
+            System.out.println("Move complete\n");
+        } else {
+            System.out.println("Move Incomplete... Try Again!\n");
+        }
+    }
+
+    // Implement all the game rules
+    public static boolean validMove(Board b, Player p, Player opponent, int pieceID, int toSpike) {
+        System.out.println("\nValidating Move...");
+        Spike current = b.getSpike(toSpike);
+
+        // TODO: Case 1: check if a blot is hit! (implement when we do GUI)
+
+        // Case 2: other team is on spike with more than one piece
+        if (!current.getCurrentTeam().equals(p.getPiece(pieceID).getColor()) & current.getPiecesOnSpike().size() > 1) {
+            System.out.println("Invalid Move - other team is occupying spike already");
+            return false;
+        }
+
+        // Case 3: other team is on spike with one piece, move is valid, blot occurs
+        else if (!current.getCurrentTeam().equals(p.getPiece(pieceID).getColor()) & current.getPiecesOnSpike().size() == 1) {
+            System.out.println("Valid Move - blot!");
+            // set as a blotPieces
+            b.getSpike(toSpike).getPiecesOnSpike().get(0).switchBlot();
+            // add to blotHit to player
+            opponent.setBlotHit();
+            // add to blotPieces
+            opponent.addBlot(b.getSpike(toSpike).getPiecesOnSpike().get(0).getID());
+            // remove old piece
+            b.getSpike(toSpike).removeFromSpike(b.getSpike(toSpike).getPiecesOnSpike().get(0));
+            // return to complete move
+            return true;
+        }
+
+        // Case 4: you already have 5 pieces on the spike
+        else if (current.getCurrentTeam().equals(p.getPiece(pieceID).getColor()) & current.getPiecesOnSpike().size() == 5) {
+            System.out.println("Invalid Move - maximum pieces on spike");
+            return false;
+        }
+
+        // Case 5: assume valid move (Add when moving a blot onto board?)
+        else {
+            System.out.println("Valid Move - Not in any cases");
+            return true;
+        }
+    }
+
+
     /*
     * Did not test Player constructor #2
     * Did not test setPieces due to unclear intentions
@@ -11,74 +64,54 @@ public class PlayerComputerTesting {
 
     public static void main(String [] args)  {
 
-        // Testing Player Constructor 1 (uses make Pieces)
+        // testing Player constructor 1
         Player player = new Player(7, 12, 2, "RED");
         Computer computer = new Computer(7, 12, 1, "BLK");
 
-        //create new board and print
+        // create new board and print
         Board newBoard = new Board(player.playerPieces, player.getTeam(), computer.playerPieces, computer.getTeam());
-        Board.printBoard(newBoard);
 
         // make player move
-        newBoard.getSpike(1).removeFromSpike(player.playerPieces.get(1));
-        newBoard.getSpike(2).addToSpike(player.playerPieces.get(1));
+        makeMove(newBoard, player, computer,1, 1, 2);
+        Board.printBoard(newBoard, player, computer);
 
-        Board.printBoard(newBoard);
+        // test blot (tests setBlotHit)
+        makeMove(newBoard, computer, player, 9, 13, 2);
+        Board.printBoard(newBoard, player, computer);
 
-/*
+        // test to see if can add to a spike with 5 pieces already on it
+        makeMove(newBoard, player, computer, 8, 17, 19);
+        Board.printBoard(newBoard, player, computer);
 
-        // Testing setBlotHit
-
-        // Testing hasWon
-
-        // Testing allHome
-
-        // Testing isHome
-
-        // Testing makePieces
+        // testing isHome
+        System.out.println("Is Piece RED11 HOME? " + player.isHome(player.playerPieces.get(10)));
+        System.out.println("Is Piece RED4 HOME? " + player.isHome(player.playerPieces.get(3)));
 
 
-        // add two pieces to the same spike
-        Piece pc = first.playerPieces.get(4);
-        newBoard.getBoard().get(4).addToSpike(pc);
+        // testing allHome
+        System.out.println("Are all of Player's pieces home? " + player.allHome());
+        makeMove(newBoard, player, computer,1, 1, 20);
+        makeMove(newBoard, player, computer,2, 1, 20);
+        makeMove(newBoard, player, computer,3, 1, 20);
+        makeMove(newBoard, player, computer,4, 1, 20);
+        makeMove(newBoard, player, computer,5, 1, 20);
+        makeMove(newBoard, player, computer,6, 12, 21);
+        makeMove(newBoard, player, computer,7, 12, 21);
+        makeMove(newBoard, player, computer,8, 17, 21);
+        makeMove(newBoard, player, computer,9, 17, 22);
+        makeMove(newBoard, player, computer,10, 17, 22);
+        Board.printBoard(newBoard, player, computer);
+        System.out.println("Are all of Player's pieces home now? " + player.allHome());
 
-        Piece pc2 = first.playerPieces.get(7);
-        newBoard.getBoard().get(4).addToSpike(pc2);
 
-        // add one piece to a spike
-        Piece blot = first.playerPieces.get(6);
-        newBoard.getBoard().get(22).addToSpike(blot);
+        // testing hasWon
+        // TODO: How do we handle bearing off?
 
-        // print player board
-        System.out.println("\nPlayer Board");
-        Board.printBoard(newBoard);
 
-        // test if a piece isHome()
-        System.out.println("Testing isHome()");
-        System.out.println("Piece on Spike 22: " + first.isHome(blot));
-        System.out.println("Piece on Spike 4: " + first.isHome(pc));
 
-        // test if pieces are allHome()
-        System.out.println("Testing allHome() --> " + first.allHome());
-
-        // test to determineBlot() on board --> prints Spike's array number
-        first.determineBlot();
-        System.out.println("Spikes with Blots: " + first.blotPieces);
-
-        // add piece to blot, determineBlot() again
-        newBoard.getBoard().get(4).removeFromSpike(pc2);
-        newBoard.getBoard().get(21).addToSpike(pc2);
-        first.determineBlot();
-        System.out.println("Spikes with Blots take 2: " + first.blotPieces);
-
-        // print player board again
-        System.out.println("Player Board");
-        Board.printBoard(newBoard);
-
- */
 
         /** TESTING COMPUTER **/
-        Computer comp = new Computer(7, 12, 2, "Red");
+
         /*
 
         System.out.println("Testing Computer");

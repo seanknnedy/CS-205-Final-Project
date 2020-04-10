@@ -159,7 +159,7 @@ public class Computer extends Player{
 
         } else {
             Spike spike = b.get(toMove);
-            ArrayList<Piece> temp = b.get(toMove).getSpike();
+            ArrayList<Piece> temp = b.get(toMove).getPiecesOnSpike();
 
             // if spike has no pieces on it, add piece
             if(temp.size() == 0) {

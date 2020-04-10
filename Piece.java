@@ -67,7 +67,7 @@ public class Piece {
 
    //isEqual: determines if piece is from same player
    public boolean isEqual(Piece p, String expected) {
-      if (p.getColor() == expected) {
+      if(p.getColor().equals(expected)) {
          return true;
       }
       return false;
@@ -75,10 +75,10 @@ public class Piece {
 
    //switch blot
    public void switchBlot() {
-      if (this.blot) {
-         this.blot = false;
-      } else {
-         this.blot = true;
+      blot = !blot;
+      if(blot) {
+         setX(0);
+         setY(0);
       }
    }
 
