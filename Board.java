@@ -1,6 +1,6 @@
-import java.io.*;
 import java.lang.*;
 import java.util.*;
+
 
 public class Board {
 
@@ -198,7 +198,7 @@ public class Board {
 
    // Prints the board
    public static void printBoard(Board board, Player p1, Player p2) {
-      System.out.println("Player 2's Pieces at Home: ");
+      System.out.println("Player 2's Pieces Bear Off List: ");
 
       //for each spike
       ArrayList<Spike> b = board.getBoard();
@@ -212,7 +212,7 @@ public class Board {
          }
       }
 
-      System.out.println("\nPlayer 1's Pieces at Home: ");
+      System.out.println("\nPlayer 1's Pieces Bear Off List: ");
       p2.printBearOffs();
 
       System.out.print("BLOTS: ");
