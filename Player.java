@@ -40,6 +40,8 @@ public class Player {
         homeXb = b;
         homeXt = t;
         homeY = y;
+        blotPieces = new ArrayList<Piece>();
+        bearOffPieces = new ArrayList<Piece>();
     }
 
 
