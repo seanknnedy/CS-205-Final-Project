@@ -12,7 +12,8 @@ public class PieceTest {
             passed = false;
             System.out.println("Failed constructor 2 Test case");
         }
-       if (!P1.equals(P2)) {
+        Piece P3 = new Piece("blue",2,3,1);
+       if (!P3.equals(P2)) {
            passed = false;
            System.out.println("Failed equals Test case");
        }
@@ -33,6 +34,10 @@ public class PieceTest {
        if (!P2.toString().equals("blue1")) {
            passed = false;
            System.out.println("Failed toString method");
+       }
+       if (!P1.isSameTeam(P3)){
+           passed = false;
+           System.out.println("Failed isSameTeam method");
        }
 
        return passed;
