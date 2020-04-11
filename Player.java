@@ -171,13 +171,13 @@ public class Player {
             return true;
         }
 
-        // Case 2: other team is this spike with more than one piece
+        // Case 2: other team is on this spike with more than one piece
         else if (!current.getCurrentTeam().equals(p.getPiece(pieceID).getColor()) & current.getPiecesOnSpike().size() > 1) {
             System.out.println("Invalid Move - other team is occupying spike already");
             return false;
         }
 
-        // Case 3: other team is this spike with one piece, move is valid, blot occurs
+        // Case 3: other team is on this spike with one piece, move is valid, blot occurs
         else if (!current.getCurrentTeam().equals(p.getPiece(pieceID).getColor()) & current.getPiecesOnSpike().size() == 1) {
             System.out.println("Valid Move - blot!");
             // add to blotHit to individual piece and opponent
