@@ -68,12 +68,13 @@ public class Piece {
    }
 
 
-   /**************************************************** Methods ******************************************************/// Determines if piece is from same player
+   /**************************************************** Methods ******************************************************/
+   // Determines if piece is from same player
    public boolean isEqual(Piece p, String expected) {
       return p.getColor().equals(expected);
    }
 
-  // Determines if a piece is from the same player
+  // Determines if two pieces are the same
    @Override
    public boolean equals(Object other) {
       if (other == null)
