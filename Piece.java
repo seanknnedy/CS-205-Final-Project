@@ -70,9 +70,33 @@ public class Piece {
 
    /**************************************************** Methods ******************************************************/
    // Determines if piece is from same player
-   public boolean isEqual(Piece p, String expected) {
-      return p.getColor().equals(expected);
+   public boolean isSameTeam(Object other) {
+      if (other == null)
+         return false;
+      if (getClass() != other.getClass())
+         return false;
+      if (this == other)
+         return true;
+      Piece otherPiece = (Piece)other;
+      return color.equals(otherPiece.getColor());
    }
+
+  // Determines if two pieces are the same
+   @Override
+   public boolean equals(Object other) {
+      if (other == null)
+         return false;
+      if (getClass() != other.getClass())
+         return false;
+      if (this == other)
+         return true;
+
+      Piece otherPiece = (Piece)other;
+
+      return color.equals(otherPiece.getColor()) && ID == otherPiece.getID();
+
+   }
+
 
    // Switches blot - set coordinates to 0 if it is a blot
    public void switchBlot() {
