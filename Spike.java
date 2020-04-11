@@ -38,6 +38,16 @@ public class Spike {
       this.currentTeam = p.getColor();
    }
 
+   // Get x coordinate
+   public int getX() {
+      return this.xCoord;
+   }
+
+   // Get y coordinate
+   public int getY() {
+      return this.yCoord;
+   }
+
    // Returns current team
    public String getCurrentTeam() {
       return currentTeam;
@@ -67,6 +77,23 @@ public class Spike {
       if(spike.size() == 0) {
          currentTeam = "NONE";
       }
+   }
+
+   // Determines if a spike is equal to another spike
+   @Override
+   public boolean equals(Object other) {
+      if (other == null)
+         return false;
+      if (getClass() != other.getClass())
+         return false;
+      if (this == other)
+         return true;
+
+      Spike otherSpike = (Spike)other;
+
+      return xCoord == otherSpike.getX() && yCoord == otherSpike.getY() && currentTeam.equals(otherSpike.getCurrentTeam())
+              && spike.equals(otherSpike.getPiecesOnSpike());
+
    }
 
    // Overridden toString method
