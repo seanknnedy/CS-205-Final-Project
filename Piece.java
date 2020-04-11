@@ -1,6 +1,5 @@
-import java.io.*;
 import java.lang.*;
-import java.util.*;
+
 
 public class Piece {
 
@@ -9,69 +8,84 @@ public class Piece {
    private int xCoord;
    private int yCoord;
    private boolean blot;
+   private int ID;
 
-   //constructor
-   public Piece(String c, int x, int y) {
+
+   /**************************************************** Constructor **************************************************/
+   public Piece(String c, int x, int y, int id) {
       setColor(c);
       setX(x);
       setY(y);
       blot = false;
+      ID = id;
    }
 
-   //setcolor
+
+   /**************************************************** Getters/Setters **********************************************/
+   // Set color
    public void setColor(String c) {
-      this.color = c;
+      color = c;
    }
 
-   //set x coord
-   public void setX(int x) {
-      this.xCoord = x;
-   }
-
-   //set y coord
-   public void setY(int y) {
-      this.yCoord = y;
-   }
-
-   //set blot
-   public void setBlot(boolean b) {
-      this.blot = b;
-   }
-
-   //get color
+   // Returns color
    public String getColor() {
       return color;
    }
 
-   //get x coord
+   // Set x coordinate
+   public void setX(int x) {
+      xCoord = x;
+   }
+
+   // Returns x coordinate
    public int getX() {
       return xCoord;
    }
 
-   //get y coord
+   // Set y coordinate
+   public void setY(int y) {
+      yCoord = y;
+   }
+
+   // Returns y coordinate
    public int getY() {
       return yCoord;
    }
 
-   //get blot
+   // Set blot - true if piece is blotted
+   public void setBlot(boolean b) {
+      blot = b;
+   }
+
+   // Returns blot - true if piece is blotted
    public boolean getBlot() {
       return blot;
    }
 
-   //isEqual: determines if piece is from same player
-   public boolean isEqual(Piece p, String expected) {
-      if (p.getColor() == expected) {
-         return true;
-      }
-      return false;
+   // Returns ID
+   public int getID() {
+      return ID;
    }
 
-   //switch blot
+
+   /**************************************************** Methods ******************************************************/
+   // Determines if piece is from same player
+   public boolean isEqual(Piece p, String expected) {
+      return p.getColor().equals(expected);
+   }
+
+   // Switches blot - set coordinates to 0 if it is a blot
    public void switchBlot() {
-      if (this.blot) {
-         this.blot = false;
-      } else {
-         this.blot = true;
+      blot = !blot;
+      if(blot) {
+         setX(0);
+         setY(0);
       }
+   }
+
+   // Print the color and ID of the Piece
+   @Override
+   public String toString() {
+      return getColor() + getID();
    }
 }

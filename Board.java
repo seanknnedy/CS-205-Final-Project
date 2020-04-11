@@ -1,16 +1,15 @@
-import java.io.*;
 import java.lang.*;
 import java.util.*;
+
 
 public class Board {
 
    //initializing board object and piece arrays for each player (not sure if latter part is needed yet)
    private static ArrayList<Spike> board; // = new Piece[24][5];
-   private ArrayList<Piece> player1;
-   private ArrayList<Piece> player2;
 
-   //board constructor
-   public Board() {
+
+   /**************************************************** Constructor **************************************************/
+   public Board(ArrayList<Piece> p1, String team1, ArrayList<Piece> p2, String team2) {
 
       //creating each spike on the board (24 in all)
       //first coord represents x: numbered 1 through 12 (12 spikes on each side of board)
@@ -70,98 +69,139 @@ public class Board {
       board.add(spike24);
 
       //creating red pieces
-      Piece red1 = new Piece("red", 0, 0);
-      Piece red2 = new Piece("red", 0, 0);
-      Piece red3 = new Piece("red", 0, 0);
-      Piece red4 = new Piece("red", 0, 0);
-      Piece red5 = new Piece("red", 0, 0);
-      Piece red6 = new Piece("red", 0, 0);
-      Piece red7 = new Piece("red", 0, 0);
-      Piece red8 = new Piece("red", 0, 0);
-      Piece red9 = new Piece("red", 0, 0);
-      Piece red10 = new Piece("red", 0, 0);
-      Piece red11 = new Piece("red", 0, 0);
-      Piece red12 = new Piece("red", 0, 0);
-      Piece red13 = new Piece("red", 0, 0);
-      Piece red14 = new Piece("red", 0, 0);
-      Piece red15 = new Piece("red", 0, 0);
+      Piece red1 = new Piece(team1, 0, 0, 1);
+      Piece red2 = new Piece(team1, 0, 0, 2);
+      Piece red3 = new Piece(team1, 0, 0, 3);
+      Piece red4 = new Piece(team1, 0, 0, 4);
+      Piece red5 = new Piece(team1, 0, 0, 5);
+      Piece red6 = new Piece(team1, 0, 0, 6);
+      Piece red7 = new Piece(team1, 0, 0, 7);
+      Piece red8 = new Piece(team1, 0, 0, 8);
+      Piece red9 = new Piece(team1, 0, 0, 9);
+      Piece red10 = new Piece(team1, 0, 0, 10);
+      Piece red11 = new Piece(team1, 0, 0, 11);
+      Piece red12 = new Piece(team1, 0, 0, 12);
+      Piece red13 = new Piece(team1, 0, 0, 13);
+      Piece red14 = new Piece(team1, 0, 0, 14);
+      Piece red15 = new Piece(team1, 0, 0, 15);
 
-      //initializing player1 list of pieces
-      player1 = new ArrayList<Piece>();
+      //adding red pieces to board
+      getSpike(1).addToSpike(red1);
+      getSpike(1).addToSpike(red2);
+      getSpike(1).addToSpike(red3);
+      getSpike(1).addToSpike(red4);
+      getSpike(1).addToSpike(red5);
+      getSpike(12).addToSpike(red6);
+      getSpike(12).addToSpike(red7);
+      getSpike(17).addToSpike(red8);
+      getSpike(17).addToSpike(red9);
+      getSpike(17).addToSpike(red10);
+      getSpike(19).addToSpike(red11);
+      getSpike(19).addToSpike(red12);
+      getSpike(19).addToSpike(red13);
+      getSpike(19).addToSpike(red14);
+      getSpike(19).addToSpike(red15);
 
       //adding pieces to player 1 arraylist
-      player1.add(red1);
-      player1.add(red2);
-      player1.add(red3);
-      player1.add(red4);
-      player1.add(red5);
-      player1.add(red6);
-      player1.add(red7);
-      player1.add(red8);
-      player1.add(red9);
-      player1.add(red10);
-      player1.add(red11);
-      player1.add(red12);
-      player1.add(red13);
-      player1.add(red14);
-      player1.add(red15);
+      p1.add(red1);
+      p1.add(red2);
+      p1.add(red3);
+      p1.add(red4);
+      p1.add(red5);
+      p1.add(red6);
+      p1.add(red7);
+      p1.add(red8);
+      p1.add(red9);
+      p1.add(red10);
+      p1.add(red11);
+      p1.add(red12);
+      p1.add(red13);
+      p1.add(red14);
+      p1.add(red15);
 
       //creating black pieces
-      Piece black1 = new Piece("black", 0, 0);
-      Piece black2 = new Piece("black", 0, 0);
-      Piece black3 = new Piece("black", 0, 0);
-      Piece black4 = new Piece("black", 0, 0);
-      Piece black5 = new Piece("black", 0, 0);
-      Piece black6 = new Piece("black", 0, 0);
-      Piece black7 = new Piece("black", 0, 0);
-      Piece black8 = new Piece("black", 0, 0);
-      Piece black9 = new Piece("black", 0, 0);
-      Piece black10 = new Piece("black", 0, 0);
-      Piece black11 = new Piece("black", 0, 0);
-      Piece black12 = new Piece("black", 0, 0);
-      Piece black13 = new Piece("black", 0, 0);
-      Piece black14 = new Piece("black", 0, 0);
-      Piece black15 = new Piece("black", 0, 0);
+      Piece black1 = new Piece(team2, 0, 0, 1);
+      Piece black2 = new Piece(team2, 0, 0, 2);
+      Piece black3 = new Piece(team2, 0, 0, 3);
+      Piece black4 = new Piece(team2, 0, 0, 4);
+      Piece black5 = new Piece(team2, 0, 0, 5);
+      Piece black6 = new Piece(team2, 0, 0, 6);
+      Piece black7 = new Piece(team2, 0, 0, 7);
+      Piece black8 = new Piece(team2, 0, 0, 8);
+      Piece black9 = new Piece(team2, 0, 0, 9);
+      Piece black10 = new Piece(team2, 0, 0, 10);
+      Piece black11 = new Piece(team2, 0, 0, 11);
+      Piece black12 = new Piece(team2, 0, 0, 12);
+      Piece black13 = new Piece(team2, 0, 0, 13);
+      Piece black14 = new Piece(team2, 0, 0, 14);
+      Piece black15 = new Piece(team2, 0, 0, 15);
 
-      //initializing list of pieces for player 2
-      player2 = new ArrayList<Piece>();
+      //adding black pieces to board
+      getSpike(5).addToSpike(black1);
+      getSpike(5).addToSpike(black2);
+      getSpike(5).addToSpike(black3);
+      getSpike(7).addToSpike(black4);
+      getSpike(7).addToSpike(black5);
+      getSpike(7).addToSpike(black6);
+      getSpike(7).addToSpike(black7);
+      getSpike(7).addToSpike(black8);
+      getSpike(13).addToSpike(black9);
+      getSpike(13).addToSpike(black10);
+      getSpike(13).addToSpike(black11);
+      getSpike(13).addToSpike(black12);
+      getSpike(13).addToSpike(black13);
+      getSpike(24).addToSpike(black14);
+      getSpike(24).addToSpike(black15);
 
       //adding pieces to player 2 list
-      player2.add(black1);
-      player2.add(black2);
-      player2.add(black3);
-      player2.add(black4);
-      player2.add(black5);
-      player2.add(black6);
-      player2.add(black7);
-      player2.add(black8);
-      player2.add(black9);
-      player2.add(black10);
-      player2.add(black11);
-      player2.add(black12);
-      player2.add(black13);
-      player2.add(black14);
-      player2.add(black15);
+      p2.add(black1);
+      p2.add(black2);
+      p2.add(black3);
+      p2.add(black4);
+      p2.add(black5);
+      p2.add(black6);
+      p2.add(black7);
+      p2.add(black8);
+      p2.add(black9);
+      p2.add(black10);
+      p2.add(black11);
+      p2.add(black12);
+      p2.add(black13);
+      p2.add(black14);
+      p2.add(black15);
 
    }
 
-   //roll die: returns an array of two integers between 1 and 6 (inclusive)
-   public ArrayList<Integer> roll() {
-      ArrayList<Integer> roll = new ArrayList<Integer>(2);
-      Random rand = new Random();
-      roll.add((rand.nextInt(6)+1));
-      roll.add((rand.nextInt(6)+1));
-      return roll;
-   }
 
-   //getBoard
+   /**************************************************** Getters/Setters **********************************************/
+   // Returns the Board
    public ArrayList<Spike> getBoard() {
       return board;
    }
 
-   //print board
-   public static void printBoard(ArrayList<Spike> b) {
+   // Returns the Spike - use this when adding/deleting pieces to spikes
+   public Spike getSpike(int numSpike) {
+      return board.get(numSpike - 1);
+   }
+
+
+   /**************************************************** Methods ******************************************************/
+   // Returns the die roll in an array of two integers between 1 and 6 (inclusive)
+      public ArrayList<Integer> roll() {
+         ArrayList<Integer> roll = new ArrayList<Integer>(2);
+         Random rand = new Random();
+         roll.add((rand.nextInt(6)+1));
+         roll.add((rand.nextInt(6)+1));
+         return roll;
+      }
+
+
+   // Prints the board
+   public static void printBoard(Board board, Player p1, Player p2) {
+      System.out.println("Player 2's Pieces Bear Off List: ");
+
       //for each spike
+      ArrayList<Spike> b = board.getBoard();
       for (int i = 0; i < b.size(); i++) {
          //print spike
          System.out.print(b.get(i).toString());
@@ -171,109 +211,44 @@ public class Board {
             System.out.println();
          }
       }
-      System.out.println();
+
+      System.out.println("\nPlayer 1's Pieces Bear Off List: ");
+      p2.printBearOffs();
+
+      System.out.print("BLOTS: ");
+      p1.printBlots();
+      p2.printBlots();
+
+      System.out.println("\n");
    }
 
-   //simple testing
    public static void main(String [] args) {
+      /*
       //create new board and print
       Board newBoard = new Board();
-      printBoard(newBoard.board);
+      Board.printBoard(newBoard);
 
       //create new piece, print x and y coords
       Piece p = new Piece("red", 0, 0);
-      System.out.println(p.getX());
-      System.out.println(p.getY());
+      System.out.println("X: " + p.getX());
+      System.out.println("Y: " + p.getY());
 
       //add to spike 5, print x and y coords
-      board.get(5).addToSpike(p);
-      System.out.println(p.getX());
-      System.out.println(p.getY());
+      newBoard.getBoard().get(5).addToSpike(p);
+      System.out.println("X: " + p.getX());
+      System.out.println("Y: " + p.getY());
 
       //print board to show piece is on spike (havent implemented toString for Piece, but this shows that it's on the spike)
-      printBoard(board);
+      Board.printBoard(newBoard);
 
       //remove piece from spike 5, print x and y coords
-      board.get(5).removeFromSpike(p);
-      System.out.println(p.getX());
-      System.out.println(p.getY());
+      newBoard.getBoard().get(5).removeFromSpike(p);
+      System.out.println("X: " + p.getX());
+      System.out.println("Y: " + p.getY());
 
       //print board again to show piece is removed
-      printBoard(board);
+      Board.printBoard(newBoard);
 
-      /** TESTING PLAYER **/
-      Player first = new Player(7, 12, 2, "Red");
-
-      // add two pieces to the same spike
-      Piece pc = first.playerPieces.get(4);
-      board.get(4).addToSpike(pc);
-
-      Piece pc2 = first.playerPieces.get(7);
-      board.get(4).addToSpike(pc2);
-
-      // add one piece to a spike
-      Piece blot = first.playerPieces.get(6);
-      board.get(22).addToSpike(blot);
-
-      // print player board
-      System.out.println("\nPlayer Board");
-      printBoard(board);
-
-      // test if a piece isHome()
-      System.out.println("Testing isHome()");
-      System.out.println("Piece on Spike 22: " + first.isHome(blot));
-      System.out.println("Piece on Spike 4: " + first.isHome(pc));
-
-      // test if pieces are allHome()
-      System.out.println("Testing allHome() --> " + first.allHome());
-
-      // test to determineBlot() on board --> prints Spike's array number
-      first.determineBlot();
-      System.out.println("Spikes with Blots: " + first.blotPieces);
-
-      // add piece to blot, determineBlot() again
-      board.get(4).removeFromSpike(pc2);
-      board.get(21).addToSpike(pc2);
-      first.determineBlot();
-      System.out.println("Spikes with Blots take 2: " + first.blotPieces);
-
-      // print player board again
-      System.out.println("Player Board");
-      printBoard(board);
-
-      /** TESTING COMPUTER **/
-
-      System.out.println("Testing Computer");
-      System.out.println("---------------------------------");
-      Board compBoard = new Board();
-      Player computer = new Player(1,6,2,"Black");
-
-      // testing Double
-      ArrayList<Integer> roll1 = new ArrayList<Integer>(2);
-      roll1.add(4);
-      roll1.add(4);
-      computer.playComp(roll1, compBoard.board);
-
-      System.out.println("Computer Board Doubles");
-      printBoard(board);
-      System.out.println("------------------------------------------------------------------------------------------------------");
-
-      // testing Single
-      ArrayList<Integer> roll2 = new ArrayList<Integer>(2);
-      roll2.add(2);
-      roll2.add(3);
-      computer.playComp(roll2, compBoard.board);
-      System.out.println("Computer Board Single");
-      printBoard(board);
-      System.out.println("------------------------------------------------------------------------------------------------------");
-
-      // testing multiple rounds of Computer
-      for(int j = 0; j < 6; j++) {
-         System.out.println("\n");
-         computer.playComp(compBoard.roll(), compBoard.board);
-         System.out.println("Computer Board, Round " + j);
-         printBoard(board);
-         System.out.println("------------------------------------------------------------------------------------------------------");
-      }
+       */
    }
 }
