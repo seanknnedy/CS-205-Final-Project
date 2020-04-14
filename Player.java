@@ -130,8 +130,8 @@ public class Player {
     public boolean makeMove(Board b, Player p, Player opponent, int pieceID, int fromSpike, int toSpike) {
         boolean successfulMove = false;
         boolean allAtHome = p.allHome();
-        boolean valid = validateMove(b, p, opponent, pieceID, toSpike);
         if(!allAtHome) {
+            boolean valid = validateMove(b, p, opponent, pieceID, toSpike);
             if(valid) {
                 b.getSpike(fromSpike).removeFromSpike(p.getPiece(pieceID));
                 b.getSpike(toSpike).addToSpike(p.getPiece(pieceID));
@@ -141,12 +141,24 @@ public class Player {
                 System.out.println("Move Incomplete... Try Again!\n");
             }
         } else {
-            //bearingOffMove(b, p, pieceID, fromSpike);
+            successfulMove = bearingOffMove(b, p, pieceID, fromSpike, toSpike);
             System.out.println("Bearing off section");
-            successfulMove = true;
         }
 
         return successfulMove;
+    }
+
+    public boolean bearingOffMove(Board b, Player p, int pieceID, int fromSpike, int toSpike) {
+        boolean valid = false;
+        if (p.getTeam().equals("RED") && toSpike == 25) {
+            // player1 is bearing off
+            valid = true;
+        } else if (p.getTeam().equals("BLK") && toSpike == 26) {
+            // player 2 is bearing off
+            valid = true;
+        }
+
+        return valid;
     }
 
 
@@ -159,27 +171,26 @@ public class Player {
         boolean blotHit = p.getBlotHit();
         boolean blotChoosen = false;
         if (blotHit) {
-            for(Piece blotPiece : p.blotPieces) {
+            for (Piece blotPiece : p.blotPieces) {
                 if (blotPiece.getID() == pieceID) {
                     blotChoosen = true;
                     p.switchBlotHit(p.getPiece(pieceID));
                     break;
                 }
             }
-            if(!blotChoosen) {
+            if (!blotChoosen) {
                 System.out.println("Invalid Move - blot must be played");
                 return false;
             }
-            return true;
         }
 
-        // Case 2: other team is on this spike with more than one piece
-        else if (!current.getCurrentTeam().equals(p.getPiece(pieceID).getColor()) & current.getPiecesOnSpike().size() > 1) {
+        // Case 3: other team is on this spike with more than one piece
+        if (!current.getCurrentTeam().equals(p.getPiece(pieceID).getColor()) & current.getPiecesOnSpike().size() > 1) {
             System.out.println("Invalid Move - other team is occupying spike already");
             return false;
         }
 
-        // Case 3: other team is on this spike with one piece, move is valid, blot occurs
+        // Case 4: other team is on this spike with one piece, move is valid, blot occurs
         else if (!current.getCurrentTeam().equals(p.getPiece(pieceID).getColor()) & current.getPiecesOnSpike().size() == 1) {
             System.out.println("Valid Move - blot!");
             // add to blotHit to individual piece and opponent
@@ -190,13 +201,13 @@ public class Player {
             return true;
         }
 
-        // Case 4: you already have 5 pieces on this spike
+        // Case 5: you already have 5 pieces on this spike
         else if (current.getCurrentTeam().equals(p.getPiece(pieceID).getColor()) & current.getPiecesOnSpike().size() == 5) {
             System.out.println("Invalid Move - maximum pieces on spike");
             return false;
         }
 
-        // Case 5: assume valid move
+        // Case 6: assume valid move
         else {
             System.out.println("Valid Move - Not in any cases");
             return true;

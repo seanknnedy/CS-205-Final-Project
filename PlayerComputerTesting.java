@@ -30,13 +30,21 @@ public class PlayerComputerTesting {
         player1.makeMove(newBoard, player1, player2, 8, 17, 19);
         Board.printBoard(newBoard, player1, player2);
 
+        // test to see if can play a blot but with an invalid move
+        player1.makeMove(newBoard, player1, player2, 1, 24, 7);
+        Board.printBoard(newBoard, player1, player2);
+
         // test to see if can play a blot
         player1.makeMove(newBoard, player1, player2, 1, 24, 11);
         Board.printBoard(newBoard, player1, player2);
 
         // test to see if can add to a spike with 5 pieces already on it
-        player2.makeMove(newBoard, player2, player1, 8, 24, 7);
+        player2.makeMove(newBoard, player2, player1, 1, 5, 7);
         Board.printBoard(newBoard, player1, player2);
+
+        // TEST
+        //player2.makeMove(newBoard, player2, player1, 9, 2, 24);
+        //Board.printBoard(newBoard, player1, player2);
 
         // testing isHome
         System.out.println("Is Piece RED11 HOME? " + player1.isHome(player1.playerPieces.get(10)));
@@ -114,6 +122,6 @@ public class PlayerComputerTesting {
         System.out.println("-------------------------------------- Testing Game -------------------------------------");
         testingGame();
         System.out.println("------------------------------------ Testing Computer -----------------------------------");
-        testingComputer();
+        //testingComputer();
     }
 }

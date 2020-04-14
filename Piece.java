@@ -97,7 +97,6 @@ public class Piece {
 
    }
 
-
    // Switches blot - set coordinates to 0 if it is a blot
    public void switchBlot() {
       blot = !blot;
