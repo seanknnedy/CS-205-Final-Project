@@ -153,6 +153,7 @@ public class Computer extends Player{
 
     // Determines if the piece can take a turn, returns true if move is valid and places piece, returns false otherwise
     public boolean takeTurn(Piece p, int displacement, Board b, Computer computer, Player player) {
-        return super.makeMove(b, computer, player, p.getID(), p.getX(), p.getX() + displacement);
+        //return super.makeMove(b, computer, player, p.getID(), p.getX(), p.getX() + displacement);
+        return true;
     }
 }

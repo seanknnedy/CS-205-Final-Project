@@ -4,69 +4,96 @@ import java.util.ArrayList;
 
 public class PlayerComputerTesting {
 
-    // Handle when all pieces are home and player is bearing off
-    public static void bearingOffMove(Board b, Player p, int pieceID, int fromSpike) {
-        p.bearOffAPiece(p.getPiece(pieceID));
-        b.getSpike(fromSpike).removeFromSpike(p.getPiece(pieceID));
-    }
-
     public static void testingGame() {
         // testing Player/Computer constructor
-        Player player1 = new Player(7, 12, 2, "RED");
-        Player player2 = new Player(7, 12, 1, "BLK");
+        Player playerRED = new Player(7, 12, 1, "RED");
+        Player playerBLK = new Player(7, 12, 2, "BLK");
 
         // create new board and print
-        Board newBoard = new Board(player1.playerPieces, player1.getTeam(), player2.playerPieces, player2.getTeam());
+        Board newBoard = new Board(playerRED.playerPieces, playerRED.getTeam(), playerBLK.playerPieces, playerBLK.getTeam());
+        Board.printBoard(newBoard);
 
         // make player move
-        player1.makeMove(newBoard, player1, player2,1, 1, 2);
-        Board.printBoard(newBoard, player1, player2);
+        System.out.println("SAMPLE PLAYER MOVE");
+        playerRED.makeMove(newBoard, playerRED, playerBLK,1, 1);
+        Board.printBoard(newBoard);
 
         // test blot (tests setBlotHit)
-        player2.makeMove(newBoard, player2, player1, 9, 13, 2);
-        Board.printBoard(newBoard, player1, player2);
+        System.out.println("HITTING A BLOT");
+        playerBLK.makeMove(newBoard, playerBLK, playerRED, 9, 6);
+        Board.printBoard(newBoard);
 
         // test to see if can play something other than a blot
-        player1.makeMove(newBoard, player1, player2, 8, 17, 19);
-        Board.printBoard(newBoard, player1, player2);
+        System.out.println("NOT PLAYING BLOT");
+        playerRED.makeMove(newBoard, playerRED, playerBLK, 8, 1);
+        Board.printBoard(newBoard);
 
         // test to see if can play a blot but with an invalid move
-        player1.makeMove(newBoard, player1, player2, 1, 24, 7);
-        Board.printBoard(newBoard, player1, player2);
+        System.out.println("PLAY BLOT WITH INVALID MOVE");
+        playerRED.makeMove(newBoard, playerRED, playerBLK, 1, 8);
+        Board.printBoard(newBoard);
 
         // test to see if can play a blot
-        player1.makeMove(newBoard, player1, player2, 1, 24, 11);
-        Board.printBoard(newBoard, player1, player2);
+        System.out.println("PLAY BLOT");
+        playerRED.makeMove(newBoard, playerRED, playerBLK, 1, 5);
+        Board.printBoard(newBoard);
 
         // test to see if can add to a spike with 5 pieces already on it
-        player2.makeMove(newBoard, player2, player1, 1, 5, 7);
-        Board.printBoard(newBoard, player1, player2);
+        System.out.println("INVALID MOVE - MAX 5");
+        playerBLK.makeMove(newBoard, playerBLK, playerRED, 8, 2);
+        Board.printBoard(newBoard);
 
-        // TEST
-        //player2.makeMove(newBoard, player2, player1, 9, 2, 24);
-        //Board.printBoard(newBoard, player1, player2);
+        // testing bearing off logic pt 1
+        System.out.println("TESTING BEARING OFF LOGIC - NOT ALL PIECES HOME YET");
+        playerRED.makeMove(newBoard, playerRED, playerBLK,15, 6);
+        Board.printBoard(newBoard);
 
         // testing isHome
-        System.out.println("Is Piece RED11 HOME? " + player1.isHome(player1.playerPieces.get(10)));
-        System.out.println("Is Piece RED4 HOME? " + player1.isHome(player1.playerPieces.get(3)));
+        System.out.println("TESTING IS HOME");
+        System.out.println("Is Piece RED11 HOME? " + playerRED.isHome(playerRED.playerPieces.get(10)));
+        System.out.println("Is Piece RED4 HOME? " + playerRED.isHome(playerRED.playerPieces.get(3)));
 
         // testing allHome
-        System.out.println("Are all of Player's pieces home? " + player1.allHome());
-        player1.makeMove(newBoard, player1, player2,1, 1, 20);
-        player1.makeMove(newBoard, player1, player2,2, 1, 20);
-        player1.makeMove(newBoard, player1, player2,3, 1, 20);
-        player1.makeMove(newBoard, player1, player2,4, 1, 20);
-        player1.makeMove(newBoard, player1, player2,5, 1, 20);
-        player1.makeMove(newBoard, player1, player2,6, 12, 21);
-        player1.makeMove(newBoard, player1, player2,7, 12, 21);
-        player1.makeMove(newBoard, player1, player2,8, 17, 21);
-        player1.makeMove(newBoard, player1, player2,9, 17, 22);
-        player1.makeMove(newBoard, player1, player2,10, 17, 22);
-        Board.printBoard(newBoard, player1, player2);
-        System.out.println("Are all of Player's pieces home now? " + player1.allHome());
+        System.out.println("Are all of Player's pieces home? " + playerRED.allHome());
+        playerRED.makeMove(newBoard, playerRED, playerBLK,1, 18);
+        playerRED.makeMove(newBoard, playerRED, playerBLK,2, 22);
+        playerRED.makeMove(newBoard, playerRED, playerBLK,3, 11);
+        playerRED.makeMove(newBoard, playerRED, playerBLK,4, 11);
+        playerRED.makeMove(newBoard, playerRED, playerBLK,5, 11);
+        playerRED.makeMove(newBoard, playerRED, playerBLK,6, 10);
+        playerRED.makeMove(newBoard, playerRED, playerBLK,7, 10);
+        playerRED.makeMove(newBoard, playerRED, playerBLK,8, 5);
+        playerRED.makeMove(newBoard, playerRED, playerBLK,9, 5);
+        playerRED.makeMove(newBoard, playerRED, playerBLK,10, 5);
+        Board.printBoard(newBoard);
+        System.out.println("Are all of Player's pieces home now? " + playerRED.allHome() + "\n\n");
 
-        // testing hasWon
-        // TODO: How do we handle bearing off?
+        // testing bearing off logic pt 2
+        System.out.println("TESTING BEARING OFF LOGIC - PIECE THAT'S FURTHER MUST BE CHOSEN");
+        playerRED.makeMove(newBoard, playerRED, playerBLK,5, 6);
+        Board.printBoard(newBoard);
+
+        // testing bearing off and hasWon
+        System.out.println("TESTING BEARING OFF PIECES");
+        System.out.println("Has the player won? " + playerRED.hasWon());
+        playerRED.makeMove(newBoard, playerRED, playerBLK,1, 2);
+        playerRED.makeMove(newBoard, playerRED, playerBLK,2, 2);
+        playerRED.makeMove(newBoard, playerRED, playerBLK,3, 2);
+        playerRED.makeMove(newBoard, playerRED, playerBLK,4, 2);
+        playerRED.makeMove(newBoard, playerRED, playerBLK,5, 2);
+        playerRED.makeMove(newBoard, playerRED, playerBLK,6, 3);
+        playerRED.makeMove(newBoard, playerRED, playerBLK,7, 3);
+        playerRED.makeMove(newBoard, playerRED, playerBLK,8, 3);
+        playerRED.makeMove(newBoard, playerRED, playerBLK,9, 3);
+        playerRED.makeMove(newBoard, playerRED, playerBLK,10, 3);
+        playerRED.makeMove(newBoard, playerRED, playerBLK,11, 6);
+        playerRED.makeMove(newBoard, playerRED, playerBLK,12, 6);
+        playerRED.makeMove(newBoard, playerRED, playerBLK,13, 6);
+        playerRED.makeMove(newBoard, playerRED, playerBLK,14, 6);
+        playerRED.makeMove(newBoard, playerRED, playerBLK,15, 6);
+        Board.printBoard(newBoard);
+
+        System.out.println("Has the player won now? " + playerRED.hasWon());
     }
 
 
@@ -76,7 +103,7 @@ public class PlayerComputerTesting {
         Computer computer2 = new Computer(7, 12, 1, "BLK");
 
         Board board = new Board(computer1.playerPieces, computer1.getTeam(), computer2.playerPieces, computer2.getTeam());
-        Board.printBoard(board, computer1, computer2);
+        Board.printBoard(board);
 
         /*
         // testing Double
@@ -95,7 +122,7 @@ public class PlayerComputerTesting {
         rollSingles.add(3);
         computer1.playComp(rollSingles, board, computer1, computer2);
         System.out.println("Computer Board Single");
-        Board.printBoard(board, computer1, computer2);
+        Board.printBoard(board);
 
 
 

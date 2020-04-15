@@ -9,6 +9,7 @@ public class Piece {
    private int yCoord;
    private boolean blot;
    private int ID;
+   private int boardLocation;
 
 
    /**************************************************** Constructor **************************************************/
@@ -18,6 +19,7 @@ public class Piece {
       setY(y);
       blot = false;
       ID = id;
+      boardLocation = 0;
    }
 
 
@@ -67,6 +69,16 @@ public class Piece {
       return ID;
    }
 
+   // Sets board location (what spike its on)
+   public void setBoardLocation(int bl) {
+      boardLocation = bl;
+   }
+
+   // Returns board location (what spike its on)
+   public int getBoardLocation() {
+      return boardLocation;
+   }
+
 
    /**************************************************** Methods ******************************************************/
    // Determines if piece is from same player
@@ -103,6 +115,7 @@ public class Piece {
       if(blot) {
          setX(0);
          setY(0);
+         setBoardLocation(27);
       }
    }
 

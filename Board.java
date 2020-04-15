@@ -14,47 +14,40 @@ public class Board {
       //creating each spike on the board (24 in all)
       //first coord represents x: numbered 1 through 12 (12 spikes on each side of board)
       //second coord represents y: numbered 1 and 2 (each side of board)
-      Spike spike1 = new Spike(1, 1);
-      Spike spike2 = new Spike(2, 1);
-      Spike spike3 = new Spike(3, 1);
-      Spike spike4 = new Spike(4, 1);
-      Spike spike5 = new Spike(5, 1);
-      Spike spike6 = new Spike(6, 1);
-      Spike spike7 = new Spike(7, 1);
-      Spike spike8 = new Spike(8, 1);
-      Spike spike9 = new Spike(9, 1);
-      Spike spike10 = new Spike(10, 1);
-      Spike spike11 = new Spike(11, 1);
-      Spike spike12 = new Spike(12, 1);
-      Spike spike13 = new Spike(1, 2);
-      Spike spike14 = new Spike(2, 2);
-      Spike spike15 = new Spike(3, 2);
-      Spike spike16 = new Spike(4, 2);
-      Spike spike17 = new Spike(5, 2);
-      Spike spike18 = new Spike(6, 2);
-      Spike spike19 = new Spike(7, 2);
-      Spike spike20 = new Spike(8, 2);
-      Spike spike21 = new Spike(9, 2);
-      Spike spike22 = new Spike(10, 2);
-      Spike spike23 = new Spike(11, 2);
-      Spike spike24 = new Spike(12, 2);
+      Spike spike13 = new Spike(1, 1, 13);
+      Spike spike14 = new Spike(2, 1, 14);
+      Spike spike15 = new Spike(3, 1, 15);
+      Spike spike16 = new Spike(4, 1, 16);
+      Spike spike17 = new Spike(5, 1, 17);
+      Spike spike18 = new Spike(6, 1, 18);
+      Spike spike19 = new Spike(7, 1, 19);
+      Spike spike20 = new Spike(8, 1, 20);
+      Spike spike21 = new Spike(9, 1, 21);
+      Spike spike22 = new Spike(10, 1, 22);
+      Spike spike23 = new Spike(11, 1, 23);
+      Spike spike24 = new Spike(12, 1, 24);
+      Spike spike12 = new Spike(1, 2, 12);
+      Spike spike11 = new Spike(2, 2, 11);
+      Spike spike10 = new Spike(3, 2, 10);
+      Spike spike9 = new Spike(4, 2, 9);
+      Spike spike8 = new Spike(5, 2, 8);
+      Spike spike7 = new Spike(6, 2,7);
+      Spike spike6 = new Spike(7, 2, 6);
+      Spike spike5 = new Spike(8, 2, 5);
+      Spike spike4 = new Spike(9, 2, 4);
+      Spike spike3 = new Spike(10, 2, 3);
+      Spike spike2 = new Spike(11, 2, 2);
+      Spike spike1 = new Spike(12, 2, 1);
+      // spikes for both homes (where bear off pieces go) and for the blot area
+      Spike spike25 = new Spike(0, 0, 25);
+      Spike spike26 = new Spike(0, 0, 26);
+      Spike spike27 = new Spike(0, 0, 27);
 
       //initializing board: array of spikes
       board = new ArrayList<Spike>();
 
       //adding spikes to board
-      board.add(spike1);
-      board.add(spike2);
-      board.add(spike3);
-      board.add(spike4);
-      board.add(spike5);
-      board.add(spike6);
-      board.add(spike7);
-      board.add(spike8);
-      board.add(spike9);
-      board.add(spike10);
-      board.add(spike11);
-      board.add(spike12);
+
       board.add(spike13);
       board.add(spike14);
       board.add(spike15);
@@ -67,6 +60,21 @@ public class Board {
       board.add(spike22);
       board.add(spike23);
       board.add(spike24);
+      board.add(spike12);
+      board.add(spike11);
+      board.add(spike10);
+      board.add(spike9);
+      board.add(spike8);
+      board.add(spike7);
+      board.add(spike6);
+      board.add(spike5);
+      board.add(spike4);
+      board.add(spike3);
+      board.add(spike2);
+      board.add(spike1);
+      board.add(spike25);
+      board.add(spike26);
+      board.add(spike27);
 
       //creating red pieces
       Piece red1 = new Piece(team1, 0, 0, 1);
@@ -88,9 +96,9 @@ public class Board {
       //adding red pieces to board
       getSpike(1).addToSpike(red1);
       getSpike(1).addToSpike(red2);
-      getSpike(1).addToSpike(red3);
-      getSpike(1).addToSpike(red4);
-      getSpike(1).addToSpike(red5);
+      getSpike(12).addToSpike(red3);
+      getSpike(12).addToSpike(red4);
+      getSpike(12).addToSpike(red5);
       getSpike(12).addToSpike(red6);
       getSpike(12).addToSpike(red7);
       getSpike(17).addToSpike(red8);
@@ -137,21 +145,21 @@ public class Board {
       Piece black15 = new Piece(team2, 0, 0, 15);
 
       //adding black pieces to board
-      getSpike(5).addToSpike(black1);
-      getSpike(5).addToSpike(black2);
-      getSpike(5).addToSpike(black3);
-      getSpike(7).addToSpike(black4);
-      getSpike(7).addToSpike(black5);
-      getSpike(7).addToSpike(black6);
-      getSpike(7).addToSpike(black7);
-      getSpike(7).addToSpike(black8);
-      getSpike(13).addToSpike(black9);
-      getSpike(13).addToSpike(black10);
-      getSpike(13).addToSpike(black11);
-      getSpike(13).addToSpike(black12);
-      getSpike(13).addToSpike(black13);
-      getSpike(24).addToSpike(black14);
-      getSpike(24).addToSpike(black15);
+      getSpike(24).addToSpike(black1);
+      getSpike(24).addToSpike(black2);
+      getSpike(13).addToSpike(black3);
+      getSpike(13).addToSpike(black4);
+      getSpike(13).addToSpike(black5);
+      getSpike(13).addToSpike(black6);
+      getSpike(13).addToSpike(black7);
+      getSpike(8).addToSpike(black8);
+      getSpike(8).addToSpike(black9);
+      getSpike(8).addToSpike(black10);
+      getSpike(6).addToSpike(black11);
+      getSpike(6).addToSpike(black12);
+      getSpike(6).addToSpike(black13);
+      getSpike(6).addToSpike(black14);
+      getSpike(6).addToSpike(black15);
 
       //adding pieces to player 2 list
       p2.add(black1);
@@ -180,10 +188,14 @@ public class Board {
    }
 
    // Returns the Spike - use this when adding/deleting pieces to spikes
-   public Spike getSpike(int numSpike) {
-      return board.get(numSpike - 1);
+   public Spike getSpike(int spikeID) {
+      for (Spike spike : board){
+         if (spike.getSpikeID() ==  spikeID) {
+            return spike;
+         }
+      }
+      return null;
    }
-
 
    /**************************************************** Methods ******************************************************/
    // Returns the die roll in an array of two integers between 1 and 6 (inclusive)
@@ -197,12 +209,13 @@ public class Board {
 
 
    // Prints the board
-   public static void printBoard(Board board, Player p1, Player p2) {
-      System.out.println("Player 2's Pieces Bear Off List: ");
+   public static void printBoard(Board board) {
+      System.out.print("Player 2's Pieces Bear Off List: ");
+      System.out.println(board.getSpike(25));
 
       //for each spike
       ArrayList<Spike> b = board.getBoard();
-      for (int i = 0; i < b.size(); i++) {
+      for (int i = 0; i < b.size() - 3; i++) {
          //print spike
          System.out.print(b.get(i).toString());
          System.out.print("   ");
@@ -212,43 +225,12 @@ public class Board {
          }
       }
 
-      System.out.println("\nPlayer 1's Pieces Bear Off List: ");
-      p2.printBearOffs();
+      System.out.print("\nPlayer 1's Pieces Bear Off List: ");
+      System.out.println(board.getSpike(26));
 
       System.out.print("BLOTS: ");
-      p1.printBlots();
-      p2.printBlots();
+      System.out.println(board.getSpike(27));
 
       System.out.println("\n");
-   }
-
-   public static void main(String [] args) {
-      /*
-      //create new board and print
-      Board newBoard = new Board();
-      Board.printBoard(newBoard);
-
-      //create new piece, print x and y coords
-      Piece p = new Piece("red", 0, 0);
-      System.out.println("X: " + p.getX());
-      System.out.println("Y: " + p.getY());
-
-      //add to spike 5, print x and y coords
-      newBoard.getBoard().get(5).addToSpike(p);
-      System.out.println("X: " + p.getX());
-      System.out.println("Y: " + p.getY());
-
-      //print board to show piece is on spike (havent implemented toString for Piece, but this shows that it's on the spike)
-      Board.printBoard(newBoard);
-
-      //remove piece from spike 5, print x and y coords
-      newBoard.getBoard().get(5).removeFromSpike(p);
-      System.out.println("X: " + p.getX());
-      System.out.println("Y: " + p.getY());
-
-      //print board again to show piece is removed
-      Board.printBoard(newBoard);
-
-       */
    }
 }

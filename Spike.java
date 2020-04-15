@@ -7,6 +7,7 @@ public class Spike {
    //each spike is a list of pieces with x and y coord
    private int xCoord;
    private int yCoord;
+   private int spikeID;
    private ArrayList<Piece> spike;
 
    //bookkeeping - keeps track of what is on each spike
@@ -14,9 +15,10 @@ public class Spike {
 
 
    /**************************************************** Constructor **************************************************/
-   public Spike(int x, int y) {
+   public Spike(int x, int y, int id) {
       setX(x);
       setY(y);
+      spikeID = id;
       spike = new ArrayList<Piece>();
       currentTeam = "NONE";
    }
@@ -48,6 +50,11 @@ public class Spike {
       return this.yCoord;
    }
 
+   // Get spike ID
+   public int getSpikeID() {
+      return spikeID;
+   }
+
    // Returns current team
    public String getCurrentTeam() {
       return currentTeam;
@@ -66,6 +73,7 @@ public class Spike {
       currentTeam = p.getColor();
       p.setX(xCoord);
       p.setY(yCoord);
+      p.setBoardLocation(spikeID);
    }
 
    // Remove piece from spike
