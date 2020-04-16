@@ -1,9 +1,10 @@
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.layout.HBox;
 
 
 /** The SpikeFX class creates a javaFX representation of the Spike class */
-public class SpikeFX extends Polygon {
+public class SpikeFX extends HBox {
     private Spike spike;
     private int xCoord;
     private int yCoord;
@@ -20,16 +21,18 @@ public class SpikeFX extends Polygon {
         xCoord = object.getX();
         yCoord = object.getY();
 
+        //System.out.println(yCoord);
+
         if (yCoord==1)
              spikeImg = new Polygon(
                      10.0, 20.0,
-                              30.0, 110.0,
-                              50.0, 20.0);
+                              50.0, 200.0, // + (xCoord + 25.0)), 110.0,
+                              90.0, 20.0); // + (xCoord + 50.0)), 20.0); 
         else
             spikeImg = new Polygon(
-                    10.0, 110.0,
-                             30, 20.0,
-                             50.0, 110.0);
+                    10.0, 200.0,
+                             50.0, 20.0,
+                             90.0, 200.0);
 
         if (spikeId % 2 == 0) {
             spikeImg.setFill(Color.SADDLEBROWN);
