@@ -22,8 +22,8 @@ public class BackgammonGui extends Application {
         Spike testSpike = new Spike(2,2,3);
         SpikeFX testSpikeFx = new SpikeFX(testSpike);
         Group g = new Group(testSpikeFx.getTriangle());
-        //grid.add(g,1,2);
         grid.getChildren().add(g);
+
 
         Scene scene = new Scene(grid,550,400);
         primaryStage.setScene(scene);
