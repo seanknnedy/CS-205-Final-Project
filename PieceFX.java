@@ -36,7 +36,7 @@ public class PieceFX extends Application {
       this.circle = new Circle(xPos, yPos, 25.0f);
       if (p.getColor() == "red") {
          this.circle.setFill(Color.RED);
-      } else if (p.getColor() == "black") {
+      } else if (p.getColor().equals("black")) {
          this.circle.setFill(Color.BLACK);
       }
    }
@@ -76,9 +76,9 @@ public class PieceFX extends Application {
    //call this when a piece is unclicked
    public void unselectedPiece() {
       this.selected = false;
-      if (this.piece.getColor() == "red") {
+      if (this.piece.getColor().equals("red")) {
          this.circle.setFill(Color.RED);
-      } else if (this.piece.getColor() == "black") {
+      } else if (this.piece.getColor().equals("black")) {
          this.circle.setFill(Color.BLACK);
       }
    } 
@@ -86,7 +86,7 @@ public class PieceFX extends Application {
    
    //sets starting stage
    public void start(Stage stage) throws Exception {
-   
+
       stage.setTitle("Creating Piece in JavaFX");
       
       Piece p = new Piece("red", 1, 1, 1);
