@@ -33,7 +33,7 @@ public class PieceFX extends Circle {
       this.xCoord = p.getX();
       this.yCoord = p.getY();
       //create new circle fx object
-      this.circle = new Circle(25.0f, 25.0f, 25.0f);
+      this.circle = new Circle(25.0f, 0.0f, 25.0f);
       //this.circle.setYpos(25.0, b, p);
       
       //this.circle.setStyle("-fx-padding: 0 0 0 10;");
@@ -75,8 +75,6 @@ public class PieceFX extends Circle {
       this.circle.setCenterY(yPos + 25.0);
          
    }
-   
-   //public void move()
   
    //call this when a piece is clicked
    //sets color to yellow
@@ -93,29 +91,5 @@ public class PieceFX extends Circle {
       } else if (this.piece.getColor().equals("black")) {
          this.circle.setFill(Color.BLACK);
       }
-   } 
-  
-   
-   //sets starting stage
-//    public void start(Stage stage) throws Exception {
-// 
-//       stage.setTitle("Creating Piece in JavaFX");
-//       
-//       Piece p = new Piece("red", 1, 1, 1);
-//       PieceFX pFX = new PieceFX(p);
-//       
-//       Group group = new Group(pFX.circle);
-//       Scene scene = new Scene(group, 500, 300);
-//       
-//       stage.setScene(scene);
-//       
-//       stage.show();
-//       
-//    }
-   
-   //launches application
-//    public static void main(String args[]) {
-//        launch(args); 
-//    }
-
+   }
 }

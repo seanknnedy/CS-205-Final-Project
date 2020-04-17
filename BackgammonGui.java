@@ -1,5 +1,7 @@
 import javafx.application.Application;
 import javafx.scene.Group;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
@@ -18,7 +20,9 @@ public class BackgammonGui extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Backgammon");
         grid = new GridPane();
-        grid.setStyle("-fx-background-color:oldlace;");
+        //grid.setStyle("-fx-background-color:oldlace;");
+        int windowHeight = 660;
+        int windowWidth = 1100;
         
         Player playerRED = new Player(7, 12, 1, "RED");
         Computer playerBLK = new Computer(7, 12, 2, "BLK");
@@ -31,32 +35,41 @@ public class BackgammonGui extends Application {
 //             Group g = new Group(spike.getTriangle());
 //             grid.getChildren().add(g);
 //         }
-        
-        //for (int r = 0; r < 2; r++) {
+
+        // create spikes
         for (int c = 0; c < 12; c++) {
             SpikeFX spike = new SpikeFX(newBoard.getBoard().get(c));
             //System.out.println(spike.getY());
             grid.add(spike.getTriangle(), c, 1);
         }
-        
-        //add padding
-        
         for (int c = 0; c < 12; c++) {
             SpikeFX spike = new SpikeFX(newBoard.getBoard().get(c + 12));
             //System.out.println(spike.getY());
             grid.add(spike.getTriangle(), c, 2);
         }
-        
+
+        //add spike padding
         //grid.setHgap(10);
         grid.setVgap(100);
 
+        // create pieces
         for (int p = 0; p < playerRED.playerPieces.size(); p++) {
             PieceFX piece = new PieceFX(playerRED.playerPieces.get(p), newBoard);
             grid.add(piece.getCircle(), playerRED.playerPieces.get(p).getX()-1, playerRED.playerPieces.get(p).getY());
             grid.setHalignment(piece.getCircle(), HPos.CENTER);
-            piece.setYpos(50.0f);
+            //piece.setYpos(50.0f);
         }
 
+
+        // add line to create right column
+        Line rightColumnLine = new Line(965, 0, 965, windowHeight);
+        rightColumnLine.setStroke(Color.BLACK);
+        rightColumnLine.setStrokeWidth(8);
+
+        Group group = new Group();
+
+        group.getChildren().add(grid);
+        group.getChildren().add(rightColumnLine);
 
         //Testing SpikeFX
         
@@ -68,7 +81,7 @@ public class BackgammonGui extends Application {
         //grid.getChildren().add(g);
 
 
-        Scene scene = new Scene(grid,1100,650);
+        Scene scene = new Scene(group,windowWidth,windowHeight);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
