@@ -18,14 +18,10 @@ public class PieceFX extends Circle {
    private int xCoord;
    private int yCoord;
    private boolean selected;
-   private Circle circle;
-   
-   //default constructor. Not sure why it is needed, but it throws a NoSuchMethod Exception if not here
-   public PieceFX() {
-   }
-   
+   private Circle circle = new Circle();
+
    //Creates FX object representation of Piece
-   //accepts piece oject, x position (in pixels) on board, and y position (in pixels) on board
+   //accepts piece object, x position (in pixels) on board, and y position (in pixels) on board
    public PieceFX(Piece p, Board b) { //, double xPos, double yPos) {
       this.selected = false;
       this.piece = p;
@@ -33,8 +29,8 @@ public class PieceFX extends Circle {
       this.xCoord = p.getX();
       this.yCoord = p.getY();
       //create new circle fx object
-      this.circle = new Circle(25.0f, 0.0f, 25.0f);
-      //this.circle.setYpos(25.0, b, p);
+      this.circle.setTranslateY(75.0);
+      this.circle.setRadius(20.0);
       
       //this.circle.setStyle("-fx-padding: 0 0 0 10;");
       if (p.getColor().equals("RED")) {
@@ -70,10 +66,12 @@ public class PieceFX extends Circle {
    }
    
    //sets y location (in pixels) of circle
-   public void setYpos(double yPos, Board b, Piece p) {
-      //if (b.getBoard().get(p.getBoardLocation()).size() == 3)
-      this.circle.setCenterY(yPos + 25.0);
-         
+   public void move(int num) {
+      // number of pieces on spike = num
+      // yPosition = num * (diameter of circles) + radius
+      if (num == 2) {
+         this.circle.setTranslateY(num * (25.0) + 25.0);
+      }
    }
   
    //call this when a piece is clicked
