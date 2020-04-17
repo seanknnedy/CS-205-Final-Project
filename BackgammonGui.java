@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class BackgammonGui extends Application {
     private GridPane grid;
     private ArrayList<PieceFX> FXPieces;
+    private Board board;
     public static void main(String[] args)
     {
         launch(args);
@@ -38,16 +39,16 @@ public class BackgammonGui extends Application {
         Computer playerBLK = new Computer(7, 12, 2, "BLK");
 
         // create new board and print
-        Board newBoard = new Board(playerRED.playerPieces, playerRED.getTeam(), playerBLK.playerPieces, playerBLK.getTeam());
+        board = new Board(playerRED.playerPieces, playerRED.getTeam(), playerBLK.playerPieces, playerBLK.getTeam());
 
         // create spikes
         for (int c = 0; c < 12; c++) {
-            SpikeFX spike = new SpikeFX(newBoard.getBoard().get(c));
+            SpikeFX spike = new SpikeFX(board.getBoard().get(c));
             //System.out.println(spike.getY());
             grid.add(spike.getTriangle(), c, 1);
         }
         for (int c = 0; c < 12; c++) {
-            SpikeFX spike = new SpikeFX(newBoard.getBoard().get(c + 12));
+            SpikeFX spike = new SpikeFX(board.getBoard().get(c + 12));
             //System.out.println(spike.getY());
             grid.add(spike.getTriangle(), c, 2);
         }
@@ -58,7 +59,7 @@ public class BackgammonGui extends Application {
         // create pieces
         for (int p = 0; p < 15; p++) {
             // Red Pieces
-            PieceFX pieceRED = new PieceFX(playerRED.playerPieces.get(p), newBoard);
+            PieceFX pieceRED = new PieceFX(playerRED.playerPieces.get(p), board);
             pieceRED.setOnMouseClicked(this::handleClick);
             //pieceRED.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, eventHandler);
             grid.add(pieceRED.getCircle(), playerRED.playerPieces.get(p).getX()-1, playerRED.playerPieces.get(p).getY());
@@ -66,7 +67,7 @@ public class BackgammonGui extends Application {
             FXPieces.add(pieceRED);
 
             // Black Pieces
-            PieceFX pieceBLK = new PieceFX(playerBLK.playerPieces.get(p), newBoard);
+            PieceFX pieceBLK = new PieceFX(playerBLK.playerPieces.get(p), board);
             pieceBLK.setOnMouseClicked(this::handleClick);
             //pieceBLK.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, eventHandler);
             grid.add(pieceBLK.getCircle(), playerBLK.playerPieces.get(p).getX()-1, playerBLK.playerPieces.get(p).getY());
@@ -75,7 +76,7 @@ public class BackgammonGui extends Application {
         }
 
         // alignment here
-        alignPieces(newBoard, false);
+        alignPieces(board, false);
 
         Group group = new Group();
 
@@ -112,9 +113,9 @@ public class BackgammonGui extends Application {
             @Override
             public void handle(MouseEvent event) {
                 System.out.println("mouse click detected! ");
-                playerRED.makeMove(newBoard, playerRED, playerBLK,1, 1);
+                playerRED.makeMove(board, playerRED, playerBLK,1, 1);
                 System.out.println(playerRED.playerPieces.get(0).getBoardLocation());
-                alignPieces(newBoard, true);
+                alignPieces(board, true);
                 //PieceFX piece = (PieceFX) event.getSource();
                 //piece.selectPiece();
             }
@@ -161,6 +162,16 @@ public class BackgammonGui extends Application {
             }
         }
         return null;
+    }
+
+    public void drawBoard() {
+        this.grid.getChildren().clear();
+        for (int r = 0; r < 15; r++) {
+            for (int c = 0; c < 2; c++){
+                //PieceFX pieceFX = new PieceFX(____.get(r), this.board);
+                // TODO: finish this using Boggle outline
+            }
+        }
     }
 
     public void alignPieces(Board b, boolean move) {
