@@ -199,13 +199,13 @@ public class Board {
 
    /**************************************************** Methods ******************************************************/
    // Returns the die roll in an array of two integers between 1 and 6 (inclusive)
-      public ArrayList<Integer> roll() {
-         ArrayList<Integer> roll = new ArrayList<Integer>(2);
-         Random rand = new Random();
-         roll.add((rand.nextInt(6)+1));
-         roll.add((rand.nextInt(6)+1));
-         return roll;
-      }
+   public ArrayList<Integer> roll() {
+      ArrayList<Integer> roll = new ArrayList<Integer>(2);
+      Random rand = new Random();
+      roll.add((rand.nextInt(6)+1));
+      roll.add((rand.nextInt(6)+1));
+      return roll;
+   }
 
 
    // Prints the board
