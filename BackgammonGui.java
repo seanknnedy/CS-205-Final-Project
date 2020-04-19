@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
@@ -14,6 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.geometry.HPos;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Button;
 import java.util.ArrayList;
 
 
@@ -21,6 +23,9 @@ public class BackgammonGui extends Application {
     private GridPane grid;
     private ArrayList<PieceFX> FXPieces;
     private Board board;
+    private Button exit, rollDice;
+    private Button leftDie, rightDie;
+    
     public static void main(String[] args)
     {
         launch(args);
@@ -79,14 +84,52 @@ public class BackgammonGui extends Application {
         alignPieces(board, false);
 
         Group group = new Group();
+        
+        // creating & positioning rolldice button
+        rollDice = new Button("Roll Dice");
+        rollDice.setLayoutX(windowWidth - 100);
+        rollDice.setLayoutY(300);
+        
+        // handling rollDice events
+        rollDice.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+               ArrayList<Integer> roll = board.roll();
+               int lDie = roll.get(0);
+               int rDie = roll.get(1);
+            
+               // creating & positioning left die
+               leftDie = new Button(Integer.toString(lDie));
+               leftDie.setLayoutX(windowWidth - 100);
+               leftDie.setLayoutY(265);
+               
+               // creating & positioning right die
+               rightDie = new Button(Integer.toString(rDie));
+               rightDie.setLayoutX(windowWidth - 60);
+               rightDie.setLayoutY(265);
+               
+               // add to window
+               group.getChildren().add(leftDie);
+               group.getChildren().add(rightDie);
+            }
+        });
 
+        // creating & positioning exit button
+        exit = new Button("Exit Game");
+        exit.setLayoutX(windowWidth - 100);
+        exit.setLayoutY(600);
+        
+        // handling exit event
+        exit.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+               Platform.exit();
+            }
+        });
+        
         // creating text
         Text blotsTitle = new Text(windowWidth - 120, 20, "Blots: ");
         Text p1Home = new Text(100, windowHeight - 50, "Player 1's Home:");
         Text p2Home = new Text(100, 40, "Player 2's Home:");
-        Text diceArea = new Text(windowWidth - 120, 300, "Dice Go Here");
-        Text quitGame = new Text(windowWidth - 120, 650, "Quit Game Button");
-
+      
         // add line to create right column
         Line rightColumnLine = new Line(965, 0, 965, windowHeight);
         rightColumnLine.setStroke(Color.BLACK);
@@ -102,12 +145,10 @@ public class BackgammonGui extends Application {
         group.getChildren().add(p2Home);
         group.getChildren().add(rightColumnLine);
         group.getChildren().add(blotContainer);
-        group.getChildren().add(diceArea);
-        group.getChildren().add(quitGame);
-
+        group.getChildren().add(rollDice);
+        group.getChildren().add(exit);
 
         Scene scene = new Scene(group, windowWidth, windowHeight);
-
 
         scene.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
@@ -147,6 +188,7 @@ public class BackgammonGui extends Application {
     }
 
      */
+
 
     public void handleClick(MouseEvent e) {
         PieceFX piece = (PieceFX) (e.getSource());
