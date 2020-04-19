@@ -16,6 +16,7 @@ import javafx.geometry.HPos;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Button;
+import javax.swing.JOptionPane;
 import java.util.ArrayList;
 
 
@@ -23,14 +24,15 @@ public class BackgammonGui extends Application {
     private GridPane grid;
     private ArrayList<PieceFX> FXPieces;
     private Board board;
-    private Button exit, rollDice;
-    private Button leftDie, rightDie;
+    private Button exit, rollDice, leftDie, rightDie;
+    private int lDie, rDie;
     
     public static void main(String[] args)
     {
         launch(args);
 
     }
+    
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Backgammon");
@@ -90,28 +92,63 @@ public class BackgammonGui extends Application {
         rollDice.setLayoutX(windowWidth - 100);
         rollDice.setLayoutY(300);
         
+        // initialize leftDie
+        leftDie = new Button("  ");
+        leftDie.setLayoutX(windowWidth - 100);
+        leftDie.setLayoutY(265);
+        
+        // initialize rightDie
+        rightDie = new Button("  ");
+        rightDie.setLayoutX(windowWidth - 60);
+        rightDie.setLayoutY(265);
+        
         // handling rollDice events
         rollDice.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                ArrayList<Integer> roll = board.roll();
-               int lDie = roll.get(0);
-               int rDie = roll.get(1);
+               lDie = roll.get(0);
+               rDie = roll.get(1);
             
                // creating & positioning left die
-               leftDie = new Button(Integer.toString(lDie));
-               leftDie.setLayoutX(windowWidth - 100);
-               leftDie.setLayoutY(265);
+               leftDie.setText(Integer.toString(lDie));
                
                // creating & positioning right die
-               rightDie = new Button(Integer.toString(rDie));
-               rightDie.setLayoutX(windowWidth - 60);
-               rightDie.setLayoutY(265);
-               
-               // add to window
-               group.getChildren().add(leftDie);
-               group.getChildren().add(rightDie);
+               rightDie.setText(Integer.toString(rDie));
             }
         });
+        
+        // handling leftDie pressed BEFORE piece selected
+        leftDie.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                Object[] option = {"OKAY"};
+                if(leftDie.getText().toString().equals("  ")) {
+                     JOptionPane.showOptionDialog(null, "Please roll the dice.\nClick OKAY to continue.", 
+                        "Invalid Selection",JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, option, option[0]);
+                } else {
+                     JOptionPane.showOptionDialog(null, "You must select a piece before a die.\nClick OKAY to continue.", 
+                        "Invalid Selection",JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, option, option[0]);
+                }
+            }
+        }); 
+
+        // handling rightDie pressed BEFORE piece selected
+        rightDie.setOnAction(new EventHandler<ActionEvent>() {
+             public void handle(ActionEvent e) {
+                Object[] option = {"OKAY"};
+                if(rightDie.getText().toString().equals("  ")) {
+                     JOptionPane.showOptionDialog(null, "Please roll the dice.\nClick OKAY to continue.", 
+                        "Invalid Selection",JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, option, option[0]);
+                } else {
+                     JOptionPane.showOptionDialog(null, "You must select a piece before a die.\nClick OKAY to continue.", 
+                        "Invalid Selection",JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, option, option[0]);
+                }
+            }
+
+        });   
 
         // creating & positioning exit button
         exit = new Button("Exit Game");
@@ -129,6 +166,7 @@ public class BackgammonGui extends Application {
         Text blotsTitle = new Text(windowWidth - 120, 20, "Blots: ");
         Text p1Home = new Text(100, windowHeight - 50, "Player 1's Home:");
         Text p2Home = new Text(100, 40, "Player 2's Home:");
+        Text dice = new Text(windowWidth - 120, 250, "Player Roll: ");
       
         // add line to create right column
         Line rightColumnLine = new Line(965, 0, 965, windowHeight);
@@ -146,7 +184,10 @@ public class BackgammonGui extends Application {
         group.getChildren().add(rightColumnLine);
         group.getChildren().add(blotContainer);
         group.getChildren().add(rollDice);
+        group.getChildren().add(leftDie);
+        group.getChildren().add(rightDie);
         group.getChildren().add(exit);
+        group.getChildren().add(dice);
 
         Scene scene = new Scene(group, windowWidth, windowHeight);
 
@@ -178,15 +219,12 @@ public class BackgammonGui extends Application {
             //piece.selectPiece();
             //Circle c = (Circle) e.getSource();
             //c = pieceFX.getCircle();
-
         }
     };
-
     public void handleClick(MouseEvent mouseEvent) {
         PieceFX pieceFX = (PieceFX) mouseEvent.getSource();
         pieceFX.selectPiece();
     }
-
      */
 
 
