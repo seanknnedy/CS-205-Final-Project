@@ -18,6 +18,7 @@ public class PieceFXtesting extends Application {
 
    public void start(Stage stage) {
       stage.setTitle("Circle Testing");
+      /*
       
       Player playerRED = new Player(7, 12, 1, "RED");
       Computer playerBLK = new Computer(7, 12, 2, "BLK");
@@ -55,6 +56,8 @@ public class PieceFXtesting extends Application {
       stage.setScene(scene);
       
       stage.show();
+
+       */
       
    }
    

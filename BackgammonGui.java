@@ -31,8 +31,9 @@ public class BackgammonGui extends Application {
     public static void main(String[] args)
     {
         launch(args);
+
     }
-    
+
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Backgammon");
@@ -48,13 +49,9 @@ public class BackgammonGui extends Application {
         // create new board and print
         board = new Board(playerRED.playerPieces, playerRED.getTeam(), playerBLK.playerPieces, playerBLK.getTeam());
 
-
-        /*
-         * Create spikes
-         */
+        // create spikes
         for (int c = 0; c < 12; c++) {
             SpikeFX spike = new SpikeFX(board.getBoard().get(c));
-<<<<<<< HEAD
             grid.add(spike, c, 1);
         }
         for (int c = 0; c < 12; c++) {
@@ -62,21 +59,9 @@ public class BackgammonGui extends Application {
             grid.add(spike, c, 2);
         }
 
-=======
-            grid.add(spike.getTriangle(), c, 1);
-        }
-        for (int c = 0; c < 12; c++) {
-            SpikeFX spike = new SpikeFX(board.getBoard().get(c + 12));
-            grid.add(spike.getTriangle(), c, 2);
-        }
-        //add spike padding
->>>>>>> 02fbe48a85020ad1ddc3201ad3fa405c43e9f7e9
         grid.setVgap(100);
 
-
-        /*
-         * Create pieces
-         */
+        // create pieces
         for (int p = 0; p < 15; p++) {
             // Red Pieces
             PieceFX pieceRED = new PieceFX(playerRED.playerPieces.get(p), board);
@@ -90,147 +75,129 @@ public class BackgammonGui extends Application {
             grid.setHalignment(pieceBLK, HPos.CENTER);
             FXPieces.add(pieceBLK);
         }
-<<<<<<< HEAD
-                
+
         for (int i = 0; i < grid.getChildren().size(); ++i) {
             grid.getChildren().get(i).setOnMousePressed(new EventHandler<MouseEvent>() {
-               @Override
-               public void handle(MouseEvent event) {
-                   
-                   
-                   PieceFX c = (PieceFX) event.getSource();
-                   
-                   if (c.getFill() == Color.YELLOW) {
-                      if (c.getPiece().getColor().equals("RED")) {
-                         c.setSelected(false);
-                         c.setFill(Color.RED);
-                      } else {
-                         c.setSelected(false);
-                         c.setFill(Color.BLACK);
-                      }
-                   } else {
-                       c.setFill(Color.YELLOW);
-                   }
-                
-                   if (c.getPiece().getColor().equals("RED")) {
-                      playerRED.makeMove(board, playerRED, playerBLK, c.getPiece(), lDie);
-                   } else {
-                      playerBLK.makeMove(board, playerBLK, playerRED, c.getPiece(), lDie);
-                   }
-                   alignPieces(board, true);
-               }
+                @Override
+                public void handle(MouseEvent event) {
+
+
+                    PieceFX c = (PieceFX) event.getSource();
+
+                    if (c.getFill() == Color.YELLOW) {
+                        if (c.getPiece().getColor().equals("RED")) {
+                            c.setSelected(false);
+                            c.setFill(Color.RED);
+                        } else {
+                            c.setSelected(false);
+                            c.setFill(Color.BLACK);
+                        }
+                    } else {
+                        c.setFill(Color.YELLOW);
+                    }
+
+                    if (c.getPiece().getColor().equals("RED")) {
+                        playerRED.makeMove(board, playerRED, playerBLK, c.getPiece(), lDie);
+                    } else {
+                        playerBLK.makeMove(board, playerBLK, playerRED, c.getPiece(), lDie);
+                    }
+                    alignPieces(board, true);
+                }
             });
-         }
-         
+        }
+
         // alignment here
         alignPieces(board, false);
-=======
 
->>>>>>> 02fbe48a85020ad1ddc3201ad3fa405c43e9f7e9
-
-        /*
-         * Align the pieces on the board and add to group
-         */
-        alignPieces(board, false);
         Group group = new Group();
 
-
-        /*
-         * Create the die
-         */
         // creating & positioning rolldice button
         rollDice = new Button("Roll Dice");
         rollDice.setLayoutX(windowWidth - 100);
         rollDice.setLayoutY(300);
-        
+
         // initialize leftDie
         leftDie = new Button("  ");
         leftDie.setLayoutX(windowWidth - 100);
         leftDie.setLayoutY(265);
-        
+
         // initialize rightDie
         rightDie = new Button("  ");
         rightDie.setLayoutX(windowWidth - 60);
         rightDie.setLayoutY(265);
-        
+
         // handling rollDice events
         rollDice.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-               ArrayList<Integer> roll = board.roll();
-               lDie = roll.get(0);
-               rDie = roll.get(1);
-            
-               // creating & positioning left die
-               leftDie.setText(Integer.toString(lDie));
-               
-               // creating & positioning right die
-               rightDie.setText(Integer.toString(rDie));
+                ArrayList<Integer> roll = board.roll();
+                lDie = roll.get(0);
+                rDie = roll.get(1);
+
+                // creating & positioning left die
+                leftDie.setText(Integer.toString(lDie));
+
+                // creating & positioning right die
+                rightDie.setText(Integer.toString(rDie));
             }
         });
-        
+
         // handling leftDie pressed BEFORE piece selected
         leftDie.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 Object[] option = {"OKAY"};
                 if(leftDie.getText().toString().equals("  ")) {
-                     JOptionPane.showOptionDialog(null, "Please roll the dice.\nClick OKAY to continue.", 
-                        "Invalid Selection",JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-                        null, option, option[0]);
+                    JOptionPane.showOptionDialog(null, "Please roll the dice.\nClick OKAY to continue.",
+                            "Invalid Selection",JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                            null, option, option[0]);
                 } else {
-                     JOptionPane.showOptionDialog(null, "You must select a piece before a die.\nClick OKAY to continue.", 
-                        "Invalid Selection",JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-                        null, option, option[0]);
+                    JOptionPane.showOptionDialog(null, "You must select a piece before a die.\nClick OKAY to continue.",
+                            "Invalid Selection",JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                            null, option, option[0]);
                 }
             }
-        }); 
+        });
 
         // handling rightDie pressed BEFORE piece selected
         rightDie.setOnAction(new EventHandler<ActionEvent>() {
-             public void handle(ActionEvent e) {
+            public void handle(ActionEvent e) {
                 Object[] option = {"OKAY"};
                 if(rightDie.getText().toString().equals("  ")) {
-                     JOptionPane.showOptionDialog(null, "Please roll the dice.\nClick OKAY to continue.", 
-                        "Invalid Selection",JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-                        null, option, option[0]);
+                    JOptionPane.showOptionDialog(null, "Please roll the dice.\nClick OKAY to continue.",
+                            "Invalid Selection",JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                            null, option, option[0]);
                 } else {
-                     JOptionPane.showOptionDialog(null, "You must select a piece before a die.\nClick OKAY to continue.", 
-                        "Invalid Selection",JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-                        null, option, option[0]);
+                    JOptionPane.showOptionDialog(null, "You must select a piece before a die.\nClick OKAY to continue.",
+                            "Invalid Selection",JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                            null, option, option[0]);
                 }
             }
 
         });
 
-        /*
-         * Create exit button
-         */
         // creating & positioning exit button
         exit = new Button("Exit Game");
         exit.setLayoutX(windowWidth - 100);
         exit.setLayoutY(600);
-        
+
         // handling exit event
         exit.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-               Platform.exit();
+                Platform.exit();
             }
         });
 
-        /*
-         * Create text/auxiliary shapes
-         */
         // creating text
         Text blotsTitle = new Text(windowWidth - 120, 20, "Blots: ");
         Text p1Home = new Text(100, windowHeight - 50, "Player 1's Home:");
         Text p2Home = new Text(100, 40, "Player 2's Home:");
         Text dice = new Text(windowWidth - 120, 250, "Player Roll: ");
-      
+
         // add line to create right column
         Line rightColumnLine = new Line(965, 0, 965, windowHeight);
         rightColumnLine.setStroke(Color.BLACK);
         rightColumnLine.setStrokeWidth(8);
 
-        // creating blot container
+        // creating shapes
         Rectangle blotContainer = new Rectangle(windowWidth - 120, 40, 110, 80);
         blotContainer.setFill(Color.LIGHTGRAY);
 
@@ -246,61 +213,11 @@ public class BackgammonGui extends Application {
         group.getChildren().add(exit);
         group.getChildren().add(dice);
 
-<<<<<<< HEAD
         Scene scene = new Scene(group, windowWidth, windowHeight);
-=======
-
-        /*
-         * Create/draw scene
-         */
-        Scene scene = new Scene(group, windowWidth, windowHeight);
-        scene.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                System.out.println("mouse click detected! ");
-                playerRED.makeMove(board, playerRED, playerBLK,1, 1);
-                System.out.println(playerRED.playerPieces.get(0).getBoardLocation());
-                alignPieces(board, true);
-                //PieceFX piece = (PieceFX) event.getSource();
-                //piece.selectPiece();
-            }
-        });
-
->>>>>>> 02fbe48a85020ad1ddc3201ad3fa405c43e9f7e9
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
-<<<<<<< HEAD
-=======
-
-/**************************************************** Helper Methods **************************************************/
-/*
-    EventHandler<MouseEvent> eventHandler = new EventHandler<javafx.scene.input.MouseEvent>() {
-        @Override
-        public void handle(javafx.scene.input.MouseEvent e) {
-            System.out.println("Hello World");
-            //PieceFX piece = (PieceFX) e.getSource();
-            //piece.selectPiece();
-            //Circle c = (Circle) e.getSource();
-            //c = pieceFX.getCircle();
-        }
-    };
-    public void handleClick(MouseEvent mouseEvent) {
-        PieceFX pieceFX = (PieceFX) mouseEvent.getSource();
-        pieceFX.selectPiece();
-    }
-     */
-
-
-    public void handleClick(MouseEvent e) {
-        PieceFX piece = (PieceFX) (e.getSource());
-        piece.getCircle().setFill(Color.YELLOW);
-        System.out.println("mouse click detected! ");
-    }
-
-
->>>>>>> 02fbe48a85020ad1ddc3201ad3fa405c43e9f7e9
     public PieceFX getFXPieceAtID(ArrayList<PieceFX> FXPieces, String color, int pieceID) {
         for(int p = 0; p < FXPieces.size(); p++){
             if (FXPieces.get(p).getPiece().getID() == pieceID && FXPieces.get(p).getPiece().getColor().equals(color)) {
@@ -312,27 +229,27 @@ public class BackgammonGui extends Application {
 
     public void drawBoard(Board b) {
         this.grid.getChildren().clear();
-        
+
         for (int r = 0; r < 12; r++) {
             for (int c = 1; c < 3; c++){
                 // TODO: finish this using Boggle outline
-  
+
                 if (c == 2) {
-                  SpikeFX spike = new SpikeFX(b.getSpike(12 - r));
-                  grid.add(spike, r, c);
-                  
+                    SpikeFX spike = new SpikeFX(b.getSpike(12 - r));
+                    grid.add(spike, r, c);
+
                 }
                 if (c == 1) {
-                  SpikeFX spike = new SpikeFX(b.getSpike(r + 13));
-                  grid.add(spike, r, c);
+                    SpikeFX spike = new SpikeFX(b.getSpike(r + 13));
+                    grid.add(spike, r, c);
                 }
             }
         }
-        
+
         //maybe add vgap?
         grid.setVgap(100);
-        
-        
+
+
         for (int p = 0; p < FXPieces.size(); p++) {
             grid.add(FXPieces.get(p), FXPieces.get(p).getX()-1, FXPieces.get(p).getY());
         }
