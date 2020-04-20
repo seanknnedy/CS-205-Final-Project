@@ -27,11 +27,10 @@ public class BackgammonGui extends Application {
     private Board board;
     private Button exit, rollDice, leftDie, rightDie;
     private int lDie, rDie;
-    
+
     public static void main(String[] args)
     {
         launch(args);
-
     }
     
     @Override
@@ -49,9 +48,13 @@ public class BackgammonGui extends Application {
         // create new board and print
         board = new Board(playerRED.playerPieces, playerRED.getTeam(), playerBLK.playerPieces, playerBLK.getTeam());
 
-        // create spikes
+
+        /*
+         * Create spikes
+         */
         for (int c = 0; c < 12; c++) {
             SpikeFX spike = new SpikeFX(board.getBoard().get(c));
+<<<<<<< HEAD
             grid.add(spike, c, 1);
         }
         for (int c = 0; c < 12; c++) {
@@ -59,9 +62,21 @@ public class BackgammonGui extends Application {
             grid.add(spike, c, 2);
         }
 
+=======
+            grid.add(spike.getTriangle(), c, 1);
+        }
+        for (int c = 0; c < 12; c++) {
+            SpikeFX spike = new SpikeFX(board.getBoard().get(c + 12));
+            grid.add(spike.getTriangle(), c, 2);
+        }
+        //add spike padding
+>>>>>>> 02fbe48a85020ad1ddc3201ad3fa405c43e9f7e9
         grid.setVgap(100);
 
-        // create pieces
+
+        /*
+         * Create pieces
+         */
         for (int p = 0; p < 15; p++) {
             // Red Pieces
             PieceFX pieceRED = new PieceFX(playerRED.playerPieces.get(p), board);
@@ -75,6 +90,7 @@ public class BackgammonGui extends Application {
             grid.setHalignment(pieceBLK, HPos.CENTER);
             FXPieces.add(pieceBLK);
         }
+<<<<<<< HEAD
                 
         for (int i = 0; i < grid.getChildren().size(); ++i) {
             grid.getChildren().get(i).setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -108,9 +124,20 @@ public class BackgammonGui extends Application {
          
         // alignment here
         alignPieces(board, false);
+=======
 
+>>>>>>> 02fbe48a85020ad1ddc3201ad3fa405c43e9f7e9
+
+        /*
+         * Align the pieces on the board and add to group
+         */
+        alignPieces(board, false);
         Group group = new Group();
-        
+
+
+        /*
+         * Create the die
+         */
         // creating & positioning rolldice button
         rollDice = new Button("Roll Dice");
         rollDice.setLayoutX(windowWidth - 100);
@@ -172,8 +199,11 @@ public class BackgammonGui extends Application {
                 }
             }
 
-        });   
+        });
 
+        /*
+         * Create exit button
+         */
         // creating & positioning exit button
         exit = new Button("Exit Game");
         exit.setLayoutX(windowWidth - 100);
@@ -185,7 +215,10 @@ public class BackgammonGui extends Application {
                Platform.exit();
             }
         });
-        
+
+        /*
+         * Create text/auxiliary shapes
+         */
         // creating text
         Text blotsTitle = new Text(windowWidth - 120, 20, "Blots: ");
         Text p1Home = new Text(100, windowHeight - 50, "Player 1's Home:");
@@ -197,7 +230,7 @@ public class BackgammonGui extends Application {
         rightColumnLine.setStroke(Color.BLACK);
         rightColumnLine.setStrokeWidth(8);
 
-        // creating shapes
+        // creating blot container
         Rectangle blotContainer = new Rectangle(windowWidth - 120, 40, 110, 80);
         blotContainer.setFill(Color.LIGHTGRAY);
 
@@ -213,11 +246,61 @@ public class BackgammonGui extends Application {
         group.getChildren().add(exit);
         group.getChildren().add(dice);
 
+<<<<<<< HEAD
         Scene scene = new Scene(group, windowWidth, windowHeight);
+=======
+
+        /*
+         * Create/draw scene
+         */
+        Scene scene = new Scene(group, windowWidth, windowHeight);
+        scene.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                System.out.println("mouse click detected! ");
+                playerRED.makeMove(board, playerRED, playerBLK,1, 1);
+                System.out.println(playerRED.playerPieces.get(0).getBoardLocation());
+                alignPieces(board, true);
+                //PieceFX piece = (PieceFX) event.getSource();
+                //piece.selectPiece();
+            }
+        });
+
+>>>>>>> 02fbe48a85020ad1ddc3201ad3fa405c43e9f7e9
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
+<<<<<<< HEAD
+=======
+
+/**************************************************** Helper Methods **************************************************/
+/*
+    EventHandler<MouseEvent> eventHandler = new EventHandler<javafx.scene.input.MouseEvent>() {
+        @Override
+        public void handle(javafx.scene.input.MouseEvent e) {
+            System.out.println("Hello World");
+            //PieceFX piece = (PieceFX) e.getSource();
+            //piece.selectPiece();
+            //Circle c = (Circle) e.getSource();
+            //c = pieceFX.getCircle();
+        }
+    };
+    public void handleClick(MouseEvent mouseEvent) {
+        PieceFX pieceFX = (PieceFX) mouseEvent.getSource();
+        pieceFX.selectPiece();
+    }
+     */
+
+
+    public void handleClick(MouseEvent e) {
+        PieceFX piece = (PieceFX) (e.getSource());
+        piece.getCircle().setFill(Color.YELLOW);
+        System.out.println("mouse click detected! ");
+    }
+
+
+>>>>>>> 02fbe48a85020ad1ddc3201ad3fa405c43e9f7e9
     public PieceFX getFXPieceAtID(ArrayList<PieceFX> FXPieces, String color, int pieceID) {
         for(int p = 0; p < FXPieces.size(); p++){
             if (FXPieces.get(p).getPiece().getID() == pieceID && FXPieces.get(p).getPiece().getColor().equals(color)) {

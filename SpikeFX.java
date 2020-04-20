@@ -24,11 +24,11 @@ public class SpikeFX extends Polygon {
 
         if (yCoord==1)
              this.getPoints().addAll(new Double[]{10.0, 20.0, 50.0, 200.0, 90.0, 20.0});
-             
+
              // = new Polygon(
                //      10.0, 20.0,
                  //             50.0, 200.0, // + (xCoord + 25.0)), 110.0,
-                   //           90.0, 20.0); // + (xCoord + 50.0)), 20.0); 
+                   //           90.0, 20.0); // + (xCoord + 50.0)), 20.0);
         else
             this.getPoints().addAll(new Double[]{10.0, 200.0, 50.0, 20.0, 90.0, 200.0});
 //             spikeImg = new Polygon(
