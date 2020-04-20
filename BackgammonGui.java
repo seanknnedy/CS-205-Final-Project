@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
 
+import javafx.scene.shape.Polygon;
 
 public class BackgammonGui extends Application {
     private GridPane grid;
@@ -43,7 +44,7 @@ public class BackgammonGui extends Application {
         FXPieces = new ArrayList<PieceFX>();
 
         Player playerRED = new Player(7, 12, 1, "RED");
-        Computer playerBLK = new Computer(7, 12, 2, "BLK");
+        Player playerBLK = new Player(7, 12, 2, "BLK");
 
         // create new board and print
         board = new Board(playerRED.playerPieces, playerRED.getTeam(), playerBLK.playerPieces, playerBLK.getTeam());
@@ -51,37 +52,60 @@ public class BackgammonGui extends Application {
         // create spikes
         for (int c = 0; c < 12; c++) {
             SpikeFX spike = new SpikeFX(board.getBoard().get(c));
-            //System.out.println(spike.getY());
-            grid.add(spike.getTriangle(), c, 1);
+            grid.add(spike, c, 1);
         }
         for (int c = 0; c < 12; c++) {
             SpikeFX spike = new SpikeFX(board.getBoard().get(c + 12));
-            //System.out.println(spike.getY());
-            grid.add(spike.getTriangle(), c, 2);
+            grid.add(spike, c, 2);
         }
 
-        //add spike padding
         grid.setVgap(100);
 
         // create pieces
         for (int p = 0; p < 15; p++) {
             // Red Pieces
             PieceFX pieceRED = new PieceFX(playerRED.playerPieces.get(p), board);
-            pieceRED.setOnMouseClicked(this::handleClick);
-            //pieceRED.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, eventHandler);
-            grid.add(pieceRED.getCircle(), playerRED.playerPieces.get(p).getX()-1, playerRED.playerPieces.get(p).getY());
-            grid.setHalignment(pieceRED.getCircle(), HPos.CENTER);
+            grid.add(pieceRED, playerRED.playerPieces.get(p).getX()-1, playerRED.playerPieces.get(p).getY());
+            grid.setHalignment(pieceRED, HPos.CENTER);
             FXPieces.add(pieceRED);
 
             // Black Pieces
             PieceFX pieceBLK = new PieceFX(playerBLK.playerPieces.get(p), board);
-            pieceBLK.setOnMouseClicked(this::handleClick);
-            //pieceBLK.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, eventHandler);
-            grid.add(pieceBLK.getCircle(), playerBLK.playerPieces.get(p).getX()-1, playerBLK.playerPieces.get(p).getY());
-            grid.setHalignment(pieceBLK.getCircle(), HPos.CENTER);
+            grid.add(pieceBLK, playerBLK.playerPieces.get(p).getX()-1, playerBLK.playerPieces.get(p).getY());
+            grid.setHalignment(pieceBLK, HPos.CENTER);
             FXPieces.add(pieceBLK);
         }
-
+                
+        for (int i = 0; i < grid.getChildren().size(); ++i) {
+            grid.getChildren().get(i).setOnMousePressed(new EventHandler<MouseEvent>() {
+               @Override
+               public void handle(MouseEvent event) {
+                   
+                   
+                   PieceFX c = (PieceFX) event.getSource();
+                   
+                   if (c.getFill() == Color.YELLOW) {
+                      if (c.getPiece().getColor().equals("RED")) {
+                         c.setSelected(false);
+                         c.setFill(Color.RED);
+                      } else {
+                         c.setSelected(false);
+                         c.setFill(Color.BLACK);
+                      }
+                   } else {
+                       c.setFill(Color.YELLOW);
+                   }
+                
+                   if (c.getPiece().getColor().equals("RED")) {
+                      playerRED.makeMove(board, playerRED, playerBLK, c.getPiece(), lDie);
+                   } else {
+                      playerBLK.makeMove(board, playerBLK, playerRED, c.getPiece(), lDie);
+                   }
+                   alignPieces(board, true);
+               }
+            });
+         }
+         
         // alignment here
         alignPieces(board, false);
 
@@ -190,50 +214,9 @@ public class BackgammonGui extends Application {
         group.getChildren().add(dice);
 
         Scene scene = new Scene(group, windowWidth, windowHeight);
-
-        scene.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                System.out.println("mouse click detected! ");
-                playerRED.makeMove(board, playerRED, playerBLK,1, 1);
-                System.out.println(playerRED.playerPieces.get(0).getBoardLocation());
-                alignPieces(board, true);
-                //PieceFX piece = (PieceFX) event.getSource();
-                //piece.selectPiece();
-            }
-        });
-
-
-
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
-
-/*
-    EventHandler<MouseEvent> eventHandler = new EventHandler<javafx.scene.input.MouseEvent>() {
-        @Override
-        public void handle(javafx.scene.input.MouseEvent e) {
-            System.out.println("Hello World");
-            //PieceFX piece = (PieceFX) e.getSource();
-            //piece.selectPiece();
-            //Circle c = (Circle) e.getSource();
-            //c = pieceFX.getCircle();
-        }
-    };
-    public void handleClick(MouseEvent mouseEvent) {
-        PieceFX pieceFX = (PieceFX) mouseEvent.getSource();
-        pieceFX.selectPiece();
-    }
-     */
-
-
-    public void handleClick(MouseEvent e) {
-        PieceFX piece = (PieceFX) (e.getSource());
-        piece.getCircle().setFill(Color.YELLOW);
-        System.out.println("mouse click detected! ");
-    }
-
 
     public PieceFX getFXPieceAtID(ArrayList<PieceFX> FXPieces, String color, int pieceID) {
         for(int p = 0; p < FXPieces.size(); p++){
@@ -244,13 +227,31 @@ public class BackgammonGui extends Application {
         return null;
     }
 
-    public void drawBoard() {
+    public void drawBoard(Board b) {
         this.grid.getChildren().clear();
-        for (int r = 0; r < 15; r++) {
-            for (int c = 0; c < 2; c++){
-                //PieceFX pieceFX = new PieceFX(____.get(r), this.board);
+        
+        for (int r = 0; r < 12; r++) {
+            for (int c = 1; c < 3; c++){
                 // TODO: finish this using Boggle outline
+  
+                if (c == 2) {
+                  SpikeFX spike = new SpikeFX(b.getSpike(12 - r));
+                  grid.add(spike, r, c);
+                  
+                }
+                if (c == 1) {
+                  SpikeFX spike = new SpikeFX(b.getSpike(r + 13));
+                  grid.add(spike, r, c);
+                }
             }
+        }
+        
+        //maybe add vgap?
+        grid.setVgap(100);
+        
+        
+        for (int p = 0; p < FXPieces.size(); p++) {
+            grid.add(FXPieces.get(p), FXPieces.get(p).getX()-1, FXPieces.get(p).getY());
         }
     }
 
@@ -258,38 +259,37 @@ public class BackgammonGui extends Application {
         for (int s = 0; s < b.getBoard().size(); s++) {
             for (int p = 0; p < b.getBoard().get(s).getPiecesOnSpike().size(); p++) {
                 Piece current = b.getBoard().get(s).getPiecesOnSpike().get(p);
-                System.out.print("s=" + s + " spike=" + b.getBoard().get(s) + " spike id = " + b.getBoard().get(s).getSpikeID());
                 PieceFX currentFX = getFXPieceAtID(FXPieces, current.getColor(), current.getID());
-                System.out.println(" current=" + current);
                 if (b.getBoard().get(s).getSpikeID() >= 13) {
                     if (p == 0) {
-                        currentFX.getCircle().setTranslateY(-70.0);
+                        currentFX.setTranslateY(-70.0);
                     } else if (p == 1) {
-                        currentFX.getCircle().setTranslateY(-40.0);
+                        currentFX.setTranslateY(-40.0);
                     } else if (p == 2) {
-                        currentFX.getCircle().setTranslateY(-10.0);
+                        currentFX.setTranslateY(-10.0);
                     } else if (p == 3) {
-                        currentFX.getCircle().setTranslateY(20.0);
+                        currentFX.setTranslateY(20.0);
                     } else if (p == 4) {
-                        currentFX.getCircle().setTranslateY(50.0);
+                        currentFX.setTranslateY(50.0);
                     }
                 } else {
                     if (p == 0) {
-                        currentFX.getCircle().setTranslateY(70.0);
+                        currentFX.setTranslateY(70.0);
                     } else if (p == 1) {
-                        currentFX.getCircle().setTranslateY(40.0);
+                        currentFX.setTranslateY(40.0);
                     } else if (p == 2) {
-                        currentFX.getCircle().setTranslateY(10.0);
+                        currentFX.setTranslateY(10.0);
                     } else if (p == 3) {
-                        currentFX.getCircle().setTranslateY(-20.0);
+                        currentFX.setTranslateY(-20.0);
                     } else if (p == 4) {
-                        currentFX.getCircle().setTranslateY(-50.0);
+                        currentFX.setTranslateY(-50.0);
                     }
                 }
                 if (move) {
                     this.grid.getChildren().remove(currentFX);
-                    // TODO: I dont know how to add the piece back to the grid
-                    //this.grid.add(currentFX.getCircle(), current.getX() - 1, current.getY());
+                    currentFX.setX(current.getX());
+                    currentFX.setY(current.getY());
+                    drawBoard(b);
                 }
             }
         }
