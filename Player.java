@@ -134,11 +134,11 @@ public class Player {
 
     // Handle the move
     // TODO: Once we are using clicks, change parameters and uncomment... int pieceID = Piece piece
-    public boolean makeMove(Board b, Player p, Player opponent, int pieceID, int roll) {
+    public boolean makeMove(Board b, Player p, Player opponent, Piece piece, int roll) {
         boolean valid;
         //TODO: uncomment the comment below and comment out the line below that
-        //int pieceID = piece.getID();
-        Piece piece = p.getPiece(pieceID);
+        int pieceID = piece.getID();
+        //Piece piece = p.getPiece(pieceID);
         int fromSpike = piece.getBoardLocation();
         int targetSpike = 0;
 

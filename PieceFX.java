@@ -13,14 +13,14 @@ import javafx.stage.Stage;
   
 import javafx.scene.Group;
 
-public class PieceFX extends HBox {
+public class PieceFX extends Circle {
    
    private Piece piece;
    private String color;
    private int xCoord;
    private int yCoord;
    private boolean selected;
-   private Circle circle = new Circle();
+   //private Circle circle = new Circle();
 
    //Creates FX object representation of Piece
    //accepts piece object, x position (in pixels) on board, and y position (in pixels) on board
@@ -31,14 +31,18 @@ public class PieceFX extends HBox {
       this.xCoord = p.getX();
       this.yCoord = p.getY();
       //create new circle fx object
-      this.circle.setTranslateY(75.0);
-      this.circle.setRadius(20.0);
+      //this.circle.setTranslateY(75.0);
+      //this.circle.setRadius(20.0);
+      this.setTranslateY(75.0);
+      this.setRadius(20.0);
       
       //this.circle.setStyle("-fx-padding: 0 0 0 10;");
       if (p.getColor().equals("RED")) {
-         this.circle.setFill(Color.RED);
+         //this.circle.setFill(Color.RED);
+         this.setFill(Color.RED);
       } else if (p.getColor().equals("BLK")) {
-         this.circle.setFill(Color.BLACK);
+         //this.circle.setFill(Color.BLACK);
+         this.setFill(Color.BLACK);
       }
    }
    
@@ -52,19 +56,39 @@ public class PieceFX extends HBox {
       return yCoord;
    }
    
+   //set x spike coord
+   public void setX(int x) {
+      this.xCoord = x;
+   }
+   
+   //set y spike coord
+   public void setY(int y) {
+      this.yCoord = y;
+   }
+   
    //retrieves piece object
    public Piece getPiece() {
       return piece;
    }
    
    //retrieves circle
-   public Circle getCircle() {
-      return circle;
-   }
+//    public Circle getCircle() {
+//       return circle;
+//    }
    
    //sets x location (in pixels) of circle
    public void setXpos(double xPos) {
-      this.circle.setCenterX(xPos);
+      this.setCenterX(xPos);
+   }
+   
+   //return selected
+   public boolean getSelected() {
+      return selected;
+   }
+   
+   //set selected
+   public void setSelected(boolean s) {
+      this.selected = s;
    }
    
    //sets y location (in pixels) of circle
@@ -72,7 +96,7 @@ public class PieceFX extends HBox {
       // number of pieces on spike = num
       // yPosition = num * (diameter of circles) + radius
       if (num == 2) {
-         this.circle.setTranslateY(num * (25.0) + 25.0);
+         this.setTranslateY(num * (25.0) + 25.0);
       }
    }
   
@@ -93,19 +117,19 @@ public class PieceFX extends HBox {
 //       }
 //    }
    
-      public void switchSelected(Circle c) {
-         if (this.selected) {
-            if (this.piece.getColor().equals("RED")) {
-               this.selected = false;
-               c.setFill(Color.RED);
-            } else {
-               this.selected = false;
-               c.setFill(Color.BLACK);
-            }
-         } else {
-            c.setFill(Color.YELLOW);
-         }
-      }
+//       public void switchSelected(Circle c) {
+//          if (this.selected) {
+//             if (this.piece.getColor().equals("RED")) {
+//                this.selected = false;
+//                c.setFill(Color.RED);
+//             } else {
+//                this.selected = false;
+//                c.setFill(Color.BLACK);
+//             }
+//          } else {
+//             c.setFill(Color.YELLOW);
+//          }
+//       }
 
 
 }
