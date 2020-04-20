@@ -13,7 +13,7 @@ import javafx.stage.Stage;
   
 import javafx.scene.Group;
 
-public class PieceFX extends Circle {
+public class PieceFX extends HBox {
    
    private Piece piece;
    private String color;
@@ -78,20 +78,34 @@ public class PieceFX extends Circle {
   
    //call this when a piece is clicked
    //sets color to yellow
-   public void selectPiece() {
-      this.selected = true;
-      this.circle.setFill(Color.YELLOW);
-   }
+//    public void selectPiece() {
+//       this.selected = true;
+//       this.circle.setFill(Color.YELLOW);
+//    }
+//    
+//    //call this when a piece is unclicked
+//    public void unselectPiece() {
+//       this.selected = false;
+//       if (this.piece.getColor().equals("red")) {
+//          this.circle.setFill(Color.RED);
+//       } else if (this.piece.getColor().equals("black")) {
+//          this.circle.setFill(Color.BLACK);
+//       }
+//    }
    
-   //call this when a piece is unclicked
-   public void unselectedPiece() {
-      this.selected = false;
-      if (this.piece.getColor().equals("red")) {
-         this.circle.setFill(Color.RED);
-      } else if (this.piece.getColor().equals("black")) {
-         this.circle.setFill(Color.BLACK);
+      public void switchSelected(Circle c) {
+         if (this.selected) {
+            if (this.piece.getColor().equals("RED")) {
+               this.selected = false;
+               c.setFill(Color.RED);
+            } else {
+               this.selected = false;
+               c.setFill(Color.BLACK);
+            }
+         } else {
+            c.setFill(Color.YELLOW);
+         }
       }
-   }
 
 
 }
