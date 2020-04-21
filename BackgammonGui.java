@@ -18,7 +18,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Button;
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
-
 import javafx.scene.shape.Polygon;
 
 public class BackgammonGui extends Application {
@@ -28,7 +27,6 @@ public class BackgammonGui extends Application {
     private Button exit, rollDice, leftDie, rightDie;
     private int lDie, rDie;
     private boolean lClicked, rClicked;
-    private boolean redTurn, blkTurn;
 
     public static void main(String[] args)
     {
