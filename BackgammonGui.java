@@ -20,6 +20,8 @@ import javax.swing.JOptionPane;
 import java.util.ArrayList;
 import javafx.scene.shape.Polygon;
 
+
+
 public class BackgammonGui extends Application {
     private GridPane grid;
     private ArrayList<PieceFX> FXPieces;
