@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class PlayerComputerTesting {
 
     public static void testingGame() {
+        /*
         // testing Player/Computer constructor
         Player playerRED = new Player(7, 12, 1, "RED");
         Player playerBLK = new Player(7, 12, 2, "BLK");
@@ -94,10 +95,13 @@ public class PlayerComputerTesting {
         Board.printBoard(newBoard);
 
         System.out.println("Has the player won now? " + playerRED.hasWon());
+
+         */
     }
 
 
     public static void testingComputer() {
+        /*
 
         Computer computer1 = new Computer(7, 12, 2, "RED");
         Computer computer2 = new Computer(7, 12, 1, "BLK");
@@ -105,7 +109,7 @@ public class PlayerComputerTesting {
         Board board = new Board(computer1.playerPieces, computer1.getTeam(), computer2.playerPieces, computer2.getTeam());
         Board.printBoard(board);
 
-        /*
+
         // testing Double
         ArrayList<Integer> rollDoubles = new ArrayList<Integer>(2);
         rollDoubles.add(2);
@@ -114,7 +118,7 @@ public class PlayerComputerTesting {
         computer1.playComp(rollDoubles, board, computer1, computer1);
         Board.printBoard(board, computer1, computer2);
 
-         */
+
 
         // testing Single
         ArrayList<Integer> rollSingles = new ArrayList<Integer>(2);
@@ -126,7 +130,8 @@ public class PlayerComputerTesting {
 
 
 
-        /*
+
+
         // testing multiple rounds of Computer
         for (int j = 0; j < 6; j++) {
             System.out.println("\n");
@@ -147,7 +152,7 @@ public class PlayerComputerTesting {
 
     public static void main(String [] args) {
         System.out.println("-------------------------------------- Testing Game -------------------------------------");
-        testingGame();
+        //testingGame();
         System.out.println("------------------------------------ Testing Computer -----------------------------------");
         //testingComputer();
     }
