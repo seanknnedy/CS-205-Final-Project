@@ -63,8 +63,15 @@ public class Player {
 
     // Returns the piece with the given id
     public Piece getPiece(int id) {
-        return playerPieces.get(id - 1);
+        return this.playerPieces.get(id - 1);
     }
+
+    /*
+    public ArrayList<Piece> getPlayerPieces() {
+        return playerPieces
+    }
+
+     */
 
 
     /**************************************************** Methods *****************************************************/
@@ -241,7 +248,8 @@ public class Player {
 
         } else {
             // Case 3: other team is on this spike with more than one piece
-            if (!current.getCurrentTeam().equals(p.getPiece(pieceID).getColor()) & current.getPiecesOnSpike().size() > 1) {
+            //TODO: changed p.playerPieces.get from p.getPieces(pieceID)
+            if (( !current.getCurrentTeam().equals(p.getPiece(pieceID).getColor()) ) & current.getPiecesOnSpike().size() > 1) {
                 System.out.println("Invalid Move - other team is occupying spike already");
                 return false;
             }

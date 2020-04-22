@@ -38,9 +38,12 @@ public class SpikeFX extends Polygon {
 
         if (spikeId % 2 == 0) {
             this.setFill(Color.SADDLEBROWN);
+        } else if (spikeId > 25) {
+            this.setFill(Color.YELLOW);
         } else {
             this.setFill(Color.TAN);
         }
+
     }
 
     //Returns the FX of the spike
