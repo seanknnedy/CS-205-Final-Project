@@ -14,6 +14,7 @@ public class Computer extends Player{
     /**************************************************** Methods *****************************************************/
     // Sends compute to playDouble() or playSingle() depending on their roll
     public void playComp(ArrayList<Integer> roll, Board board, Computer computer, Player player) {
+        System.out.println(roll.toString());
         if(roll.get(0).equals(roll.get(1))) {
             playDouble(roll, board, computer, player);
         } else {
@@ -152,8 +153,8 @@ public class Computer extends Player{
     }
 
     // Determines if the piece can take a turn, returns true if move is valid and places piece, returns false otherwise
-    public boolean takeTurn(Piece p, int displacement, Board b, Computer computer, Player player) {
-        //return super.makeMove(b, computer, player, p.getID(), p.getX(), p.getX() + displacement);
-        return true;
+    public boolean takeTurn(Piece p, int roll, Board b, Computer computer, Player player) {
+        return super.makeMove(b, computer, player, p, roll);
+
     }
 }
