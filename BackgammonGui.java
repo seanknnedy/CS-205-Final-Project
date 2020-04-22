@@ -351,6 +351,7 @@ public class BackgammonGui extends Application {
 
 
         for (int p = 0; p < FXPieces.size(); p++) {
+            // TODO: When piece is beared off, X = 0 and then it goes out of bounds... FIX
             grid.add(FXPieces.get(p), FXPieces.get(p).getX()-1, FXPieces.get(p).getY());
         }
     }
