@@ -137,7 +137,7 @@ public class BackgammonGui extends Application {
                                                 int id = playerBLK.playerPieces.get(p).getID();
                                                 int x = playerBLK.playerPieces.get(p).getX();
                                                 int y = playerBLK.playerPieces.get(p).getY();
-                                                System.out.println("Piece id: " + id + " at location: " + loc + " (x,y): " + x + ", "+ y);
+                                                //System.out.println("Piece id: " + id + " at location: " + loc + " (x,y): " + x + ", "+ y);
                                             }
                                         }
                                     } else {
@@ -169,13 +169,13 @@ public class BackgammonGui extends Application {
                                         if (playerMovesLeft == 0) {
                                             playerBLK.playComp(board.roll(), board, playerBLK, playerRED);
                                             alignPieces(board, true);
-                                            System.out.println("Computer Roll: " + lDie + rDie);
+                                            //System.out.println("Computer Roll: " + lDie + rDie);
                                             for(int p = 0; p < playerBLK.playerPieces.size(); p++) {
                                                 int loc = playerBLK.playerPieces.get(p).getBoardLocation();
                                                 int id = playerBLK.playerPieces.get(p).getID();
                                                 int x = playerBLK.playerPieces.get(p).getX();
                                                 int y = playerBLK.playerPieces.get(p).getY();
-                                                System.out.println("Piece id: " + id + " at location: " + loc + " (x,y): " + x + ", "+ y);
+                                                //System.out.println("Piece id: " + id + " at location: " + loc + " (x,y): " + x + ", "+ y);
                                             }
                                         }
                                     } else {

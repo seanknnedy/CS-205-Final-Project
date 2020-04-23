@@ -53,12 +53,12 @@ public class Player {
 
     // Get blotHit status
     public boolean getBlotHit() {
-        return blotHit;
+        return this.blotHit;
     }
 
     // Returns the team of the player
     public String getTeam() {
-        return team;
+        return this.team;
     }
 
     // Returns the piece with the given id
@@ -93,7 +93,7 @@ public class Player {
 
     // Determine if all player pieces are in the home quad
     public boolean allHome() {
-        for (Piece playerPiece : playerPieces) {
+        for (Piece playerPiece : this.playerPieces) {
             if (!isHome(playerPiece)) {
                 return false;
             }
@@ -115,7 +115,7 @@ public class Player {
     // Bear off the specified piece
     public void bearOffAPiece(int pieceID) {
         Piece p = getPiece(pieceID);
-        bearOffPieces.add(p);
+        this.bearOffPieces.add(p);
         p.setX(0);
         p.setY(0);
     }
@@ -248,7 +248,6 @@ public class Player {
 
         } else {
             // Case 3: other team is on this spike with more than one piece
-            //TODO: changed p.playerPieces.get from p.getPieces(pieceID)
             if (( !current.getCurrentTeam().equals(p.getPiece(pieceID).getColor()) ) & current.getPiecesOnSpike().size() > 1) {
                 System.out.println("Invalid Move - other team is occupying spike already");
                 return false;

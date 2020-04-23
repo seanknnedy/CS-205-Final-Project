@@ -14,149 +14,67 @@ public class Computer extends Player{
     /**************************************************** Methods *****************************************************/
     // Sends compute to playDouble() or playSingle() depending on their roll
     public void playComp(ArrayList<Integer> roll, Board board, Computer computer, Player player) {
-        System.out.println(roll.toString());
-        ArrayList<Piece> tempPieces = computer.playerPieces;
-        System.out.println("Player Pieces: " + computer.playerPieces);
-        if(roll.get(0).equals(roll.get(1))) {
-            playDouble(roll, board, computer, player, tempPieces);
+        System.out.println("Computer rolled: " + roll.toString());
+
+        // clone the computer player pieces to a temp array
+        ArrayList<Piece> tempPieces = (ArrayList<Piece>) computer.playerPieces.clone();
+
+        // add all the possible moves to the array
+        ArrayList<Integer> possibleMoves = new ArrayList<Integer>();
+
+        int diceUsed = 0;
+        int maxMoves;
+        boolean turnComplete = false;
+
+        if (roll.get(0) != roll.get(1)) {
+            // index 0 = first die, index 1 = second die, index 2 = both die
+            possibleMoves.add(roll.get(0));
+            possibleMoves.add(roll.get(1));
+            possibleMoves.add(roll.get(0) + roll.get(1));
+            maxMoves = 2;
         } else {
-            playSingle(roll, board, computer, player, tempPieces);
+            // if doubles, 1 = x, 2 = 2x, 3 = 3x, 4 =4x
+            possibleMoves.add(roll.get(0));
+            possibleMoves.add(roll.get(0) * 2);
+            possibleMoves.add(roll.get(0) * 3);
+            possibleMoves.add(roll.get(0) * 4);
+            maxMoves = 4;
         }
-    }
 
-    // Handles when the computer rolls the same number on both dice
-    public void playDouble(ArrayList<Integer> dieRoll, Board board, Computer computer, Player player, ArrayList<Piece> tempPieces) {
-        // declaring everything
-        System.out.println("In playDouble with roll of " + dieRoll);
-
-        int rollsAll = dieRoll.get(0) * 4;
-        int rollsThree = dieRoll.get(0) * 3;
-        int rollsTwo = dieRoll.get(0) * 2;
-        int rollsOne = dieRoll.get(0);
-        int diceUsed = 0;
-        boolean currentPieceUsed = false;
-
-        while(diceUsed != 4) {
-
-            System.out.println("Temp: " + tempPieces.toString() + "\nturns used: " + diceUsed);
-
-            // if there are no more pieces, exit turn
-            if(tempPieces.size() == 0) {
-                System.out.println("No playable pieces");
+        while(possibleMoves.size() != 0) {
+            if (tempPieces.size() == 0) {
+                System.out.println("No possible move. Player's Turn!");
                 break;
             }
 
-            // get piece to play
+            // get a random piece from computer
             Piece playingPiece = randPiece(tempPieces);
-            currentPieceUsed = false;
 
-            // test to see if piece can be moved using all dice
-            boolean playableAll = takeTurn(playingPiece, rollsAll, board, computer, player);
-            if(playableAll) {
-                System.out.println("Moved Piece " + playingPiece + " using 4/4 dice " + rollsAll + " spots.");
-                currentPieceUsed = true;
-            }
-
-            // test to see if piece can be moved using 3 dice
-            else if(diceUsed <= 1) {
-                boolean playableThree = takeTurn(playingPiece, rollsThree, board, computer, player);
-                if(playableThree) {
-                    tempPieces.remove(playingPiece);
-                    diceUsed += 3;
-                    currentPieceUsed = true;
-                    System.out.println("Moved Piece " + playingPiece + " using 3/4 dice " + rollsThree + " spots.");
+            // for each of the possible moves, check to see if the turn is complete using that roll
+            for (int r = 0; r < possibleMoves.size(); r++) {
+                turnComplete = takeTurn(playingPiece, possibleMoves.get(r), board, computer, player);
+                // if the turn is complete, add the amount of dice for the current move to total dice used and break the statement
+                if (turnComplete) {
+                    if (maxMoves == 2) {
+                        if (r == 0 || r == 1) {
+                            if (possibleMoves.size() > 1) {
+                                possibleMoves.remove(2);
+                            }
+                            possibleMoves.remove(r);
+                        } else {
+                            possibleMoves.clear();
+                        }
+                    } else {
+                        while (possibleMoves.size() != (r - 1)) {
+                            possibleMoves.remove(possibleMoves.size() - 1);
+                        }
+                    }
+                    break;
                 }
             }
 
-            // test to see if piece can be moved using 2 dice
-            else if(diceUsed <= 2) {
-                boolean playableTwo = takeTurn(playingPiece, rollsTwo, board, computer, player);
-                if(playableTwo) {
-                    tempPieces.remove(playingPiece);
-                    diceUsed += 2;
-                    currentPieceUsed = true;
-                    System.out.println("Moved Piece " + playingPiece + " using 2/4 dice " + rollsTwo + " spots.");
-                }
-            }
-
-            // test to see if piece can be moved using 1 die
-            else if(diceUsed <= 3) {
-                boolean playableOne = takeTurn(playingPiece, rollsOne, board, computer, player);
-                if(playableOne) {
-                    tempPieces.remove(playingPiece);
-                    diceUsed++;
-                    currentPieceUsed = true;
-                    System.out.println("Moved Piece " + playingPiece + " using 1/4 dice " + rollsOne + " spots.");
-                }
-            }
-
-            // if the piece made it this far, it cannot be used)
-            if (!currentPieceUsed) {
-                tempPieces.remove(playingPiece);
-                System.out.println("Piece " + playingPiece + " is unusable");
-            }
-        }
-    }
-
-    // Handles when the computer rolls different numbers on the dice
-    public void playSingle(ArrayList<Integer> s, Board b, Computer computer, Player player, ArrayList<Piece> tempPieces) {
-
-        System.out.println("In playSingle with roll of " + s);
-        //ArrayList<Piece> tempPieces = playerPieces;
-        int diceUsed = 0;
-        int bothDie = s.get(0) + s.get(1);
-        int firstDie = s.get(0);
-        int secondDie = s.get(1);
-        boolean currentPieceUsed = false;
-
-        while(diceUsed != 2) {
-
-            // if there are no more pieces, exit turn
-            if(tempPieces.size() == 0) {
-                System.out.println("No playable pieces");
-                break;
-            }
-
-            // get piece to play
-            Piece playingPiece = randPiece(tempPieces);
-            currentPieceUsed = false;
-
-            System.out.println("Temp: " + tempPieces.toString() + "\nturns used: " + diceUsed);
-            System.out.println("Attempting to move: " + playingPiece);
-
-            // test to see if one piece can be moved using both dice
-            boolean playableT = takeTurn(playingPiece, bothDie, b, computer, player);
-            if(playableT) {
-                System.out.println("Moved Piece " + playingPiece + " " + bothDie + " spots using both die." );
-                //diceUsed = 2;
-                //currentPieceUsed = true;
-                break;
-            }
-
-            // test to see if the piece can be moved using first die
-            if(diceUsed <= 1) {
-                boolean playable0 = takeTurn(playingPiece, firstDie, b, computer, player);
-                if(playable0) {
-                    tempPieces.remove(playingPiece);
-                    diceUsed++;
-                    currentPieceUsed = true;
-                    System.out.println("Moved Piece " + playingPiece + " " +  firstDie + " spots using the first die.");
-                }
-            }
-
-            // test to see if the piece can be moved using second die
-            if(diceUsed <= 1) {
-                boolean playable1 = takeTurn(playingPiece, s.get(1), b, computer, player);
-                if(playable1) {
-                    tempPieces.remove(playingPiece);
-                    diceUsed++;
-                    currentPieceUsed = true;
-                    System.out.println("Moved Piece " + playingPiece + " " + secondDie +" spots using the second die.");
-                }
-            }
-
-            // if the piece made it this far, it cannot be used)
-            if (!currentPieceUsed) {
+            // if the turn is not compelete, the piece cannot be played
+            if (!turnComplete) {
                 tempPieces.remove(playingPiece);
                 System.out.println("Piece " + playingPiece + " is unusable");
             }
@@ -165,7 +83,7 @@ public class Computer extends Player{
 
     // Choose a random piece
     public Piece randPiece(ArrayList<Piece> c) {
-        return c.get(rand.nextInt(c.size()-1));
+        return c.get(rand.nextInt(c.size()));
     }
 
     // Determines if the piece can take a turn, returns true if move is valid and places piece, returns false otherwise
