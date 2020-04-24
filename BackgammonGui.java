@@ -20,7 +20,9 @@ import javafx.scene.control.Button;
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
 import javafx.scene.shape.Polygon;
-
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.FontPosture;
 
 
 public class BackgammonGui extends Application {
@@ -45,7 +47,7 @@ public class BackgammonGui extends Application {
         //borderPane = new BorderPane();
         //borderPane.setStyle("-fx-border-color: black");
 
-        windowHeight = 750;
+        windowHeight = 700;
         windowWidth = 1100;
 
         // initializing clicks
@@ -79,7 +81,7 @@ public class BackgammonGui extends Application {
         SpikeFX homeSpikeBottom = new SpikeFX(board.getSpike(25));
         grid.add(homeSpikeBottom, 10, 3);
 
-        grid.setVgap(100);
+        grid.setVgap(75);
 
         // create pieces
         for (int p = 0; p < 15; p++) {
@@ -298,22 +300,23 @@ public class BackgammonGui extends Application {
         });
 
         // creating text
-        Text blotsTitle = new Text(windowWidth - 120, 20, "Blots: ");
-        Text p1Home = new Text(100, windowHeight - 50, "Player 1's Home:");
-        Text p2Home = new Text(100, 40, "Player 2's Home:");
+        Text blotsTitleComp = new Text(windowWidth - 120, 110, "Computer Blots: ");
+        blotsTitleComp.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 10));
+        Text blotsTitlePlayer = new Text(windowWidth - 120, 560, "Player Blots: ");
+        blotsTitlePlayer.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 10));
+        Text p1Home = new Text(600, windowHeight - 50, "Player 1's Home:");
+        p1Home.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        Text p2Home = new Text(600, 30, "Player 2's Home:");
+        p2Home.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
 
         // add line to create right column
         Line rightColumnLine = new Line(965, 0, 965, windowHeight);
         rightColumnLine.setStroke(Color.BLACK);
         rightColumnLine.setStrokeWidth(8);
 
-        // creating shapes
-        Rectangle blotContainer = new Rectangle(windowWidth - 120, 40, 110, 80);
-        blotContainer.setFill(Color.LIGHTGRAY);
-
-
         group.getChildren().add(grid);
-        group.getChildren().add(blotsTitle);
+        group.getChildren().add(blotsTitleComp);
+        group.getChildren().add(blotsTitlePlayer);
         group.getChildren().add(p1Home);
         group.getChildren().add(p2Home);
         group.getChildren().add(rightColumnLine);
@@ -444,7 +447,7 @@ public class BackgammonGui extends Application {
             }
         }
 
-        // first check for a winner
+        // check for a winner
         if (computer.hasWon() || player.hasWon()) {
             System.out.println("A PLAYER HAS WON");
             String message;

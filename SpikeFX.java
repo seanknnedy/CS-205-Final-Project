@@ -36,7 +36,7 @@ public class SpikeFX extends Polygon {
         }
 
         if (spikeId >= 25) {
-            this.setFill(Color.YELLOW);
+            this.setFill(Color.WHITE);
         }
 
     }
