@@ -30,13 +30,13 @@ public class SpikeFX extends Polygon {
         }
 
         if (spikeId % 2 == 0 ) {
-            this.setFill(Color.SADDLEBROWN);
+            this.setFill(Color.rgb(102, 51, 0));
         } else {
-            this.setFill(Color.TAN);
+            this.setFill(Color.rgb(153, 102, 51));
         }
 
         if (spikeId >= 25) {
-            this.setFill(Color.WHITE);
+            this.setFill(Color.rgb(0, 0, 0, 0.0));
         }
 
     }

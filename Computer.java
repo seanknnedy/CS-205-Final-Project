@@ -14,8 +14,6 @@ public class Computer extends Player{
     /**************************************************** Methods *****************************************************/
     // Sends compute to playDouble() or playSingle() depending on their roll
     public void playComp(ArrayList<Integer> roll, Board board, Computer computer, Player player) {
-        System.out.println("Computer rolled: " + roll.toString());
-
         // clone the computer player pieces to a temp array
         ArrayList<Piece> tempPieces = (ArrayList<Piece>) computer.playerPieces.clone();
 
@@ -41,19 +39,22 @@ public class Computer extends Player{
         }
 
         while(possibleMoves.size() != 0) {
-            if (tempPieces.size() == 0) {
-                System.out.println("No possible move. Player's Turn!");
-                break;
-            }
 
             // get a random piece from computer
             Piece playingPiece = randPiece(tempPieces);
+
+            if (tempPieces.size() == 0 || playingPiece == null) {
+                System.out.println("No possible move. Player's Turn!");
+                break;
+            }
 
             // for each of the possible moves, check to see if the turn is complete using that roll
             for (int r = 0; r < possibleMoves.size(); r++) {
                 turnComplete = takeTurn(playingPiece, possibleMoves.get(r), board, computer, player);
                 // if the turn is complete, add the amount of dice for the current move to total dice used and break the statement
                 if (turnComplete) {
+                    // reset the temp pieces
+                    tempPieces = (ArrayList<Piece>) computer.playerPieces.clone();
                     if (maxMoves == 2) {
                         if (r == 0 || r == 1) {
                             if (possibleMoves.size() > 1) {
@@ -83,14 +84,27 @@ public class Computer extends Player{
             // if the turn is not compelete, the piece cannot be played
             if (!turnComplete) {
                 tempPieces.remove(playingPiece);
-                System.out.println("Piece " + playingPiece + " is unusable");
             }
         }
     }
 
     // Choose a random piece
     public Piece randPiece(ArrayList<Piece> c) {
-        return c.get(rand.nextInt(c.size()));
+        if (c.size() == 0) {
+            return null;
+        }
+
+        Piece tempPiece = c.get(rand.nextInt(c.size()));
+
+        while (tempPiece.getBoardLocation() == 26) {
+            c.remove(tempPiece);
+            if (c.size() == 0) {
+                return null;
+            }
+            tempPiece = c.get(rand.nextInt(c.size()));
+        }
+
+        return tempPiece;
     }
 
     // Determines if the piece can take a turn, returns true if move is valid and places piece, returns false otherwise

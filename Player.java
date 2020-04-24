@@ -142,12 +142,11 @@ public class Player {
     }
 
     // Handle the move
-    // TODO: Once we are using clicks, change parameters and uncomment... int pieceID = Piece piece
     public boolean makeMove(Board b, Player p, Player opponent, Piece piece, int roll, boolean move) {
         boolean valid;
-        //TODO: uncomment the comment below and comment out the line below that
+        boolean printStatements;
+        String message = "";
         int pieceID = piece.getID();
-        //Piece piece = p.getPiece(pieceID);
         int fromSpike = piece.getBoardLocation();
         int targetSpike = 0;
 
@@ -155,7 +154,7 @@ public class Player {
         if (p.getTeam().equals("BLK")) {
             targetSpike = fromSpike - roll;
             if (targetSpike < 1) {
-                targetSpike = 25;
+                targetSpike = 26;
             }
             if (piece.getBlot()) {
                 targetSpike = 25 - roll;
@@ -164,14 +163,22 @@ public class Player {
         if (p.getTeam().equals("RED")) {
             targetSpike = fromSpike + roll;
             if (targetSpike > 24) {
-                targetSpike = 26;
+                targetSpike = 25;
             }
             if (piece.getBlot()) {
                 targetSpike = roll;
             }
         }
 
-        valid = validateMove(b, p, opponent, pieceID, fromSpike, targetSpike, roll);
+        if (!move || p.getTeam().equals("BLK")) {
+            printStatements = false;
+        } else {
+            printStatements = true;
+        }
+
+
+
+        valid = validateMove(b, p, opponent, pieceID, fromSpike, targetSpike, roll, printStatements);
         if (move) {
             if (valid) {
                 if (piece.getBlot()) {
@@ -179,18 +186,22 @@ public class Player {
                 }
                 b.getSpike(fromSpike).removeFromSpike(p.getPiece(pieceID));
                 b.getSpike(targetSpike).addToSpike(p.getPiece(pieceID));
-                System.out.println("Move complete\n");
+                message = "Move complete\n";
             } else {
-                System.out.println("Move Incomplete... Try Again!\n");
+                message = "Move Incomplete... Try Again!\n";
             }
+        }
+
+        if (p.getTeam().equals("RED")) {
+            System.out.print(message);
         }
 
         return valid;
     }
 
     // Validate the the selected move
-    public boolean validateMove(Board b, Player p, Player opponent, int pieceID, int fromSpike, int targetSpike, int roll) {
-        System.out.println("\nValidating Move...");
+    public boolean validateMove(Board b, Player p, Player opponent, int pieceID, int fromSpike, int targetSpike, int roll, boolean printStatements) {
+        String message = "\nValidating Move...\n";
         Spike current = b.getSpike(targetSpike);
         boolean bearingOff = false;
         if (targetSpike == 25 || targetSpike == 26) {
@@ -199,7 +210,6 @@ public class Player {
 
 
         // Case 1: player has a blot hit, must choose to play blot
-        boolean blotHit = p.getBlotHit();
         boolean blotChoosen = false;
         if (p.getBlotPieces().size() != 0) {
             for (Piece blotPiece : p.blotPieces) {
@@ -209,7 +219,10 @@ public class Player {
                 }
             }
             if (!blotChoosen) {
-                System.out.println("Invalid Move - blot must be played");
+                message = message + "Invalid Move - blot must be played\n";
+                if (printStatements) {
+                    System.out.print(message);
+                }
                 return false;
             }
         }
@@ -218,7 +231,10 @@ public class Player {
         if (bearingOff) {
             // if all of the player pieces are not home, move is invalid
             if (!p.allHome()) {
-                System.out.println("Invalid Move - all pieces must be home before bearing off");
+                message = message + "Invalid Move - all pieces must be home before bearing off\n";
+                if (printStatements) {
+                    System.out.print(message);
+                }
                 return false;
             }
 
@@ -228,7 +244,7 @@ public class Player {
             if (p.getTeam().equals("BLK")) {
                 distance = fromSpike;
                 for (Piece piece1 : p.playerPieces) {
-                    if (piece1.getBoardLocation() > furthest) {
+                    if (piece1.getBoardLocation() != 26 && piece1.getBoardLocation() > furthest) {
                         furthest = piece1.getBoardLocation();
                     }
                 }
@@ -244,23 +260,32 @@ public class Player {
 
             // if the roll is higher then the distance and there is a further piece, move is invalid
             if (roll > distance && furthest > distance) {
-                System.out.println("Invalid Move - must choose furthest piece");
+                message = message + "Invalid Move - must choose furthest piece\n";
+                if (printStatements) {
+                    System.out.print(message);
+                }
                 return false;
             }
 
             p.bearOffAPiece(pieceID);
+            if (printStatements) {
+                System.out.print(message);
+            }
             return true;
 
         } else {
             // Case 3: other team is on this spike with more than one piece
             if (( !current.getCurrentTeam().equals(p.getPiece(pieceID).getColor()) ) & current.getPiecesOnSpike().size() > 1) {
-                System.out.println("Invalid Move - other team is occupying spike already");
+                message = message + "Invalid Move - other team is occupying spike already\n";
+                if (printStatements) {
+                    System.out.print(message);
+                }
                 return false;
             }
 
             // Case 4: blot occrus, other team is on this spike with one piece, move is valid
             else if (!current.getCurrentTeam().equals(p.getPiece(pieceID).getColor()) & current.getPiecesOnSpike().size() == 1) {
-                System.out.println("Valid Move - blot!");
+                //message = message + "Valid Move - blot!\n";
                 // add to blotHit to individual piece and opponent
                 opponent.switchBlotHit(b.getSpike(targetSpike).getPiecesOnSpike().get(0));
                 // add that piece to blots
@@ -268,18 +293,27 @@ public class Player {
                 // remove piece from board
                 b.getSpike(targetSpike).removeFromSpike(b.getSpike(targetSpike).getPiecesOnSpike().get(0));
                 // return to complete move
+                if (printStatements) {
+                    System.out.print(message);
+                }
                 return true;
             }
 
             // Case 5: you already have 5 pieces on this spike
             else if (current.getCurrentTeam().equals(p.getPiece(pieceID).getColor()) & current.getPiecesOnSpike().size() == 5) {
-                System.out.println("Invalid Move - maximum pieces on spike");
+                message = message + "Invalid Move - maximum pieces on spike\n";
+                if (printStatements) {
+                    System.out.print(message);
+                }
                 return false;
             }
 
             // Case 6: assume valid move
             else {
-                System.out.println("Valid Move - Not in any cases");
+                //message = message + "Valid Move - Not in any cases\n";
+                if (printStatements) {
+                    System.out.print(message);
+                }
                 return true;
             }
         }

@@ -47,7 +47,7 @@ public class BackgammonGui extends Application {
         //borderPane = new BorderPane();
         //borderPane.setStyle("-fx-border-color: black");
 
-        windowHeight = 700;
+        windowHeight = 665;
         windowWidth = 1100;
 
         // initializing clicks
@@ -116,7 +116,6 @@ public class BackgammonGui extends Application {
                         c.setSelected(true);
                         c.setFill(Color.YELLOW);
                     }
-                    System.out.println(playerRED.getBlotPieces().toString());
 
                     // handle if piece is red
                     if (c.getPiece().getColor().equals("RED")) {
@@ -124,11 +123,11 @@ public class BackgammonGui extends Application {
                         leftDie.setOnAction(new EventHandler<ActionEvent>() {
                             public void handle(ActionEvent e) {
                                 // handle if already selected
-                                if (lClicked) {
-                                    System.out.println("Already Used that Dice");
+                                if (playerMovesLeft == 0) {
+                                    System.out.println("\nRoll Again.");
+                                } else if (lClicked) {
+                                    System.out.println("\nAlready Used that Dice.");
                                     c.setSelected(false);
-                                } else if (playerMovesLeft == 0) {
-                                    System.out.println("Roll Again");
                                 } else if (c.getSelected()) {
                                     // handle if player can make move
                                     if (playerRED.makeMove(board, playerRED, playerBLK, c.getPiece(), lDie, true)) {
@@ -142,8 +141,6 @@ public class BackgammonGui extends Application {
                                             playerBLK.playComp(board.roll(), board, playerBLK, playerRED);
                                             alignPieces(board, playerRED, playerBLK, true);
                                         }
-                                    } else {
-                                        System.out.println("Invalid Move.");
                                     }
                                 }
                                 c.setFill(Color.RED);
@@ -154,11 +151,11 @@ public class BackgammonGui extends Application {
                         rightDie.setOnAction(new EventHandler<ActionEvent>() {
                             // same as left die, except it handles everything for the right die
                             public void handle(ActionEvent e) {
-                                if (rClicked) {
-                                    System.out.println("Already Used that Dice");
+                                if (playerMovesLeft == 0) {
+                                    System.out.println("\nRoll Again.");
+                                } else if (rClicked) {
+                                    System.out.println("\nAlready Used that Dice.");
                                     c.setSelected(false);
-                                } else if (playerMovesLeft == 0) {
-                                    System.out.println("Roll Again");
                                 } else if (c.getSelected()) {
                                     // handle if player can make move
                                     if (playerRED.makeMove(board, playerRED, playerBLK, c.getPiece(), rDie, true)) {
@@ -172,8 +169,6 @@ public class BackgammonGui extends Application {
                                             playerBLK.playComp(board.roll(), board, playerBLK, playerRED);
                                             alignPieces(board, playerRED, playerBLK, true);
                                         }
-                                    } else {
-                                        System.out.println("Invalid Move.");
                                     }
                                 }
                                 c.setFill(Color.RED);
@@ -191,23 +186,8 @@ public class BackgammonGui extends Application {
 
         // creating & positioning rolldice button
         skipTurn = new Button("Skip Turn");
-        skipTurn.setLayoutX(windowWidth - 100);
-        skipTurn.setLayoutY(350);
-
-        // creating & positioning rolldice button
-        rollDice = new Button("Roll Dice");
-        rollDice.setLayoutX(windowWidth - 100);
-        rollDice.setLayoutY(300);
-
-        // initialize leftDie
-        leftDie = new Button("  ");
-        leftDie.setLayoutX(windowWidth - 100);
-        leftDie.setLayoutY(265);
-
-        // initialize rightDie
-        rightDie = new Button("  ");
-        rightDie.setLayoutX(windowWidth - 60);
-        rightDie.setLayoutY(265);
+        skipTurn.setLayoutX(windowWidth - 102);
+        skipTurn.setLayoutY(335);
 
         skipTurn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -222,13 +202,12 @@ public class BackgammonGui extends Application {
                         validTurnExists = playerRED.makeMove(board, playerRED, playerBLK, p, rDie, false);
                     }
                     if (validTurnExists) {
-                        System.out.println("Valid move using piece: " + p + " currently located on: " + p.getBoardLocation());
                         break;
                     }
                 }
 
                 if (!validTurnExists) {
-                    System.out.println("Skipped turn.");
+                    System.out.println("\nSkipped turn.\n");
                     lClicked = true;
                     rClicked = true;
                     playerMovesLeft = 0;
@@ -241,6 +220,11 @@ public class BackgammonGui extends Application {
 
             }
         });
+
+        // creating & positioning rolldice button
+        rollDice = new Button("Roll Dice");
+        rollDice.setLayoutX(windowWidth - 100);
+        rollDice.setLayoutY(300);
 
         // handling rollDice events
         rollDice.setOnAction(new EventHandler<ActionEvent>() {
@@ -271,6 +255,10 @@ public class BackgammonGui extends Application {
             }
         });
 
+        // initialize leftDie
+        leftDie = new Button("  ");
+        leftDie.setLayoutX(windowWidth - 100);
+        leftDie.setLayoutY(265);
 
         // handling leftDie pressed BEFORE piece selected
         leftDie.setOnAction(new EventHandler<ActionEvent>() {
@@ -278,6 +266,11 @@ public class BackgammonGui extends Application {
                 System.out.println("Select Piece before die");
             }
         });
+
+        // initialize rightDie
+        rightDie = new Button("  ");
+        rightDie.setLayoutX(windowWidth - 60);
+        rightDie.setLayoutY(265);
 
         // handling rightDie pressed BEFORE piece selected
         rightDie.setOnAction(new EventHandler<ActionEvent>() {
@@ -288,9 +281,8 @@ public class BackgammonGui extends Application {
 
         // creating & positioning exit button
         exit = new Button("Exit Game");
-        exit.setLayoutX(windowWidth - 100);
+        exit.setLayoutX(windowWidth - 105);
         exit.setLayoutY(600);
-
 
         // handling exit event
         exit.setOnAction(new EventHandler<ActionEvent>() {
@@ -300,33 +292,48 @@ public class BackgammonGui extends Application {
         });
 
         // creating text
-        Text blotsTitleComp = new Text(windowWidth - 120, 110, "Computer Blots: ");
-        blotsTitleComp.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 10));
-        Text blotsTitlePlayer = new Text(windowWidth - 120, 560, "Player Blots: ");
-        blotsTitlePlayer.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 10));
-        Text p1Home = new Text(600, windowHeight - 50, "Player 1's Home:");
-        p1Home.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
-        Text p2Home = new Text(600, 30, "Player 2's Home:");
-        p2Home.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        Text blotsTitleComp = new Text(windowWidth - 120, 110, "Computer Blots");
+        blotsTitleComp.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 12));
 
-        // add line to create right column
+        Text blotsTitlePlayer = new Text(windowWidth - 105, 565, "Player Blots");
+        blotsTitlePlayer.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 12));
+
+        Text computerHomeText = new Text(120, 75, "Computer Home:");
+        computerHomeText.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 60));
+
+        Text playerHomeText = new Text(237, windowHeight - 30, "Player Home:");
+        playerHomeText.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 60));
+
+
+        // creating lines
         Line rightColumnLine = new Line(965, 0, 965, windowHeight);
         rightColumnLine.setStroke(Color.BLACK);
         rightColumnLine.setStrokeWidth(8);
 
+        Line topLine = new Line(0, 110, 965, 110);
+        topLine.setStroke(Color.BLACK);
+        topLine.setStrokeWidth(8);
+
+        Line bottomLine = new Line(0, windowHeight - 110, 965, windowHeight - 110);
+        bottomLine.setStroke(Color.BLACK);
+        bottomLine.setStrokeWidth(8);
+
+        // add items to group
         group.getChildren().add(grid);
         group.getChildren().add(blotsTitleComp);
         group.getChildren().add(blotsTitlePlayer);
-        group.getChildren().add(p1Home);
-        group.getChildren().add(p2Home);
+        group.getChildren().add(playerHomeText);
+        group.getChildren().add(computerHomeText);
         group.getChildren().add(rightColumnLine);
+        group.getChildren().add(topLine);
+        group.getChildren().add(bottomLine);
         group.getChildren().add(skipTurn);
         group.getChildren().add(rollDice);
         group.getChildren().add(leftDie);
         group.getChildren().add(rightDie);
         group.getChildren().add(exit);
 
-        Scene scene = new Scene(group, windowWidth, windowHeight);
+        Scene scene = new Scene(group, windowWidth, windowHeight, Color.rgb(235, 217, 198));
         primaryStage.setScene(scene);
         primaryStage.show();
 
@@ -369,9 +376,7 @@ public class BackgammonGui extends Application {
         SpikeFX homeSpikeBottom = new SpikeFX(board.getSpike(25));
         grid.add(homeSpikeBottom, 10, 3);
 
-        //maybe add vgap?
-        grid.setVgap(100);
-
+        grid.setVgap(75);
 
         for (int p = 0; p < FXPieces.size(); p++) {
 
@@ -411,8 +416,18 @@ public class BackgammonGui extends Application {
             for (int p = 0; p < b.getBoard().get(s).getPiecesOnSpike().size(); p++) {
                 Piece current = b.getBoard().get(s).getPiecesOnSpike().get(p);
                 PieceFX currentFX = getFXPieceAtID(FXPieces, current.getColor(), current.getID());
-                if (b.getBoard().get(s).getSpikeID() >= 25) {
-                    currentFX.setTranslateY(0.0);
+                if (b.getBoard().get(s).getSpikeID() == 27) {
+                    if (current.getColor().equals("RED")) {
+                        currentFX.setTranslateY(70.0);
+                    } else {
+                        currentFX.setTranslateY(-70.0);
+                    }
+                } else if (b.getBoard().get(s).getSpikeID() == 26 || b.getBoard().get(s).getSpikeID() == 25) {
+                    if (current.getColor().equals("RED")) {
+                        currentFX.setTranslateY(-30.0);
+                    } else {
+                        currentFX.setTranslateY(30.0);
+                    }
                 } else if (b.getBoard().get(s).getSpikeID() >= 13) {
                     if (p == 0) {
                         currentFX.setTranslateY(-70.0);
@@ -449,7 +464,6 @@ public class BackgammonGui extends Application {
 
         // check for a winner
         if (computer.hasWon() || player.hasWon()) {
-            System.out.println("A PLAYER HAS WON");
             String message;
             if (computer.hasWon()) {
                 message = "The computer has won! Game over.";

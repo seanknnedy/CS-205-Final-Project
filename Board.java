@@ -94,7 +94,7 @@ public class Board {
       Piece red15 = new Piece(team1, 0, 0, 15);
 
       //adding red pieces to board
-      
+      /*
       getSpike(1).addToSpike(red1);
       getSpike(1).addToSpike(red2);
       getSpike(12).addToSpike(red3);
@@ -111,23 +111,25 @@ public class Board {
       getSpike(19).addToSpike(red14);
       getSpike(19).addToSpike(red15);
 
-      /*
-      getSpike(23).addToSpike(red1);
-      getSpike(23).addToSpike(red2);
-      getSpike(23).addToSpike(red3);
-      getSpike(23).addToSpike(red4);
-      getSpike(23).addToSpike(red5);
-      getSpike(22).addToSpike(red6);
-      getSpike(22).addToSpike(red7);
-      getSpike(22).addToSpike(red8);
-      getSpike(22).addToSpike(red9);
-      getSpike(22).addToSpike(red10);
-      getSpike(20).addToSpike(red11);
-      getSpike(20).addToSpike(red12);
-      getSpike(20).addToSpike(red13);
-      getSpike(20).addToSpike(red14);
-      getSpike(20).addToSpike(red15);
-      */
+       */
+
+
+      getSpike(15).addToSpike(red1);
+      getSpike(15).addToSpike(red2);
+      getSpike(15).addToSpike(red3);
+      getSpike(15).addToSpike(red4);
+      getSpike(15).addToSpike(red5);
+      getSpike(19).addToSpike(red6);
+      getSpike(19).addToSpike(red7);
+      getSpike(19).addToSpike(red8);
+      getSpike(19).addToSpike(red9);
+      getSpike(19).addToSpike(red10);
+      getSpike(18).addToSpike(red11);
+      getSpike(18).addToSpike(red12);
+      getSpike(18).addToSpike(red13);
+      getSpike(18).addToSpike(red14);
+      getSpike(18).addToSpike(red15);
+
 
       //adding pieces to player 1 arraylist
       p1.add(red1);
@@ -164,6 +166,7 @@ public class Board {
       Piece black15 = new Piece(team2, 0, 0, 15);
 
       //adding black pieces to board
+      /*
       getSpike(24).addToSpike(black1);
       getSpike(24).addToSpike(black2);
       getSpike(13).addToSpike(black3);
@@ -179,6 +182,25 @@ public class Board {
       getSpike(6).addToSpike(black13);
       getSpike(6).addToSpike(black14);
       getSpike(6).addToSpike(black15);
+
+       */
+
+      getSpike(2).addToSpike(black1);
+      getSpike(2).addToSpike(black2);
+      getSpike(2).addToSpike(black3);
+      getSpike(2).addToSpike(black4);
+      getSpike(2).addToSpike(black5);
+      getSpike(3).addToSpike(black6);
+      getSpike(3).addToSpike(black7);
+      getSpike(3).addToSpike(black8);
+      getSpike(3).addToSpike(black9);
+      getSpike(3).addToSpike(black10);
+      getSpike(4).addToSpike(black11);
+      getSpike(4).addToSpike(black12);
+      getSpike(4).addToSpike(black13);
+      getSpike(4).addToSpike(black14);
+      getSpike(4).addToSpike(black15);
+
 
       //adding pieces to player 2 list
       p2.add(black1);
