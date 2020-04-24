@@ -66,23 +66,25 @@ public class Player {
         return this.playerPieces.get(id - 1);
     }
 
-    /*
-    public ArrayList<Piece> getPlayerPieces() {
-        return playerPieces
+    public ArrayList<Piece> getBlotPieces() {
+        return blotPieces;
     }
-
-     */
 
 
     /**************************************************** Methods *****************************************************/
     // Set blotHit status
     public void switchBlotHit(Piece p) {
-        blotHit = !blotHit;
-        p.switchBlot();
-        if(blotHit) {
-            blotPieces.add(p);
-        } else {
+
+        if(p.getBlot()) {
             blotPieces.remove(p);
+        } else {
+            blotPieces.add(p);
+        }
+
+        p.switchBlot();
+
+        if (this.getBlotPieces().size() == 0) {
+            blotHit = !blotHit;
         }
     }
 
@@ -141,7 +143,7 @@ public class Player {
 
     // Handle the move
     // TODO: Once we are using clicks, change parameters and uncomment... int pieceID = Piece piece
-    public boolean makeMove(Board b, Player p, Player opponent, Piece piece, int roll) {
+    public boolean makeMove(Board b, Player p, Player opponent, Piece piece, int roll, boolean move) {
         boolean valid;
         //TODO: uncomment the comment below and comment out the line below that
         int pieceID = piece.getID();
@@ -170,15 +172,17 @@ public class Player {
         }
 
         valid = validateMove(b, p, opponent, pieceID, fromSpike, targetSpike, roll);
-        if(valid) {
-            if (piece.getBlot()) {
-                p.switchBlotHit(p.getPiece(pieceID));
+        if (move) {
+            if (valid) {
+                if (piece.getBlot()) {
+                    p.switchBlotHit(p.getPiece(pieceID));
+                }
+                b.getSpike(fromSpike).removeFromSpike(p.getPiece(pieceID));
+                b.getSpike(targetSpike).addToSpike(p.getPiece(pieceID));
+                System.out.println("Move complete\n");
+            } else {
+                System.out.println("Move Incomplete... Try Again!\n");
             }
-            b.getSpike(fromSpike).removeFromSpike(p.getPiece(pieceID));
-            b.getSpike(targetSpike).addToSpike(p.getPiece(pieceID));
-            System.out.println("Move complete\n");
-        } else {
-            System.out.println("Move Incomplete... Try Again!\n");
         }
 
         return valid;
@@ -193,10 +197,11 @@ public class Player {
             bearingOff = true;
         }
 
+
         // Case 1: player has a blot hit, must choose to play blot
         boolean blotHit = p.getBlotHit();
         boolean blotChoosen = false;
-        if (blotHit) {
+        if (p.getBlotPieces().size() != 0) {
             for (Piece blotPiece : p.blotPieces) {
                 if (blotPiece.getID() == pieceID) {
                     blotChoosen = true;

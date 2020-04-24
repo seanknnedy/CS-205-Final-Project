@@ -22,7 +22,6 @@ public class Computer extends Player{
         // add all the possible moves to the array
         ArrayList<Integer> possibleMoves = new ArrayList<Integer>();
 
-        int diceUsed = 0;
         int maxMoves;
         boolean turnComplete = false;
 
@@ -65,8 +64,16 @@ public class Computer extends Player{
                             possibleMoves.clear();
                         }
                     } else {
-                        while (possibleMoves.size() != (r - 1)) {
-                            possibleMoves.remove(possibleMoves.size() - 1);
+                        if (possibleMoves.size() == r) {
+                            possibleMoves.clear();
+                        } else {
+                            while (possibleMoves.size() > (r - 1)) {
+                                if (possibleMoves.size() != 0) {
+                                    possibleMoves.remove(possibleMoves.size() - 1);
+                                } else {
+                                    break;
+                                }
+                            }
                         }
                     }
                     break;
@@ -88,7 +95,7 @@ public class Computer extends Player{
 
     // Determines if the piece can take a turn, returns true if move is valid and places piece, returns false otherwise
     public boolean takeTurn(Piece p, int roll, Board b, Computer computer, Player player) {
-        return super.makeMove(b, computer, player, p, roll);
+        return super.makeMove(b, computer, player, p, roll, true);
 
     }
 }

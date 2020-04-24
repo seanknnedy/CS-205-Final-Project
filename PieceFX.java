@@ -20,6 +20,7 @@ public class PieceFX extends Circle {
    private int xCoord;
    private int yCoord;
    private boolean selected;
+   private boolean isBlot;
    //private Circle circle = new Circle();
 
    //Creates FX object representation of Piece
@@ -27,6 +28,7 @@ public class PieceFX extends Circle {
    public PieceFX(Piece p, Board b) { //, double xPos, double yPos) {
       this.selected = false;
       this.piece = p;
+      this.isBlot = false;
       //these are spike locations
       this.xCoord = p.getX();
       this.yCoord = p.getY();
@@ -55,6 +57,11 @@ public class PieceFX extends Circle {
    public int getY() {
       return yCoord;
    }
+
+   //retrieves if FX piece is a blot
+   public boolean getBlot() {
+      return isBlot;
+   }
    
    //set x spike coord
    public void setX(int x) {
@@ -64,6 +71,15 @@ public class PieceFX extends Circle {
    //set y spike coord
    public void setY(int y) {
       this.yCoord = y;
+   }
+
+   //retrieves if FX piece is a blot
+   public void setBlot(boolean b) {
+      this.isBlot = b;
+      if (isBlot) {
+         this.xCoord = 0;
+         this.yCoord = 0;
+      }
    }
    
    //retrieves piece object

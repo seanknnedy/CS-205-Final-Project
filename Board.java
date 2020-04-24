@@ -40,7 +40,7 @@ public class Board {
       Spike spike1 = new Spike(12, 2, 1);
       // spikes for both homes (where bear off pieces go) and for the blot area
       Spike spike25 = new Spike(0, 0, 25);
-      Spike spike26 = new Spike(0, 0, 26);
+      Spike spike26 = new Spike(0, 3, 26);
       Spike spike27 = new Spike(0, 0, 27);
 
       //initializing board: array of spikes
@@ -94,6 +94,7 @@ public class Board {
       Piece red15 = new Piece(team1, 0, 0, 15);
 
       //adding red pieces to board
+      /*
       getSpike(1).addToSpike(red1);
       getSpike(1).addToSpike(red2);
       getSpike(12).addToSpike(red3);
@@ -109,6 +110,24 @@ public class Board {
       getSpike(19).addToSpike(red13);
       getSpike(19).addToSpike(red14);
       getSpike(19).addToSpike(red15);
+
+       */
+
+      getSpike(23).addToSpike(red1);
+      getSpike(23).addToSpike(red2);
+      getSpike(23).addToSpike(red3);
+      getSpike(23).addToSpike(red4);
+      getSpike(23).addToSpike(red5);
+      getSpike(22).addToSpike(red6);
+      getSpike(22).addToSpike(red7);
+      getSpike(22).addToSpike(red8);
+      getSpike(22).addToSpike(red9);
+      getSpike(22).addToSpike(red10);
+      getSpike(20).addToSpike(red11);
+      getSpike(20).addToSpike(red12);
+      getSpike(20).addToSpike(red13);
+      getSpike(20).addToSpike(red14);
+      getSpike(20).addToSpike(red15);
 
       //adding pieces to player 1 arraylist
       p1.add(red1);
