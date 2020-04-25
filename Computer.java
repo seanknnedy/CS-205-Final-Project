@@ -44,7 +44,7 @@ public class Computer extends Player{
             Piece playingPiece = randPiece(tempPieces);
 
             if (tempPieces.size() == 0 || playingPiece == null) {
-                System.out.println("No possible move. Player's Turn!");
+                System.out.println("\nNo possible move. Player's Turn!");
                 break;
             }
 

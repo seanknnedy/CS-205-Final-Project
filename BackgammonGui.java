@@ -76,9 +76,10 @@ public class BackgammonGui extends Application {
         SpikeFX blotSpike2 = new SpikeFX(board.getSpike(27));
         grid.add(blotSpike2, 13, 2);
 
-        SpikeFX homeSpikeTop = new SpikeFX(board.getSpike(26));
+        SpikeFX homeSpikeTop = new SpikeFX(board.getSpike(25));
         grid.add(homeSpikeTop, 10, 0);
-        SpikeFX homeSpikeBottom = new SpikeFX(board.getSpike(25));
+
+        SpikeFX homeSpikeBottom = new SpikeFX(board.getSpike(26));
         grid.add(homeSpikeBottom, 10, 3);
 
         grid.setVgap(75);
@@ -124,9 +125,9 @@ public class BackgammonGui extends Application {
                             public void handle(ActionEvent e) {
                                 // handle if already selected
                                 if (playerMovesLeft == 0) {
-                                    System.out.println("\nRoll Again.");
+                                    System.out.println("\nAlready Used That Roll. Roll Again.");
                                 } else if (lClicked) {
-                                    System.out.println("\nAlready Used that Dice.");
+                                    System.out.println("\nAlready Used That Dice.");
                                     c.setSelected(false);
                                 } else if (c.getSelected()) {
                                     // handle if player can make move
@@ -152,9 +153,9 @@ public class BackgammonGui extends Application {
                             // same as left die, except it handles everything for the right die
                             public void handle(ActionEvent e) {
                                 if (playerMovesLeft == 0) {
-                                    System.out.println("\nRoll Again.");
+                                    System.out.println("\nAlready Used That Roll. Roll Again.");
                                 } else if (rClicked) {
-                                    System.out.println("\nAlready Used that Dice.");
+                                    System.out.println("\nAlready Used That Dice.");
                                     c.setSelected(false);
                                 } else if (c.getSelected()) {
                                     // handle if player can make move
@@ -298,10 +299,10 @@ public class BackgammonGui extends Application {
         Text blotsTitlePlayer = new Text(windowWidth - 105, 565, "Player Blots");
         blotsTitlePlayer.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 12));
 
-        Text computerHomeText = new Text(120, 75, "Computer Home:");
+        Text computerHomeText = new Text(120, windowHeight - 30, "Computer Home:");
         computerHomeText.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 60));
 
-        Text playerHomeText = new Text(237, windowHeight - 30, "Player Home:");
+        Text playerHomeText = new Text(237, 75, "Player Home:");
         playerHomeText.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 60));
 
 
@@ -370,10 +371,10 @@ public class BackgammonGui extends Application {
         SpikeFX blotSpike2 = new SpikeFX(board.getSpike(27));
         grid.add(blotSpike2, 13, 2);
 
-        SpikeFX homeSpikeTop = new SpikeFX(board.getSpike(26));
+        SpikeFX homeSpikeTop = new SpikeFX(board.getSpike(25));
         grid.add(homeSpikeTop, 10, 0);
 
-        SpikeFX homeSpikeBottom = new SpikeFX(board.getSpike(25));
+        SpikeFX homeSpikeBottom = new SpikeFX(board.getSpike(26));
         grid.add(homeSpikeBottom, 10, 3);
 
         grid.setVgap(75);
@@ -394,9 +395,9 @@ public class BackgammonGui extends Application {
                 }
             } else if (FXPieces.get(p).getPiece().getX() == 0) {
                 if (FXPieces.get(p).getPiece().getColor().equals("RED")) {
-                    grid.add(FXPieces.get(p), 10, 3);
-                } else {
                     grid.add(FXPieces.get(p), 10, 0);
+                } else {
+                    grid.add(FXPieces.get(p), 10, 3);
                 }
             } else {
                 if (FXPieces.get(p).getPiece().getColor().equals("RED")) {
@@ -424,9 +425,9 @@ public class BackgammonGui extends Application {
                     }
                 } else if (b.getBoard().get(s).getSpikeID() == 26 || b.getBoard().get(s).getSpikeID() == 25) {
                     if (current.getColor().equals("RED")) {
-                        currentFX.setTranslateY(-30.0);
-                    } else {
                         currentFX.setTranslateY(30.0);
+                    } else {
+                        currentFX.setTranslateY(-30.0);
                     }
                 } else if (b.getBoard().get(s).getSpikeID() >= 13) {
                     if (p == 0) {
