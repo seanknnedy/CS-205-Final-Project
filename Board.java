@@ -94,7 +94,7 @@ public class Board {
       Piece red15 = new Piece(team1, 0, 0, 15);
 
       //adding red pieces to board
-      /*
+
       getSpike(1).addToSpike(red1);
       getSpike(1).addToSpike(red2);
       getSpike(12).addToSpike(red3);
@@ -111,8 +111,8 @@ public class Board {
       getSpike(19).addToSpike(red14);
       getSpike(19).addToSpike(red15);
 
-       */
 
+/*
 
       getSpike(15).addToSpike(red1);
       getSpike(15).addToSpike(red2);
@@ -129,6 +129,8 @@ public class Board {
       getSpike(18).addToSpike(red13);
       getSpike(18).addToSpike(red14);
       getSpike(18).addToSpike(red15);
+
+       */
 
 
       //adding pieces to player 1 arraylist
@@ -166,7 +168,7 @@ public class Board {
       Piece black15 = new Piece(team2, 0, 0, 15);
 
       //adding black pieces to board
-      /*
+
       getSpike(24).addToSpike(black1);
       getSpike(24).addToSpike(black2);
       getSpike(13).addToSpike(black3);
@@ -183,7 +185,7 @@ public class Board {
       getSpike(6).addToSpike(black14);
       getSpike(6).addToSpike(black15);
 
-       */
+       /*
 
       getSpike(2).addToSpike(black1);
       getSpike(2).addToSpike(black2);
@@ -200,6 +202,8 @@ public class Board {
       getSpike(4).addToSpike(black13);
       getSpike(4).addToSpike(black14);
       getSpike(4).addToSpike(black15);
+
+        */
 
 
       //adding pieces to player 2 list
