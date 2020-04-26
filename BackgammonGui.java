@@ -3,24 +3,18 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.geometry.HPos;
 import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Button;
 import javax.swing.JOptionPane;
 import java.awt.*;
 import java.util.ArrayList;
-import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.FontPosture;
@@ -53,7 +47,7 @@ public class BackgammonGui extends Application {
         rClicked = false;
 
         FXPieces = new ArrayList<PieceFX>();
-        
+
         // create players
         Player playerRED = new Player(7, 12, 1, "RED");
         Computer playerBLK = new Computer(7, 12, 2, "BLK");
@@ -70,7 +64,7 @@ public class BackgammonGui extends Application {
             SpikeFX spike = new SpikeFX(board.getBoard().get(c + 12));
             grid.add(spike, c, 2);
         }
-        
+
         SpikeFX blotSpike1 = new SpikeFX(board.getSpike(27));
         grid.add(blotSpike1, 13, 1);
         SpikeFX blotSpike2 = new SpikeFX(board.getSpike(27));
@@ -224,12 +218,12 @@ public class BackgammonGui extends Application {
         rollDice = new Button("Roll Dice");
         rollDice.setLayoutX(windowWidth - 100);
         rollDice.setLayoutY(300);
-        
+
         // initialize rightDie
         rightDie = new Button("  ");
         rightDie.setLayoutX(windowWidth - 60);
         rightDie.setLayoutY(265);
-        
+
         // initialize leftDie
         leftDie = new Button("  ");
         leftDie.setLayoutX(windowWidth - 100);
@@ -249,17 +243,17 @@ public class BackgammonGui extends Application {
 
                     // creating & positioning left die
                     leftDie.setText(Integer.toString(lDie));
-                    
+
                     // handling leftDie pressed BEFORE piece selected
                     leftDie.setOnAction(new EventHandler<ActionEvent>() {
                         public void handle(ActionEvent e) {
                             errorSelectPiece();
                         }
                     });
-            
+
                     // creating & positioning right die
                     rightDie.setText(Integer.toString(rDie));
-                    
+
                     // handling rightDie pressed BEFORE piece selected
                     rightDie.setOnAction(new EventHandler<ActionEvent>() {
                         public void handle(ActionEvent e) {
@@ -277,7 +271,7 @@ public class BackgammonGui extends Application {
                 }
             }
         });
-        
+
         // handling leftDie pressed BEFORE piece selected
         leftDie.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
@@ -362,7 +356,7 @@ public class BackgammonGui extends Application {
 
     public void drawBoard(Board b) {
         this.grid.getChildren().clear();
-        
+
         for (int r = 0; r < 12; r++) {
             for (int c = 1; c < 3; c++) {
                 if (c == 2) {
@@ -421,7 +415,7 @@ public class BackgammonGui extends Application {
             }
         }
     }
-    
+
     // aligns pieces in proper spots on spikes
     public void alignPieces(Board b, Player player, Computer computer, boolean move) {
         for (int s = 0; s < b.getBoard().size(); s++) {
@@ -487,13 +481,14 @@ public class BackgammonGui extends Application {
 
     }
 
-/* ------------------------------------------------------ Pop-Up Messages/Errors ------------------------------------------------------*/
+    /* ------------------------------------------------------ Pop-Up Messages/Errors ------------------------------------------------------*/
 
     //Displays message in jOptionPane
     private void ShowMessage(String message) {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
+                Object[] option = {"OKAY"};
                 JOptionPane.showOptionDialog(null, message,
                         "Game Over", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
                         null, option, option[0]);
@@ -501,22 +496,24 @@ public class BackgammonGui extends Application {
             }
         });
     }
-    
+
     private void errorRoll() {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
+                Object[] option = {"OKAY"};
                 JOptionPane.showOptionDialog(null, "Please roll dice.",
                         "Roll Dice", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
                         null, option, option[0]);
             }
         });
     }
-    
+
     private void errorAlreadyRolled() {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
+                Object[] option = {"OKAY"};
                 JOptionPane.showOptionDialog(null, "You can only roll dice once a turn.\nPlease play roll.",
                         "Already Rolled", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
                         null, option, option[0]);
@@ -524,29 +521,31 @@ public class BackgammonGui extends Application {
         });
     }
 
-    
+
     private void errorDieUsed() {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
+                Object[] option = {"OKAY"};
                 JOptionPane.showOptionDialog(null, "You have already used this die.\nPlease use other roll.\nIF other die unusable, Skip Turn.",
                         "Die Used", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
                         null, option, option[0]);
             }
         });
     }
-    
+
     private void errorSelectPiece() {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
+                Object[] option = {"OKAY"};
                 JOptionPane.showOptionDialog(null, "Select a piece before a die.",
                         "Select Piece", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
                         null, option, option[0]);
             }
         });
     }
-    
+
     private void errorValidMove() {
         EventQueue.invokeLater(new Runnable() {
             @Override
@@ -558,5 +557,5 @@ public class BackgammonGui extends Application {
             }
         });
     }
-    
+
 }
