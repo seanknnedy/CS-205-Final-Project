@@ -208,7 +208,7 @@ public class BackgammonGui extends Application {
                     }
                 }
 
-                if (!validTurnExists) {
+                if (!validTurnExists && playerMovesLeft > 0) {
                     System.out.println("\nSkipped turn.\n");
                     lClicked = true;
                     rClicked = true;
