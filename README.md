@@ -1,2 +1,2 @@
-# CS-205-Final-Project
-Software Engineering Final Project
+# Backgammon
+Software Engineering (CS205) Final Project
