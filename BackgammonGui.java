@@ -45,9 +45,6 @@ public class BackgammonGui extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Backgammon");
         grid = new GridPane();
-        //borderPane = new BorderPane();
-        //borderPane.setStyle("-fx-border-color: black");
-
         windowHeight = 665;
         windowWidth = 1100;
 
@@ -56,7 +53,8 @@ public class BackgammonGui extends Application {
         rClicked = false;
 
         FXPieces = new ArrayList<PieceFX>();
-
+        
+        // create players
         Player playerRED = new Player(7, 12, 1, "RED");
         Computer playerBLK = new Computer(7, 12, 2, "BLK");
 
@@ -72,6 +70,7 @@ public class BackgammonGui extends Application {
             SpikeFX spike = new SpikeFX(board.getBoard().get(c + 12));
             grid.add(spike, c, 2);
         }
+        
         SpikeFX blotSpike1 = new SpikeFX(board.getSpike(27));
         grid.add(blotSpike1, 13, 1);
         SpikeFX blotSpike2 = new SpikeFX(board.getSpike(27));
@@ -79,7 +78,6 @@ public class BackgammonGui extends Application {
 
         SpikeFX homeSpikeTop = new SpikeFX(board.getSpike(25));
         grid.add(homeSpikeTop, 10, 0);
-
         SpikeFX homeSpikeBottom = new SpikeFX(board.getSpike(26));
         grid.add(homeSpikeBottom, 10, 3);
 
@@ -126,9 +124,9 @@ public class BackgammonGui extends Application {
                             public void handle(ActionEvent e) {
                                 // handle if already selected
                                 if (playerMovesLeft == 0) {
-                                    System.out.println("\nAlready Used That Roll. Roll Again.");
+                                    errorRoll();
                                 } else if (lClicked) {
-                                    System.out.println("\nAlready Used That Dice.");
+                                    errorDieUsed();
                                     c.setSelected(false);
                                 } else if (c.getSelected()) {
                                     // handle if player can make move
@@ -154,9 +152,9 @@ public class BackgammonGui extends Application {
                             // same as left die, except it handles everything for the right die
                             public void handle(ActionEvent e) {
                                 if (playerMovesLeft == 0) {
-                                    System.out.println("\nAlready Used That Roll. Roll Again.");
+                                    errorRoll();
                                 } else if (rClicked) {
-                                    System.out.println("\nAlready Used That Dice.");
+                                    errorDieUsed();
                                     c.setSelected(false);
                                 } else if (c.getSelected()) {
                                     // handle if player can make move
@@ -209,14 +207,13 @@ public class BackgammonGui extends Application {
                 }
 
                 if (!validTurnExists && playerMovesLeft > 0) {
-                    System.out.println("\nSkipped turn.\n");
                     lClicked = true;
                     rClicked = true;
                     playerMovesLeft = 0;
                     playerBLK.playComp(board.roll(), board, playerBLK, playerRED);
                     alignPieces(board, playerRED, playerBLK, true);
                 } else {
-                    System.out.println("You still have a valid move! Cannot skip turn.");
+                    errorValidMove();
                 }
 
 
@@ -227,6 +224,16 @@ public class BackgammonGui extends Application {
         rollDice = new Button("Roll Dice");
         rollDice.setLayoutX(windowWidth - 100);
         rollDice.setLayoutY(300);
+        
+        // initialize rightDie
+        rightDie = new Button("  ");
+        rightDie.setLayoutX(windowWidth - 60);
+        rightDie.setLayoutY(265);
+        
+        // initialize leftDie
+        leftDie = new Button("  ");
+        leftDie.setLayoutX(windowWidth - 100);
+        leftDie.setLayoutY(265);
 
         // handling rollDice events
         rollDice.setOnAction(new EventHandler<ActionEvent>() {
@@ -242,9 +249,23 @@ public class BackgammonGui extends Application {
 
                     // creating & positioning left die
                     leftDie.setText(Integer.toString(lDie));
-
+                    
+                    // handling leftDie pressed BEFORE piece selected
+                    leftDie.setOnAction(new EventHandler<ActionEvent>() {
+                        public void handle(ActionEvent e) {
+                            errorSelectPiece();
+                        }
+                    });
+            
                     // creating & positioning right die
                     rightDie.setText(Integer.toString(rDie));
+                    
+                    // handling rightDie pressed BEFORE piece selected
+                    rightDie.setOnAction(new EventHandler<ActionEvent>() {
+                        public void handle(ActionEvent e) {
+                            errorSelectPiece();
+                        }
+                    });
 
                     if (lDie == rDie) {
                         playerMovesLeft = 4;
@@ -252,32 +273,22 @@ public class BackgammonGui extends Application {
                         playerMovesLeft = 2;
                     }
                 } else {
-                    System.out.println("Already Rolled");
+                    errorAlreadyRolled();
                 }
             }
         });
-
-        // initialize leftDie
-        leftDie = new Button("  ");
-        leftDie.setLayoutX(windowWidth - 100);
-        leftDie.setLayoutY(265);
-
+        
         // handling leftDie pressed BEFORE piece selected
         leftDie.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-                System.out.println("Select Piece before die");
+                errorRoll();
             }
         });
-
-        // initialize rightDie
-        rightDie = new Button("  ");
-        rightDie.setLayoutX(windowWidth - 60);
-        rightDie.setLayoutY(265);
 
         // handling rightDie pressed BEFORE piece selected
         rightDie.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-                System.out.println("Select Piece before die");
+                errorRoll();
             }
         });
 
@@ -410,9 +421,9 @@ public class BackgammonGui extends Application {
             }
         }
     }
-
+    
+    // aligns pieces in proper spots on spikes
     public void alignPieces(Board b, Player player, Computer computer, boolean move) {
-
         for (int s = 0; s < b.getBoard().size(); s++) {
             for (int p = 0; p < b.getBoard().get(s).getPiecesOnSpike().size(); p++) {
                 Piece current = b.getBoard().get(s).getPiecesOnSpike().get(p);
@@ -472,22 +483,17 @@ public class BackgammonGui extends Application {
                 message = "You have won! Game over.";
             }
             ShowMessage(message);
-            /*
-            Object[] option = {"OKAY"};
-            JOptionPane.showOptionDialog(null, message,
-                    "Game Over", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-                    null, option, option[0]);*/
-
         }
 
     }
+
+/* ------------------------------------------------------ Pop-Up Messages/Errors ------------------------------------------------------*/
 
     //Displays message in jOptionPane
     private void ShowMessage(String message) {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                Object[] option = {"OKAY"};
                 JOptionPane.showOptionDialog(null, message,
                         "Game Over", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
                         null, option, option[0]);
@@ -495,4 +501,62 @@ public class BackgammonGui extends Application {
             }
         });
     }
+    
+    private void errorRoll() {
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                JOptionPane.showOptionDialog(null, "Please roll dice.",
+                        "Roll Dice", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, option, option[0]);
+            }
+        });
+    }
+    
+    private void errorAlreadyRolled() {
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                JOptionPane.showOptionDialog(null, "You can only roll dice once a turn.\nPlease play roll.",
+                        "Already Rolled", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, option, option[0]);
+            }
+        });
+    }
+
+    
+    private void errorDieUsed() {
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                JOptionPane.showOptionDialog(null, "You have already used this die.\nPlease use other roll.\nIF other die unusable, Skip Turn.",
+                        "Die Used", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, option, option[0]);
+            }
+        });
+    }
+    
+    private void errorSelectPiece() {
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                JOptionPane.showOptionDialog(null, "Select a piece before a die.",
+                        "Select Piece", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, option, option[0]);
+            }
+        });
+    }
+    
+    private void errorValidMove() {
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                Object[] option = {"OKAY"};
+                JOptionPane.showOptionDialog(null, "You still have a valid move. Cannot Skip Turn.",
+                        "Valid Move", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, option, option[0]);
+            }
+        });
+    }
+    
 }

@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import java.awt.*;
 
 
 public class Computer extends Player{
@@ -44,7 +46,7 @@ public class Computer extends Player{
             Piece playingPiece = randPiece(tempPieces);
 
             if (tempPieces.size() == 0 || playingPiece == null) {
-                System.out.println("\nNo possible move. Player's Turn!");
+                errorComputerTurn("Computer cannot move. Player's Turn!");
                 break;
             }
 
@@ -111,5 +113,17 @@ public class Computer extends Player{
     public boolean takeTurn(Piece p, int roll, Board b, Computer computer, Player player) {
         return super.makeMove(b, computer, player, p, roll, true);
 
+    }
+    
+    private void errorComputerTurn(String message) {
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                Object[] option = {"OKAY"};
+                JOptionPane.showOptionDialog(null, message,
+                        "Computer Turn Error", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, option, option[0]);
+            }
+        });
     }
 }

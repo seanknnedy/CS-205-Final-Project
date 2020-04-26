@@ -1,5 +1,7 @@
 import java.lang.*;
 import java.util.*;
+import javax.swing.JOptionPane;
+import java.awt.*;
 
 
 public class Player {
@@ -201,7 +203,7 @@ public class Player {
 
     // Validate the the selected move
     public boolean validateMove(Board b, Player p, Player opponent, int pieceID, int fromSpike, int targetSpike, int roll, boolean printStatements) {
-        String message = "\nValidating Move...\n";
+        String message = "";
         Spike current = b.getSpike(targetSpike);
         boolean bearingOff = false;
         if (targetSpike == 25 || targetSpike == 26) {
@@ -219,9 +221,9 @@ public class Player {
                 }
             }
             if (!blotChoosen) {
-                message = message + "Invalid Move - blot must be played\n";
+                message = message + "Invalid Move - Blot must be played.\nIF you cannot play blotted piece, Skip Turn.";
                 if (printStatements) {
-                    System.out.print(message);
+                    errorTurn(message);
                 }
                 return false;
             }
@@ -231,9 +233,9 @@ public class Player {
         if (bearingOff) {
             // if all of the player pieces are not home, move is invalid
             if (!p.allHome()) {
-                message = message + "Invalid Move - all pieces must be home before bearing off\n";
+                message = message + "Invalid Move - All pieces must be home before bearing off.";
                 if (printStatements) {
-                    System.out.print(message);
+                    errorTurn(message);
                 }
                 return false;
             }
@@ -260,9 +262,9 @@ public class Player {
 
             // if the roll is higher then the distance and there is a further piece, move is invalid
             if (roll > distance && furthest > distance) {
-                message = message + "Invalid Move - must choose furthest piece\n";
+                message = message + "Invalid Move - You must choose furthest piece to bear off.";
                 if (printStatements) {
-                    System.out.print(message);
+                    errorTurn(message);
                 }
                 return false;
             }
@@ -276,9 +278,9 @@ public class Player {
         } else {
             // Case 3: other team is on this spike with more than one piece
             if (( !current.getCurrentTeam().equals(p.getPiece(pieceID).getColor()) ) & current.getPiecesOnSpike().size() > 1) {
-                message = message + "Invalid Move - other team is occupying spike already\n";
+                message = message + "Invalid Move - Other team is occupying spike already.";
                 if (printStatements) {
-                    System.out.print(message);
+                    errorTurn(message);
                 }
                 return false;
             }
@@ -301,9 +303,9 @@ public class Player {
 
             // Case 5: you already have 5 pieces on this spike
             else if (current.getCurrentTeam().equals(p.getPiece(pieceID).getColor()) & current.getPiecesOnSpike().size() == 5) {
-                message = message + "Invalid Move - maximum pieces on spike\n";
+                message = message + "Invalid Move - Maximum pieces already on spike (5).";
                 if (printStatements) {
-                    System.out.print(message);
+                    errorTurn(message);
                 }
                 return false;
             }
@@ -317,5 +319,17 @@ public class Player {
                 return true;
             }
         }
+    }
+    
+    private void errorTurn(String message) {
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                Object[] option = {"OKAY"};
+                JOptionPane.showOptionDialog(null, message,
+                        "Turn Error", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, option, option[0]);
+            }
+        });
     }
 }
