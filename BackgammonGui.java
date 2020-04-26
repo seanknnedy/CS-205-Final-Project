@@ -18,6 +18,7 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Button;
 import javax.swing.JOptionPane;
+import java.awt.*;
 import java.util.ArrayList;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
@@ -337,7 +338,6 @@ public class BackgammonGui extends Application {
         Scene scene = new Scene(group, windowWidth, windowHeight, Color.rgb(235, 217, 198));
         primaryStage.setScene(scene);
         primaryStage.show();
-
     }
 
     public PieceFX getFXPieceAtID(ArrayList<PieceFX> FXPieces, String color, int pieceID) {
@@ -351,7 +351,7 @@ public class BackgammonGui extends Application {
 
     public void drawBoard(Board b) {
         this.grid.getChildren().clear();
-
+        
         for (int r = 0; r < 12; r++) {
             for (int c = 1; c < 3; c++) {
                 if (c == 2) {
@@ -471,12 +471,27 @@ public class BackgammonGui extends Application {
             } else {
                 message = "You have won! Game over.";
             }
+            ShowMessage(message);
+            /*
             Object[] option = {"OKAY"};
             JOptionPane.showOptionDialog(null, message,
                     "Game Over", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-                    null, option, option[0]);
+                    null, option, option[0]);*/
 
         }
 
+    }
+
+    //Displays message in jOptionPane
+    private void ShowMessage(String message) {
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                Object[] option = {"OKAY"};
+                JOptionPane.showOptionDialog(null, message,
+                        "Game Over", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, option, option[0]);
+            }
+        });
     }
 }
