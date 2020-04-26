@@ -1,4 +1,4 @@
-# Software Engineering (CS205) Final Project
+CS205 Final Project
 ## BACKGAMMON
 
 ### Rules
