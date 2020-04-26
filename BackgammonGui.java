@@ -491,6 +491,7 @@ public class BackgammonGui extends Application {
                 JOptionPane.showOptionDialog(null, message,
                         "Game Over", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
                         null, option, option[0]);
+                System.exit(0);
             }
         });
     }
